@@ -2,9 +2,11 @@ import { Stack, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Button, Text, TextInput, View, Alert } from 'react-native';
 import styles from '../styles/registerStyles';
+import Constants from 'expo-constants';
 
-const SERVER_URL = process.env.REACT_APP_SERVER_URL || process.env.REACT_APP_DEBUG_SERVER_URL;
-
+const SERVER_URL: string =
+  Constants.expoConfig?.extra?.SERVER_URL ?? 'http://localhost:8081';
+  
 export default function RegisterPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');

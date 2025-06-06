@@ -3,14 +3,18 @@ import { useState } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../styles/loginStyles';
+import Constants from 'expo-constants';
 
-const SERVER_URL = process.env.REACT_APP_SERVER_URL || process.env.REACT_APP_DEBUG_SERVER_URL;
+const SERVER_URL: string =
+  Constants.expoConfig?.extra?.SERVER_URL ?? 'http://localhost:8081';
+  
+console.log(SERVER_URL);
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');  // <-- Add error message state
+  const [errorMessage, setErrorMessage] = useState('');
 
   const login = async () => {
     if (!email || !password) {
