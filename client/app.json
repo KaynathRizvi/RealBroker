@@ -1,4 +1,10 @@
 {
-  "name": "client",
-  "slug": "client"
+  "expo": {
+    "scheme": "acme",
+    "plugins": [
+      "expo-router"
+    ],
+    "name": "client",
+    "slug": "client"
+  }
 }
