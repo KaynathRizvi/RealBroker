@@ -6,7 +6,7 @@ import styles from '../styles/loginStyles';
 import Constants from 'expo-constants';
 
 const SERVER_URL: string =
-  Constants.expoConfig?.extra?.SERVER_URL ?? 'http://localhost:5000';
+  Constants.expoConfig?.extra?.SERVER_URL ?? 'https://localhost:5000';
 
 console.log(SERVER_URL);
 

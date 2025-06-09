@@ -5,7 +5,7 @@ import styles from '../styles/registerStyles';
 import Constants from 'expo-constants';
 
 const SERVER_URL: string =
-  Constants.expoConfig?.extra?.SERVER_URL ?? 'http://localhost:5000';
+  Constants.expoConfig?.extra?.SERVER_URL ?? 'https://broker2broker-server.onrender.com';
 
 export default function RegisterPage() {
   const router = useRouter();
