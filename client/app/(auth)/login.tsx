@@ -1,14 +1,12 @@
 import { Stack, useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Button, Text, TextInput, View } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import styles from '../styles/loginStyles';
+import { Button, Text, TextInput, View, Alert } from 'react-native';
 import Constants from 'expo-constants';
+import styles from '../styles/loginStyles';
 
-const SERVER_URL: string =
-  Constants.expoConfig?.extra?.SERVER_URL ?? 'https://broker2broker-server.onrender.com';
-
-console.log(SERVER_URL);
+const SERVER_URL =
+  Constants.expoConfig?.extra?.DEBUG_SERVER_URL ||
+  Constants.expoConfig?.extra?.SERVER_URL;
 
 export default function LoginPage() {
   const router = useRouter();
@@ -18,45 +16,41 @@ export default function LoginPage() {
 
   const login = async () => {
     if (!email || !password) {
-      setErrorMessage('Please enter email and password');
+      Alert.alert('Error', 'Please enter both email and password');
       return;
     }
 
     try {
-      const res = await fetch(SERVER_URL + '/api/auth/login', {
+      const response = await fetch(`${SERVER_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
+      const data = await response.json();
 
-      if (res.ok && data.token) {
-        setErrorMessage('');  // clear any previous error
-        await AsyncStorage.setItem('token', data.token);
+      if (response.ok) {
+        setErrorMessage('');
+        Alert.alert('Success', 'Logged in successfully!');
         router.replace('/home');
       } else {
-        setErrorMessage(data.message || 'Invalid credentials');
+        console.log('Login error:', data.message);
+        setErrorMessage(data.message || 'Login failed');
+        setPassword('');
       }
     } catch (error) {
-      setErrorMessage('Something went wrong');
+      Alert.alert('Network error', (error as Error).message || 'Unknown error');
     }
   };
 
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: 'Login' }} />
-      <Text style={styles.title}>Login Page</Text>
-      <TextInput placeholder="Email" value={email} onChangeText={setEmail} style={styles.input} autoCapitalize="none" keyboardType="email-address" />
-      <TextInput placeholder="Password" secureTextEntry value={password} onChangeText={setPassword} style={styles.input}
-      />
-
-      {/* Inline error message */}
-      {errorMessage ? (
-        <Text style={{ color: 'red', marginVertical: 8 }}>{errorMessage}</Text>
-      ) : null}
-
-      <View style={styles.button} >
+      <Text>Login Page</Text>
+      <TextInput placeholder="Email" value={email} onChangeText={setEmail} style={styles.input} />
+      <TextInput placeholder="Password" secureTextEntry value={password} onChangeText={setPassword} style={styles.input} />
+      {errorMessage ? <Text style={{ color: 'red', marginVertical: 10 }}>{errorMessage}</Text> : null}
+      <View style={styles.button}>
         <Button title="Login" onPress={login} />
         <Button title="Go to Register" onPress={() => router.push('/register')} />
       </View>

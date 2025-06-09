@@ -4,8 +4,9 @@ import { Button, Text, TextInput, View, Alert } from 'react-native';
 import styles from '../styles/registerStyles';
 import Constants from 'expo-constants';
 
-const SERVER_URL: string =
-  Constants.expoConfig?.extra?.SERVER_URL ?? 'https://broker2broker-server.onrender.com';
+const SERVER_URL =
+  Constants.expoConfig?.extra?.DEBUG_SERVER_URL ||
+  Constants.expoConfig?.extra?.SERVER_URL;
 
 export default function RegisterPage() {
   const router = useRouter();
