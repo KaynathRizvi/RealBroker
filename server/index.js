@@ -13,6 +13,10 @@ app.use('/api/auth', authRoutes);
 const profileRoutes = require('./routes/profile');
 app.use('/api/profile', profileRoutes);
 
+const propertyRoutes = require('./routes/propertyRoutes');
+app.use('/api/property', propertyRoutes);
+
+
 app.get('/', (req, res) => {
   res.send('API is running...');
 });

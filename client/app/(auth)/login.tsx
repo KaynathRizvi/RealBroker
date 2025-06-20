@@ -1,7 +1,14 @@
 import { Stack, useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Button, Text, TextInput, View, Alert } from 'react-native';
+import {
+  Button,
+  Text,
+  TextInput,
+  View,
+  Alert,
+} from 'react-native';
 import Constants from 'expo-constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../styles/loginStyles';
 
 const SERVER_URL =
@@ -30,6 +37,9 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (response.ok) {
+        // ✅ Store token
+        await AsyncStorage.setItem('token', data.token);
+
         setErrorMessage('');
         Alert.alert('Success', 'Logged in successfully!');
         router.replace('/home');
@@ -46,13 +56,35 @@ export default function LoginPage() {
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: 'Login' }} />
-      <Text>Login Page</Text>
-      <TextInput placeholder="Email" value={email} onChangeText={setEmail} style={styles.input} />
-      <TextInput placeholder="Password" secureTextEntry value={password} onChangeText={setPassword} style={styles.input} />
-      {errorMessage ? <Text style={{ color: 'red', marginVertical: 10 }}>{errorMessage}</Text> : null}
+      <Text style={{ fontSize: 20, marginBottom: 20 }}>Login Page</Text>
+
+      <TextInput
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+        keyboardType="email-address"
+        style={styles.input}
+      />
+
+      <TextInput
+        placeholder="Password"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+        style={styles.input}
+      />
+
+      {errorMessage ? (
+        <Text style={{ color: 'red', marginVertical: 10 }}>{errorMessage}</Text>
+      ) : null}
+
       <View style={styles.button}>
         <Button title="Login" onPress={login} />
-        <Button title="Go to Register" onPress={() => router.push('/register')} />
+        <Button
+          title="Go to Register"
+          onPress={() => router.push('/register')}
+        />
       </View>
     </View>
   );

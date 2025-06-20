@@ -1,9 +1,8 @@
 const jwt = require('jsonwebtoken');
-
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const protect = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1]; // Expect 'Bearer TOKEN'
+  const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
     return res.status(401).json({ message: 'Not authorized, no token' });
@@ -11,8 +10,7 @@ const protect = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    console.log('Decoded JWT:', decoded);
-    req.user = decoded; // Save user info in request
+    req.user = decoded; // Assumes payload has userId
     next();
   } catch (error) {
     res.status(401).json({ message: 'Token is not valid' });
