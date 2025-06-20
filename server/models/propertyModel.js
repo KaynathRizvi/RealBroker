@@ -30,7 +30,25 @@ async function getUserProperties(userId) {
   }
 }
 
+async function getAllProperties() {
+  try {
+  const result = await pool.query(
+      `SELECT 
+         p.*, 
+         u.email 
+       FROM user_property p
+       JOIN users u ON p.user_id = u.id
+       ORDER BY p.created_at DESC`
+    );
+    return result.rows;
+  } catch (error) {
+    console.error('Error in getAllProperties:', error.message);
+    throw error;
+  }
+}
+
 module.exports = {
   addUserProperty,
-  getUserProperties
+  getUserProperties,
+  getAllProperties, // renamed here
 };
