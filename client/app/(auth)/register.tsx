@@ -32,7 +32,7 @@ export default function RegisterPage() {
       if (response.ok) {
         setErrorMessage('');
         Alert.alert('Success', 'Registered successfully!');
-        router.replace('/home');
+        router.replace('/login');
       } else {
         console.log('Showing error alert with message:', data.message);
         setErrorMessage(data.message || 'Something went wrong');
