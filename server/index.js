@@ -31,5 +31,10 @@ app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
+// Catch-all to serve React app for any route not handled by API
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
