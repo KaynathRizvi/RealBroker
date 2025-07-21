@@ -37,6 +37,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  imageScrollContainer: {
+    marginBottom: 10,
+  },
+  thumbnailImage: {
+    width: 100,
+    height: 100,
+    marginRight: 10,
+    marginBottom: 10,
+    borderRadius: 8,
+  },
 });
 
 export default styles;

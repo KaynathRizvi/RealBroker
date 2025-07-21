@@ -2,7 +2,7 @@ const { updateUserProfile, getUserProfile, addUserProperty } = require('../model
 
 async function getProfile(req, res) {
   try {
-    const userId = req.user.id; // assume user ID is in req.user after authentication
+    const userId = req.user.userId; // assume user ID is in req.user after authentication
     const profile = await getUserProfile(userId);
     res.json(profile);
   } catch (err) {
@@ -13,7 +13,7 @@ async function getProfile(req, res) {
 
 async function updateProfile(req, res) {
   try {
-    const userId = req.user.id;
+    const userId = req.user.userId;
     const { name, agency_name, contact_number, license_number, location } = req.body;
     await updateUserProfile(userId, { name, agency_name, contact_number, license_number, location });
     res.json({ message: 'Profile updated' });
@@ -25,7 +25,7 @@ async function updateProfile(req, res) {
 
 async function addProperty(req, res) {
   try {
-    const userId = req.user.id;
+    const userId = req.user.userId;
     const { property_name, deal_price, property_pic_url } = req.body;
     const newProperty = await addUserProperty(userId, { property_name, deal_price, property_pic_url });
     res.status(201).json(newProperty);

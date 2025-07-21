@@ -4,8 +4,12 @@ require('dotenv').config();
 
 const app = express();
 
-app.use(cors()); // Allow all origins, customize if needed
-app.use(express.json()); // Parse JSON bodies
+app.use(cors({
+  origin: ["http://localhost:3000", "http://localhost:8081"],
+  credentials: true,
+}));
+
+app.use(express.json());
 
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
@@ -16,6 +20,8 @@ app.use('/api/profile', profileRoutes);
 const propertyRoutes = require('./routes/propertyRoutes');
 app.use('/api/property', propertyRoutes);
 
+const subscriptionRoutes = require("./routes/subscriptionRoutes")
+app.use("/api/subscription", subscriptionRoutes)
 
 app.get('/', (req, res) => {
   res.send('API is running...');

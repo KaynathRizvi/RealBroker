@@ -1,20 +1,29 @@
 const jwt = require('jsonwebtoken');
+
 const JWT_SECRET = process.env.JWT_SECRET;
 
+// Your existing protect function
 const protect = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(' ')[1];
 
   if (!token) {
-    return res.status(401).json({ message: 'Not authorized, no token' });
+    return res.status(401).json({ message: 'Access token required' });
   }
 
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded; // Assumes payload has userId
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.status(401).json({ message: 'Invalid or expired token' });
+    }
+    req.user = user; // This will have userId
     next();
-  } catch (error) {
-    res.status(401).json({ message: 'Token is not valid' });
-  }
+  });
 };
 
-module.exports = { protect };
+// New function for subscription routes (same as protect, just different name)
+const authenticateToken = protect;
+
+module.exports = { 
+  protect,           // For your existing routes
+  authenticateToken  // For subscription routes
+};

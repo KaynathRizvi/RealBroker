@@ -7,11 +7,14 @@ import {
   FlatList,
   Image,
   Alert,
-  ScrollView
+  Modal,
+  Pressable,
 } from 'react-native';
+import { Stack } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
-import styles from '../styles/profileStyles';
+
+import styles from '../styles/mypropertiesStyles';
 
 const SERVER_URL =
   Constants.expoConfig?.extra?.DEBUG_SERVER_URL ||
@@ -21,16 +24,18 @@ type Property = {
   id: number;
   property_name: string;
   deal_price: string;
-  property_pic_url: string;
+  property_pic_url: string[];
 };
 
-export default function MyPropertyPage() {
+export default function MyProperty() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
-
   const [newPropName, setNewPropName] = useState('');
   const [newPropPrice, setNewPropPrice] = useState('');
   const [newPropPicUrl, setNewPropPicUrl] = useState('');
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [propertyToDelete, setPropertyToDelete] = useState<number | null>(null);
 
   useEffect(() => {
     fetchProperties();
@@ -56,7 +61,7 @@ export default function MyPropertyPage() {
       } else {
         Alert.alert('Error', data.message || 'Failed to fetch properties');
       }
-    } catch (err) {
+    } catch {
       Alert.alert('Error', 'Network error');
     } finally {
       setLoading(false);
@@ -80,7 +85,7 @@ export default function MyPropertyPage() {
         body: JSON.stringify({
           property_name: newPropName,
           deal_price: parseFloat(newPropPrice),
-          property_pic_url: newPropPicUrl,
+          property_pic_url: newPropPicUrl.trim().split(/\s+/),
         }),
       });
 
@@ -99,32 +104,79 @@ export default function MyPropertyPage() {
     }
   }
 
-  function renderProperty({ item }: { item: Property }) {
-    return (
-      <View style={{ marginBottom: 15, borderWidth: 1, padding: 10, borderRadius: 8 }}>
-        {item.property_pic_url ? (
-          <Image source={{ uri: item.property_pic_url }} style={{ width: 100, height: 100 }} />
-        ) : null}
-        <Text>Name: {item.property_name}</Text>
-        <Text>Price: ${item.deal_price}</Text>
-      </View>
-    );
+  function confirmDeleteProperty(id: number) {
+    setPropertyToDelete(id);
+    setModalVisible(true);
   }
 
-  if (loading) return <Text>Loading properties...</Text>;
+  async function handleDeleteConfirmed() {
+    if (propertyToDelete === null) return;
+
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const res = await fetch(`${SERVER_URL}/api/property/${propertyToDelete}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok) {
+        setProperties(prev => prev.filter(prop => prop.id !== propertyToDelete));
+        Alert.alert('Deleted', 'Property removed');
+      } else {
+        Alert.alert('Error', data.message || 'Failed to delete property');
+      }
+    } catch (err) {
+      console.error('Network error in deleteProperty:', err);
+      Alert.alert('Error', 'Network error');
+    } finally {
+      setModalVisible(false);
+      setPropertyToDelete(null);
+    }
+  }
+
+  const renderProperty = ({ item }: { item: Property }) => (
+    <View style={styles.propertyCard}>
+      <View style={styles.imageWrapper}>
+        {item.property_pic_url.map((url, index) => (
+          <Image
+            key={index}
+            source={{ uri: url }}
+            style={styles.thumbnail}
+            resizeMode="cover"
+          />
+        ))}
+      </View>
+      <Text style={styles.text}>Name: {item.property_name}</Text>
+      <Text style={styles.text}>Price: ${item.deal_price}</Text>
+      <View style={{ marginTop: 5 }}>
+        <Button
+          title="Delete This Property"
+          color="red"
+          onPress={() => confirmDeleteProperty(item.id)}
+        />
+      </View>
+    </View>
+  );
+
+  if (loading) return <Text style={styles.text}>Loading properties...</Text>;
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
+      <Stack.Screen options={{ headerShown: false }} />
       <Text style={styles.title}>My Properties</Text>
 
       <FlatList
         data={properties}
         keyExtractor={item => item.id.toString()}
         renderItem={renderProperty}
-        style={{ marginBottom: 20 }}
+        style={styles.list}
       />
 
-      <Text style={{ fontWeight: 'bold' }}>Add New Property</Text>
+      <Text style={styles.subtitle}>Add New Property</Text>
       <TextInput
         placeholder="Property Name"
         value={newPropName}
@@ -139,12 +191,41 @@ export default function MyPropertyPage() {
         style={styles.input}
       />
       <TextInput
-        placeholder="Property Picture URL"
+        placeholder="Property Picture URL(s)"
         value={newPropPicUrl}
         onChangeText={setNewPropPicUrl}
         style={styles.input}
       />
       <Button title="Add Property" onPress={addProperty} />
-    </ScrollView>
+
+      <Modal
+        visible={modalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.text}>
+              Are you sure you want to delete this property?
+            </Text>
+            <View style={styles.modalActions}>
+              <Pressable
+                style={[styles.modalButton, { backgroundColor: 'gray' }]}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={{ color: 'white' }}>Cancel</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.modalButton, { backgroundColor: 'red' }]}
+                onPress={handleDeleteConfirmed}
+              >
+                <Text style={{ color: 'white' }}>Delete</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    </View>
   );
 }

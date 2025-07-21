@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  Alert,
-  ScrollView,
-} from 'react-native';
+import { View, Text, TextInput, Button, Alert, ScrollView } from 'react-native';
+import { Stack } from "expo-router";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 import styles from '../styles/profileStyles';
@@ -59,7 +53,11 @@ export default function ProfilePage() {
 
       const data = await res.json();
       if (res.ok) {
-        setProfile(data);
+        setProfile(prev => ({
+          ...prev,
+          ...data,
+          email: data.email || prev.email,
+        }));
       } else {
         Alert.alert('Error', data.message || 'Failed to fetch profile');
       }
@@ -104,48 +102,49 @@ export default function ProfilePage() {
     }
   }
 
-  if (loading) return <Text>Loading...</Text>;
+  if (loading) return <Text style={styles.text}>Loading...</Text>;
 
   return (
     <ScrollView style={styles.container}>
+      <Stack.Screen options={{ headerShown: false }} />
       <Text style={styles.title}>Your Profile</Text>
 
-      <Text>Email (not editable):</Text>
+      <Text style={styles.label}>Email (not editable):</Text>
       <TextInput
         value={profile.email}
         editable={false}
-        style={[styles.input, { backgroundColor: '#ddd' }]}
+        style={[styles.input, styles.disabledInput]}
       />
 
-      <Text>Name:</Text>
+      <Text style={styles.label}>Name:</Text>
       <TextInput
         value={profile.name}
         onChangeText={(text) => setProfile((prev) => ({ ...prev, name: text }))}
         style={styles.input}
       />
 
-      <Text>Agency Name:</Text>
+      <Text style={styles.label}>Agency Name:</Text>
       <TextInput
         value={profile.agency_name}
         onChangeText={(text) => setProfile((prev) => ({ ...prev, agency_name: text }))}
         style={styles.input}
       />
 
-      <Text>Contact Number:</Text>
+      <Text style={styles.label}>Contact Number:</Text>
       <TextInput
         value={profile.contact_number}
         onChangeText={(text) => setProfile((prev) => ({ ...prev, contact_number: text }))}
         style={styles.input}
       />
 
-      <Text>License Number:</Text>
+      <Text style={styles.label}>License Number:</Text>
       <TextInput
         value={profile.license_number}
         onChangeText={(text) => setProfile((prev) => ({ ...prev, license_number: text }))}
         style={styles.input}
       />
 
-      <Text>Location:</Text>
+      <Text style={styles.label}>Location:</Text>
       <TextInput
         value={profile.location}
         onChangeText={(text) => setProfile((prev) => ({ ...prev, location: text }))}
@@ -153,7 +152,7 @@ export default function ProfilePage() {
       />
 
       <Button title="Save Profile" onPress={saveProfile} />
-    <MyProperty />
+      <MyProperty />
     </ScrollView>
   );
 }

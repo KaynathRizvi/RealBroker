@@ -4,7 +4,6 @@ const { protect } = require('../middleware/authMiddleware');
 const { getUserProfile, updateUserProfile, addUserProperty } = require('../models/profileModel');
 
 // GET /api/profile
-// GET /api/profile
 router.get('/', protect, async (req, res) => {
   try {
     const userId = req.user.userId;

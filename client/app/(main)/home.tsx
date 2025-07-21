@@ -1,32 +1,73 @@
-import { Stack, useRouter } from 'expo-router';
-import { ScrollView, Text, View } from 'react-native';
-import styles from '../styles/homeStyles'; // ✅ Import the styles
+"use client"
+
+import { Stack, useRouter } from "expo-router"
+import { Text, View } from "react-native"
+import { useEffect, useState } from "react"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import Constants from "expo-constants"
+import styles from "../styles/homeStyles"
+
+const SERVER_URL =
+  Constants.expoConfig?.extra?.DEBUG_SERVER_URL ||
+  Constants.expoConfig?.extra?.SERVER_URL
 
 export default function HomePage() {
-  const router = useRouter();
+  const router = useRouter()
+  const [subscriptionInfo, setSubscriptionInfo] = useState<any>(null)
 
-  const handleLogout = () => {
-    router.replace('/login');
-  };
+  useEffect(() => {
+    fetchSubscriptionInfo()
+  }, [])
+
+  const fetchSubscriptionInfo = async () => {
+    try {
+      const token = await AsyncStorage.getItem("token")
+      if (!token) {
+        router.replace("/login")
+        return
+      }
+
+      const response = await fetch(`${SERVER_URL}/api/subscription/status`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+
+      const data = await response.json()
+
+      if (data.hasActiveSubscription) {
+        setSubscriptionInfo(data.subscription)
+      }
+    } catch (error) {
+      console.error("Error fetching subscription:", error)
+    }
+  }
 
   return (
-    <View style={styles.container}>
-      <Stack.Screen options={{ title: 'Home' }} />
+    <View style={styles.content}>
+      <Stack.Screen options={{ headerShown: false }} />
+      <Text style={{ fontSize: 18, marginBottom: 20 }}>
+        Welcome to BrokerApp Home Page!
+      </Text>
 
-      <View style={styles.navbar}>
-        <Text style={styles.title}>BrokerApp</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.navLinks}>
-            <Text style={styles.link} onPress={() => router.push('/home')}>Home</Text>
-            <Text style={styles.link} onPress={() => router.push('/about')}>About</Text>
-            <Text style={styles.link} onPress={() => router.push('/properties')}>Properties</Text>
-            <Text style={styles.link} onPress={() => router.push('/profile')}>Profile</Text>
-            <Text style={[styles.link, styles.logout]} onPress={handleLogout}>Logout</Text>
-        </ScrollView>
-      </View>
-
-      <View style={styles.content}>
-        <Text>Welcome to BrokerApp Home Page!</Text>
-      </View>
+      {subscriptionInfo && (
+        <View
+          style={{
+            backgroundColor: "#e8f5e8",
+            padding: 15,
+            borderRadius: 8,
+            marginBottom: 20,
+          }}
+        >
+          <Text style={{ fontSize: 16, fontWeight: "bold", color: "#2d5a2d" }}>
+            Active Subscription: {subscriptionInfo.planName}
+          </Text>
+          <Text style={{ color: "#2d5a2d" }}>
+            Expires: {new Date(subscriptionInfo.expiryDate).toLocaleDateString()}
+          </Text>
+        </View>
+      )}
     </View>
-  );
+  )
 }

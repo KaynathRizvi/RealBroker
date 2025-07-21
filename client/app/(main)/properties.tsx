@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Stack } from "expo-router";
 import { View, Text, Image, ScrollView, ActivityIndicator } from 'react-native';
 import Constants from 'expo-constants';
 import styles from '../styles/propertiesStyle';
@@ -38,13 +39,19 @@ const Properties = () => {
 
   return (
     <ScrollView style={styles.container}>
+      <Stack.Screen options={{ headerShown: false }} />
       {properties.map((property) => (
         <View key={property.property_id} style={styles.card}>
-          <Image
-            source={{ uri: property.property_pic_url }}
-            style={styles.image}
-            resizeMode="cover"
-          />
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.imageScrollContainer}>
+            {property.property_pic_url?.map((url, index) => (
+              <Image
+                key={index}
+                source={{ uri: url }}
+                style={styles.thumbnailImage}
+                resizeMode="cover"
+              />
+            ))}
+          </ScrollView>
           <Text style={styles.title}>{property.property_name}</Text>
           <Text style={styles.detail}>Price: ₹{property.deal_price ?? 'Not specified'}</Text>
           <Text style={styles.email}>Owner: {property.email}</Text>

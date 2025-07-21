@@ -47,8 +47,17 @@ async function getAllProperties() {
   }
 }
 
+async function deleteUserProperty(userId, propertyId) {
+    const result = await pool.query(
+      'DELETE FROM user_property WHERE id = $1 AND user_id = $2',
+      [propertyId, userId]
+    );
+      return result.rowCount > 0;
+}
+
 module.exports = {
   addUserProperty,
   getUserProperties,
-  getAllProperties, // renamed here
+  getAllProperties,
+  deleteUserProperty, 
 };

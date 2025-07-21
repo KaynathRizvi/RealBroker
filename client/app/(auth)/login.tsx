@@ -1,61 +1,68 @@
-import { Stack, useRouter } from 'expo-router';
-import { useState } from 'react';
-import {
-  Button,
-  Text,
-  TextInput,
-  View,
-  Alert,
-} from 'react-native';
-import Constants from 'expo-constants';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import styles from '../styles/loginStyles';
+"use client"
 
-const SERVER_URL =
-  Constants.expoConfig?.extra?.DEBUG_SERVER_URL ||
-  Constants.expoConfig?.extra?.SERVER_URL;
+import { Stack, useRouter } from "expo-router"
+import { useState } from "react"
+import { Button, Text, TextInput, View, Alert, ActivityIndicator } from "react-native"
+import Constants from "expo-constants"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import styles from "../styles/loginStyles"
+
+const SERVER_URL = Constants.expoConfig?.extra?.DEBUG_SERVER_URL || Constants.expoConfig?.extra?.SERVER_URL
 
 export default function LoginPage() {
-  const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const router = useRouter()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [errorMessage, setErrorMessage] = useState("")
+  const [loading, setLoading] = useState(false)
 
   const login = async () => {
     if (!email || !password) {
-      Alert.alert('Error', 'Please enter both email and password');
-      return;
+      Alert.alert("Error", "Please enter both email and password")
+      return
     }
+
+    setLoading(true)
 
     try {
       const response = await fetch(`${SERVER_URL}/api/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
-      });
+      })
 
-      const data = await response.json();
+      const data = await response.json()
 
       if (response.ok) {
-        // ✅ Store token
-        await AsyncStorage.setItem('token', data.token);
+        // Store token and user info
+        await AsyncStorage.setItem("token", data.token)
+        await AsyncStorage.setItem("userEmail", email)
 
-        setErrorMessage('');
-        Alert.alert('Success', 'Logged in successfully!');
-        router.replace('/home');
+        setErrorMessage("")
+
+        // Check subscription status from login response
+        if (data.hasActiveSubscription) {
+          Alert.alert("Success", "Logged in successfully!")
+          router.replace("/home")
+        } else {
+          Alert.alert("Subscription Required", "Please purchase a subscription to continue.")
+          router.replace("/subscription")
+        }
       } else {
-        console.log('Login error:', data.message);
-        setErrorMessage(data.message || 'Login failed');
-        setPassword('');
+        console.log("Login error:", data.message)
+        setErrorMessage(data.message || "Login failed")
+        setPassword("")
       }
     } catch (error) {
-      Alert.alert('Network error', (error as Error).message || 'Unknown error');
+      Alert.alert("Network error", (error as Error).message || "Unknown error")
+    } finally {
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: 'Login' }} />
+      <Stack.Screen options={{ title: "Login" }} />
       <Text style={{ fontSize: 20, marginBottom: 20 }}>Login Page</Text>
 
       <TextInput
@@ -65,6 +72,7 @@ export default function LoginPage() {
         autoCapitalize="none"
         keyboardType="email-address"
         style={styles.input}
+        editable={!loading}
       />
 
       <TextInput
@@ -73,19 +81,21 @@ export default function LoginPage() {
         value={password}
         onChangeText={setPassword}
         style={styles.input}
+        editable={!loading}
       />
 
-      {errorMessage ? (
-        <Text style={{ color: 'red', marginVertical: 10 }}>{errorMessage}</Text>
-      ) : null}
+      {errorMessage ? <Text style={{ color: "red", marginVertical: 10 }}>{errorMessage}</Text> : null}
 
       <View style={styles.button}>
-        <Button title="Login" onPress={login} />
-        <Button
-          title="Go to Register"
-          onPress={() => router.push('/register')}
-        />
+        {loading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : (
+          <>
+            <Button title="Login" onPress={login} />
+            <Button title="Go to Register" onPress={() => router.push("/register")} />
+          </>
+        )}
       </View>
     </View>
-  );
+  )
 }
