@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');  // <-- Add this
 require('dotenv').config();
 
 const app = express();
@@ -24,12 +25,15 @@ app.use('/api/profile', profileRoutes);
 const propertyRoutes = require('./routes/propertyRoutes');
 app.use('/api/property', propertyRoutes);
 
-const subscriptionRoutes = require("./routes/subscriptionRoutes")
-app.use("/api/subscription", subscriptionRoutes)
+const subscriptionRoutes = require("./routes/subscriptionRoutes");
+app.use("/api/subscription", subscriptionRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
+
+// Serve React static files from the build folder
+app.use(express.static(path.join(__dirname, 'build')));
 
 // Catch-all to serve React app for any route not handled by API
 app.get('*', (req, res) => {
