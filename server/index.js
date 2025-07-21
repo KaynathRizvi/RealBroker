@@ -5,7 +5,11 @@ require('dotenv').config();
 const app = express();
 
 app.use(cors({
-  origin: ["http://localhost:3000", "http://localhost:8081"],
+  origin: [
+    "http://localhost:3000", 
+    "http://localhost:8081", 
+    "https://broker2broker.onrender.com",
+  ],
   credentials: true,
 }));
 
