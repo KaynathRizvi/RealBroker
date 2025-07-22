@@ -97,7 +97,7 @@ export default function LoginPage() {
               <Text style={styles.buttonText}>Go to Register</Text>
             </Pressable>
 
-            <Pressable style={styles.forgotButton} onPress={() => router.push('/forgot-password')}>
+            <Pressable style={styles.forgotButton} onPress={() => router.push('/forgotpassword')}>
               <Text style={styles.forgotButtonText}>Forgot Password?</Text>
             </Pressable>
           </>

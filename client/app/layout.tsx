@@ -7,8 +7,8 @@ import { Platform, View, ActivityIndicator } from "react-native"
 export default function Layout() {
   // 1. Load fonts
   const [fontsLoaded] = useFonts({
-    Poppins: require('../assets/fonts/Poppins-Regular.ttf'),
-    PoppinsBold: require('../assets/fonts/Poppins-Bold.ttf'),
+    Nunito: require('../assets/fonts/Nunito-Regular.ttf'),
+    NunitoBold: require('../assets/fonts/Nunito-Bold.ttf'),
   });
 
   // 2. Show loader until fonts are ready

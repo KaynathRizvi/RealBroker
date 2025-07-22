@@ -15,7 +15,7 @@ const loginStyles = StyleSheet.create({
     padding: 12,
     borderRadius: 10,
     fontSize: 16,
-    fontFamily: 'Poppins',
+    fontFamily: 'Nunito',
     backgroundColor: '#fff',
   },
   button: {
@@ -34,7 +34,7 @@ const loginStyles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 16,
-    fontFamily: 'PoppinsBold',
+    fontFamily: 'NunitoBold',
   },
   forgotButton: {
     backgroundColor: 'transparent',
@@ -47,12 +47,12 @@ const loginStyles = StyleSheet.create({
   forgotButtonText: {
     color: '#555',
     fontSize: 15,
-    fontFamily: 'Poppins',
+    fontFamily: 'Nunito',
     textDecorationLine: 'underline',
   },
   title: {
     fontSize: 26,
-    fontFamily: 'PoppinsBold',
+    fontFamily: 'NunitoBold',
     marginBottom: 24,
     textAlign: 'center',
     color: '2',
