@@ -93,6 +93,7 @@ export default function LoginPage() {
           <>
             <Button title="Login" onPress={login} />
             <Button title="Go to Register" onPress={() => router.push("/register")} />
+            <Button title="Forgot Password?" onPress={() => router.push("/forgotpassword")} />
           </>
         )}
       </View>
