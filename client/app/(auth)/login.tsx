@@ -2,7 +2,7 @@
 
 import { Stack, useRouter } from "expo-router"
 import { useState } from "react"
-import { Button, Text, TextInput, View, Alert, ActivityIndicator } from "react-native"
+import { Pressable, Button, Text, TextInput, View, Alert, ActivityIndicator } from "react-native"
 import Constants from "expo-constants"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import styles from "../styles/loginStyles"
@@ -63,7 +63,7 @@ export default function LoginPage() {
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: "Login" }} />
-      <Text style={{ fontSize: 20, marginBottom: 20 }}>Login Page</Text>
+      <Text style={styles.title}>Login Page</Text>
 
       <TextInput
         placeholder="Email"
@@ -86,17 +86,22 @@ export default function LoginPage() {
 
       {errorMessage ? <Text style={{ color: "red", marginVertical: 10 }}>{errorMessage}</Text> : null}
 
-      <View style={styles.button}>
         {loading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <>
-            <Button title="Login" onPress={login} />
-            <Button title="Go to Register" onPress={() => router.push("/register")} />
-            <Button title="Forgot Password?" onPress={() => router.push("/forgotpassword")} />
+          <Pressable style={styles.button} onPress={login}>
+            <Text style={styles.buttonText}>Login</Text>
+          </Pressable>
+            <Pressable style={styles.button} onPress={() => router.push('/register')}>
+              <Text style={styles.buttonText}>Go to Register</Text>
+            </Pressable>
+
+            <Pressable style={styles.forgotButton} onPress={() => router.push('/forgot-password')}>
+              <Text style={styles.forgotButtonText}>Forgot Password?</Text>
+            </Pressable>
           </>
         )}
-      </View>
     </View>
   )
 }

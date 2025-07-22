@@ -1,12 +1,15 @@
 // app/forgot-password.tsx
 import { useState } from 'react';
+import { useRouter } from 'expo-router';
 import { View, Text, TextInput, Button, Alert } from 'react-native';
 import Constants from 'expo-constants';
+import styles from './styles/forgotpasswordStyles';
 
 const SERVER_URL = Constants.expoConfig?.extra?.DEBUG_SERVER_URL || Constants.expoConfig?.extra?.SERVER_URL;
 
 export default function ForgotPasswordScreen() {
   const [email, setEmail] = useState('');
+  const router = useRouter();
 
   const handleReset = async () => {
     try {
@@ -24,17 +27,18 @@ export default function ForgotPasswordScreen() {
   };
 
   return (
-    <View style={{ padding: 20 }}>
-      <Text>Enter your email to reset password</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Enter your email to reset password</Text>
       <TextInput
         value={email}
         onChangeText={setEmail}
         placeholder="Email"
         keyboardType="email-address"
         autoCapitalize="none"
-        style={{ borderBottomWidth: 1, marginVertical: 10 }}
+        style={styles.input}
       />
       <Button title="Send Reset Email" onPress={handleReset} />
+      <Button title="Go Back to Login" onPress={() => router.push('/login')} />
     </View>
   );
 }
