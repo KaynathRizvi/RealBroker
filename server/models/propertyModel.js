@@ -35,9 +35,9 @@ async function getAllProperties() {
   const result = await pool.query(
       `SELECT 
          p.*, 
-         u.email 
+         pr.name
        FROM user_property p
-       JOIN users u ON p.user_id = u.id
+       JOIN user_profile pr ON p.user_id = pr.user_id
        ORDER BY p.created_at DESC`
     );
     return result.rows;

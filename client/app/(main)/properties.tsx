@@ -54,7 +54,7 @@ const Properties = () => {
           </ScrollView>
           <Text style={styles.title}>{property.property_name}</Text>
           <Text style={styles.detail}>Price: ₹{property.deal_price ?? 'Not specified'}</Text>
-          <Text style={styles.email}>Owner: {property.email}</Text>
+          <Text style={styles.email}>Owner: {property.name}</Text>
         </View>
       ))}
     </ScrollView>
