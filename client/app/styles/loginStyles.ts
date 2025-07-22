@@ -5,31 +5,43 @@ const loginStyles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    padding: 20,
-    backgroundColor: '#f9f9f9',
+    padding: 24,
+    backgroundColor: '#f4f6f9',
+  },
+  title: {
+    fontSize: 28,
+    fontFamily: 'NunitoBold',
+    marginBottom: 32,
+    textAlign: 'center',
+    color: '#1f2937', // dark gray
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ddd',
-    marginBottom: 14,
-    padding: 12,
-    borderRadius: 10,
+    borderColor: '#e2e8f0',
+    marginBottom: 16,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderRadius: 12,
     fontSize: 16,
     fontFamily: 'Nunito',
     backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 1,
   },
   button: {
-    backgroundColor: '#000',
+    backgroundColor: '#2563eb', // blue-600
     paddingVertical: 14,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    marginVertical: 8,
+    borderRadius: 12,
+    marginTop: 8,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowColor: '#2563eb',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 4,
   },
   buttonText: {
     color: '#fff',
@@ -37,26 +49,20 @@ const loginStyles = StyleSheet.create({
     fontFamily: 'NunitoBold',
   },
   forgotButton: {
-    backgroundColor: 'transparent',
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 6,
-    marginTop: 12,
+    marginTop: 18,
     alignItems: 'center',
   },
   forgotButtonText: {
-    color: '#555',
+    color: '#4b5563', // gray-600
     fontSize: 15,
     fontFamily: 'Nunito',
     textDecorationLine: 'underline',
   },
-  title: {
-    fontSize: 26,
-    fontFamily: 'NunitoBold',
-    marginBottom: 24,
-    textAlign: 'center',
-    color: '2',
-  },
+  message: {
+    color: 'red',
+    fontFamily: 'Nunito',
+    fontSize: 16,
+  }
 });
 
 export default loginStyles;

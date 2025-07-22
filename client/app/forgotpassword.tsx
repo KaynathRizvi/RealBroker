@@ -1,14 +1,17 @@
-// app/forgot-password.tsx
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
-import { View, Text, TextInput, Button, Alert } from 'react-native';
+import { Pressable, View, Text, TextInput, Alert } from 'react-native';
 import Constants from 'expo-constants';
 import styles from './styles/forgotpasswordStyles';
 
-const SERVER_URL = Constants.expoConfig?.extra?.DEBUG_SERVER_URL || Constants.expoConfig?.extra?.SERVER_URL;
+const SERVER_URL =
+  Constants.expoConfig?.extra?.DEBUG_SERVER_URL ||
+  Constants.expoConfig?.extra?.SERVER_URL;
 
 export default function ForgotPasswordScreen() {
   const [email, setEmail] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const router = useRouter();
 
   const handleReset = async () => {
@@ -20,15 +23,24 @@ export default function ForgotPasswordScreen() {
       });
 
       const data = await res.json();
-      Alert.alert('Info', data.message || 'Check your email for reset link');
+
+      if (!res.ok) {
+        setErrorMessage(data.message || 'Something went wrong');
+        setSuccessMessage('');
+      } else {
+        setErrorMessage('');
+        setSuccessMessage(data.message || 'Check your email for reset link');
+      }
     } catch (err) {
-      Alert.alert('Error', 'Something went wrong');
+      setErrorMessage('Network error. Please try again.');
+      setSuccessMessage('');
     }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Enter your email to reset password</Text>
+
       <TextInput
         value={email}
         onChangeText={setEmail}
@@ -37,8 +49,22 @@ export default function ForgotPasswordScreen() {
         autoCapitalize="none"
         style={styles.input}
       />
-      <Button title="Send Reset Email" onPress={handleReset} />
-      <Button title="Go Back to Login" onPress={() => router.push('/login')} />
+
+      {errorMessage ? (
+        <Text style={styles.message}>{errorMessage}</Text>
+      ) : null}
+
+      {successMessage ? (
+        <Text style={styles.success}>{successMessage}</Text>
+      ) : null}
+
+      <Pressable style={styles.button} onPress={handleReset}>
+        <Text style={styles.buttonText}>Send Reset Email</Text>
+      </Pressable>
+
+      <Pressable style={styles.button} onPress={() => router.push('/login')}>
+        <Text style={styles.buttonText}>Go Back to Login</Text>
+      </Pressable>
     </View>
   );
 }

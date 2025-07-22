@@ -2,7 +2,7 @@
 
 import { Stack, useRouter } from "expo-router"
 import { useState } from "react"
-import { Pressable, Button, Text, TextInput, View, Alert, ActivityIndicator } from "react-native"
+import { Pressable, Text, TextInput, View, Alert, ActivityIndicator } from "react-native"
 import Constants from "expo-constants"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import styles from "../styles/loginStyles"
@@ -84,7 +84,7 @@ export default function LoginPage() {
         editable={!loading}
       />
 
-      {errorMessage ? <Text style={{ color: "red", marginVertical: 10 }}>{errorMessage}</Text> : null}
+      {errorMessage ? <Text style={styles.message}>{errorMessage}</Text> : null}
 
         {loading ? (
           <ActivityIndicator size="large" color="#0000ff" />

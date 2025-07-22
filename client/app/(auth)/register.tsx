@@ -1,6 +1,6 @@
 import { Stack, useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Button, Text, TextInput, View, Alert } from 'react-native';
+import { Pressable, Button, Text, TextInput, View, Alert } from 'react-native';
 import styles from '../styles/registerStyles';
 import Constants from 'expo-constants';
 
@@ -46,14 +46,18 @@ export default function RegisterPage() {
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: 'Register' }} />
-      <Text>Register Page</Text>
+       <Text style={styles.title}>Register Page</Text>
       <TextInput placeholder="Email" value={email} onChangeText={setEmail} style={styles.input} />
       <TextInput placeholder="Password" secureTextEntry value={password} onChangeText={setPassword} style={styles.input} />
-      {errorMessage ? <Text style={{ color: 'red', marginVertical: 10 }}>{errorMessage}</Text> : null}
-      <View style={styles.button}>
-        <Button title="Register" onPress={register} />
-        <Button title="Go to Login" onPress={() => router.push('/login')} />
-      </View>
+      
+      {errorMessage ? <Text style={styles.message}>{errorMessage}</Text> : null}
+        
+        <Pressable style={styles.button} onPress={register}>
+          <Text style={styles.buttonText}>Register</Text>
+        </Pressable>
+        <Pressable style={styles.button} onPress={() => router.push('/login')}>
+          <Text style={styles.buttonText}>Go to Login</Text>
+        </Pressable>
     </View>
   );
 }

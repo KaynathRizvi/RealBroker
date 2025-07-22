@@ -33,7 +33,7 @@ const sendResetEmail = async (req, res) => {
     res.json({ message: 'Password reset email sent' });
   } catch (err) {
     console.error('Forgot password error:', err.message);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Invalid email' });
   }
 };
 
