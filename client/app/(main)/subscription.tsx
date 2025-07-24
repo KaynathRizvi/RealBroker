@@ -125,6 +125,7 @@ export default function SubscriptionPage() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Stack.Screen options={{ headerShown: false }} />
       <Text style={styles.title}>Choose a Subscription Plan</Text>
       {plans.map((plan) => (
         <View key={plan.id} style={styles.planCard}>
