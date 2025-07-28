@@ -11,7 +11,7 @@ app.use(cors({
     "http://localhost:8081", 
     "http://localhost:5173",
     "https://broker2broker.onrender.com",
-    "https://admin-panel-ukxk.onrender.com/",
+    "https://admin-panel-ukxk.onrender.com",
   ],
   credentials: true,
 }));
