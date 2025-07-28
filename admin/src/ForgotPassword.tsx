@@ -11,7 +11,7 @@ const ForgotPassword = () => {
 
   const handleReset = async () => {
     try {
-      const res = await fetch(`${SERVER_URL}/api/auth/forgot-password`, {
+      const res = await fetch(`${SERVER_URL}/api/admin/forgot-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
