@@ -9,6 +9,7 @@ app.use(cors({
   origin: [
     "http://localhost:3000", 
     "http://localhost:8081", 
+    "http://localhost:5173",
     "https://broker2broker.onrender.com",
   ],
   credentials: true,
@@ -27,6 +28,9 @@ app.use('/api/property', propertyRoutes);
 
 const subscriptionRoutes = require("./routes/subscriptionRoutes");
 app.use("/api/subscription", subscriptionRoutes);
+
+const adminRoutes = require('./routes/admin');
+app.use('/api/admin', adminRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is running...');

@@ -1,16 +1,19 @@
 // admin/pages/LoginPage.tsx
 import React, { useState } from 'react';
+import { SERVER_URL } from '../../config.ts';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const res = await fetch('http://localhost:3000/api/auth/admin-login', {
+      const res = await fetch(`${SERVER_URL}/api/admin/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -19,16 +22,14 @@ const LoginPage = () => {
       const data = await res.json();
 
       if (res.ok) {
-        alert('Logged in successfully!');
-        setErrorMessage('');
-        // You can store token if provided: localStorage.setItem("token", data.token)
-        // Redirect to admin dashboard if needed
-        // window.location.href = "/admin/dashboard"; 
+        localStorage.setItem('token', data.token);
+        navigate('/dashboard'); // ✅ redirect after success
       } else {
         setErrorMessage(data.message || 'Login failed');
       }
     } catch (err) {
-      setErrorMessage('Network error. Please try again.');
+      console.error(err);
+      alert('Something went wrong');
     }
   };
 

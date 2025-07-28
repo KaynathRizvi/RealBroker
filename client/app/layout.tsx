@@ -3,6 +3,7 @@ import { useFonts } from 'expo-font';
 import { useEffect } from "react"
 import * as Linking from "expo-linking"
 import { Platform, View, ActivityIndicator } from "react-native"
+import InactivityHandler from "./component/InactivityHandler"
 
 export default function Layout() {
   // 1. Load fonts
@@ -28,6 +29,9 @@ export default function Layout() {
     return () => subscription.remove();
   }, []);
 
-  // 4. Render your navigation stack
-  return <Stack />;
+ return (
+    <InactivityHandler>
+      <Stack />
+    </InactivityHandler>
+  );
 }
