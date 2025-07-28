@@ -13,7 +13,13 @@ const sendResetEmail = async (req, res) => {
 
     const user = result.rows[0];
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '15m' });
-    const resetLink = `${process.env.CLIENT_URL}/reset-password?token=${token}`;
+    
+     // ✅ Step: choose base URL based on source
+    const baseUrl = source === 'admin' 
+      ? process.env.ADMIN_URL 
+      : process.env.CLIENT_URL;
+      
+    const resetLink = `${baseUrl}/reset-password?token=${token}`;
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',

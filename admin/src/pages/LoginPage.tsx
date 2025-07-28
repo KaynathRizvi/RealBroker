@@ -1,7 +1,7 @@
 // admin/pages/LoginPage.tsx
 import React, { useState } from 'react';
 import { SERVER_URL } from '../../config.ts';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -58,6 +58,11 @@ const LoginPage = () => {
         {errorMessage && <p style={styles.error}>{errorMessage}</p>}
 
         <button type="submit" style={styles.button}>Login</button>
+        <div style={styles.forgotPassword}>
+          <Link to="/forgotpassword" style={styles.forgotPasswordLink}>
+            Forgot Password?
+          </Link>
+        </div>
       </form>
     </div>
   );
@@ -106,6 +111,16 @@ const styles: { [key: string]: React.CSSProperties } = {
     marginBottom: 10,
     fontSize: 13,
     textAlign: 'center',
+  },
+  forgotPassword: {
+    textAlign: 'right',
+    marginBottom: 10,
+  },
+  forgotPasswordLink: {
+    color: '#007bff',
+    textDecoration: 'underline',
+    cursor: 'pointer',
+    fontSize: 13,
   },
 };
 
