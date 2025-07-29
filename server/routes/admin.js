@@ -14,6 +14,6 @@ router.post('/forgot-password', sendAdminResetEmail);
 router.post('/reset-password/:token', resetAdminPassword);
 
 // DELETE /api/property/:id - delete a property
-router.delete('/property/:id', protect, deleteProperty);
+router.delete('/properties/:id', protect, deleteProperty);
 
 module.exports = router;

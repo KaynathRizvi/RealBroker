@@ -44,7 +44,7 @@ const PropertyLists: React.FC = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`${SERVER_URL}/api/admin/property/${id}`, {
+      const res = await fetch(`${SERVER_URL}/api/admin/properties/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
