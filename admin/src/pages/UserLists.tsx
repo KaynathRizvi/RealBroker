@@ -19,7 +19,7 @@ const UserLists: React.FC = () => {
     const fetchUsers = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch(`${SERVER_URL}/api/admin/users`, {
+        const res = await fetch(`${SERVER_URL}/api/admin/users/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -42,7 +42,7 @@ const UserLists: React.FC = () => {
   const handleDelete = async (id: string) => {
   const token = localStorage.getItem('token');
   try {
-    await fetch(`${SERVER_URL}/users/${id}`, {
+    await fetch(`${SERVER_URL}/api/admin/users/${id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
