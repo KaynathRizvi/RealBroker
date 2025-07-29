@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SERVER_URL } from '../../config';
+import '../styles/PropertyLists.css';
 
 interface Property {
   id: number;
@@ -68,13 +69,13 @@ const PropertyLists: React.FC = () => {
   if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
   return (
-    <div style={styles.container}>
-      <div style={styles.topBar}>
-        <button onClick={() => navigate('/dashboard')} style={styles.backButton}>← Back</button>
+    <div className="property-lists-container">
+      <div className="property-topbar">
+        <button onClick={() => navigate('/dashboard')} className="back-button">← Back</button>
         <h2>Property List</h2>
       </div>
 
-      <table border={1} cellPadding={8} style={styles.table}>
+      <table border={1} cellPadding={8} className="property-table">
         <thead>
           <tr>
             <th>Owner's Name</th>
@@ -92,7 +93,7 @@ const PropertyLists: React.FC = () => {
               <td>{p.deal_price ?? 'N/A'}</td>
               <td>{p.email}</td>
               <td>
-                <button onClick={() => deleteProperty(p.id)} style={styles.deleteButton}>
+                <button onClick={() => deleteProperty(p.id)} className="p-delete-button">
                   Delete
                 </button>
               </td>
@@ -104,36 +105,5 @@ const PropertyLists: React.FC = () => {
   );
 };
 
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    padding: '2rem',
-    backgroundColor: '#f9f9f9',
-    height: '100vh',
-  },
-  topBar: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1rem',
-    marginBottom: '2rem',
-  },
-  backButton: {
-    padding: '0.5rem 1rem',
-    fontSize: '1rem',
-    cursor: 'pointer',
-  },
-  table: {
-    backgroundColor: '#fff',
-    borderCollapse: 'collapse',
-    width: '100%',
-  },
-  deleteButton: {
-    backgroundColor: '#ff4d4f',
-    color: '#fff',
-    border: 'none',
-    padding: '6px 12px',
-    cursor: 'pointer',
-    borderRadius: '4px',
-  },
-};
 
 export default PropertyLists;

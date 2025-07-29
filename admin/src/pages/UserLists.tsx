@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SERVER_URL } from '../../config.ts';
+import '../styles/UserLists.css';
 
 interface User {
   id: string;
@@ -66,12 +67,12 @@ const handleView = (id: string) => {
 };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.topBar}>
-        <button onClick={() => navigate('/dashboard')} style={styles.backButton}>← Back</button>
+    <div className='user-lists-container'>
+      <div className='user-topbar'>
+        <button onClick={() => navigate('/dashboard')} className='user-back-button'>← Back</button>
         <h2>User List</h2>
       </div>
-      <table border={1} cellPadding={8} style={styles.table}>
+      <table border={1} cellPadding={8} className='user-table'>
         <thead>
   <tr>
     <th>Profile</th>
@@ -83,17 +84,14 @@ const handleView = (id: string) => {
 <tbody>
   {users.map((u) => (
     <tr key={u.id}>
-      <td><button onClick={() => handleView(u.id)}
-      style={{ color: 'white', backgroundColor: 'red', padding: '4px 8px', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+      <td><button onClick={() => handleView(u.id)} className='user-view-button'>
           View
         </button></td>
       <td>{u.email}</td>
       <td>{u.role}</td>
       <td>
         <button
-          onClick={() => handleDelete(u.id)}
-          style={{ color: 'white', backgroundColor: 'red', padding: '4px 8px', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-        >
+          onClick={() => handleDelete(u.id)} className='user-delete-button'>
           Delete
         </button>
       </td>
@@ -103,30 +101,6 @@ const handleView = (id: string) => {
       </table>
     </div>
   );
-};
-
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    padding: '2rem',
-    backgroundColor: '#f9f9f9',
-    height: '100vh',
-  },
-  topBar: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1rem',
-    marginBottom: '2rem',
-  },
-  backButton: {
-    padding: '0.5rem 1rem',
-    fontSize: '1rem',
-    cursor: 'pointer',
-  },
-  table: {
-    backgroundColor: '#fff',
-    borderCollapse: 'collapse',
-    width: '100%',
-  },
 };
 
 export default UserLists;

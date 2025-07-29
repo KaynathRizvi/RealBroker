@@ -70,6 +70,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   title: {
     marginBottom: 20,
     fontSize: 20,
+    color: '#223b61'
   },
   input: {
     width: '100%',
@@ -78,17 +79,20 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: '1px solid #ccc',
     borderRadius: 6,
     fontSize: 14,
+    boxSizing: 'border-box',
   },
+  
   button: {
     width: '100%',
     padding: 12,
     marginBottom: 10,
-    backgroundColor: '#000',
+    backgroundColor: '#223b61',
     color: '#fff',
     border: 'none',
     borderRadius: 6,
     cursor: 'pointer',
     fontWeight: 'bold',
+    boxSizing: 'border-box',
   },
   secondaryButton: {
     width: '100%',
@@ -98,6 +102,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: '1px solid #ccc',
     borderRadius: 6,
     cursor: 'pointer',
+    boxSizing: 'border-box',
   },
   error: {
     color: 'red',

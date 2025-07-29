@@ -1,0 +1,82 @@
+/* Elegant Admin UI Theme */
+
+.property-lists-container {
+  padding: 2rem;
+  background-color: #e0e3e4;
+  min-height: 100vh;
+  font-family: 'Roboto';
+}
+
+.property-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.back-button {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  background-color: #223b61;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #425674;
+}
+
+.property-topbar h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #223b61;
+}
+
+.property-table {
+  width: 100%;
+  border-collapse: separate;
+  border-style: none;
+  border-spacing: 0 0px;
+  background-color: transparent;
+}
+
+.property-table th {
+  text-align: left;
+  padding: 12px;
+  background-color: #223b61;
+  color: white;
+  font-size: 0.95rem;
+  border-bottom: 2px solid #223b61;
+  border-style: none;
+}
+
+.property-table td {
+  padding: 14px;
+  background-color: white;
+  color: #223b61;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  vertical-align: middle;
+  border-style: none;
+}
+
+.property-table td:last-child {
+  text-align: center;
+}
+
+.p-delete-button {
+  background-color: #c0392b;
+  color: white;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.p-delete-button:hover {
+  background-color: #942c23;
+}
