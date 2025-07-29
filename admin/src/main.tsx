@@ -16,6 +16,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Route path="/users" element={<UserLists />} />
       <Route path="/properties" element={<PropertyLists />} />
       <Route path="/forgotpassword" element={<ForgotPassword />} />
-<Route path="/reset-password/:token" element={<ResetPassword />} />    </Routes>
+<Route path="/reset-password" element={<ResetPassword />} />    </Routes>
   </BrowserRouter>
 );

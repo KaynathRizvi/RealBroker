@@ -13,7 +13,7 @@ const sendAdminResetEmail = async (req, res) => {
 
     const user = result.rows[0];
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '15m' });
-    
+
     const resetLink = `${process.env.ADMIN_URL}/reset-password?token=${token}`;
 
     const transporter = nodemailer.createTransport({

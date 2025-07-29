@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 const ResetPassword = () => {
-  const { token } = useParams<{ token: string }>();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get('token');
 
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
