@@ -44,22 +44,25 @@ const PropertyLists: React.FC = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`${SERVER_URL}/api/admin/properties/${id}`, {
+      const res = await fetch(`${SERVER_URL}/api/admin/property/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
+      const data = await res.json();
+
       if (res.ok) {
-        setProperties(prev => prev.filter(p => p.id !== id));
-      } else {
-        alert('Failed to delete property');
-      }
-    } catch (err) {
-      alert('Error deleting property');
+      alert('Property deleted successfully');
+      // Optionally refetch the list or update state
+    } else {
+      alert(data.message || 'Failed to delete property');
     }
-  };
+  } catch (error) {
+    alert('Something went wrong');
+  }
+};
 
   if (loading) return <p>Loading properties...</p>;
   if (error) return <p style={{ color: 'red' }}>{error}</p>;

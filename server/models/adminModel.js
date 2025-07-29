@@ -29,9 +29,23 @@ const getAllWithOwnerEmail = async () => {
   return result.rows;
 };
 
+async function deleteUserProperty(propertyId) {
+  try {
+    const result = await pool.query(
+      'DELETE FROM user_property WHERE id = $1',
+      [propertyId]
+    );
+    return result.rowCount > 0;
+  } catch (error) {
+    console.error('Error in deleteProperty:', error.message);
+    throw error;
+  }
+}
+
 module.exports = {
   findAdminByEmail,
   getAllUsers,
   deleteUserById,
   getAllWithOwnerEmail,
+  deleteUserProperty,
 };
