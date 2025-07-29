@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+import { SERVER_URL } from '../config'
 
 const ResetPassword = () => {
   const navigate = useNavigate();
