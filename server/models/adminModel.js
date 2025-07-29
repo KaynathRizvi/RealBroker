@@ -13,8 +13,20 @@ const getAllUsers = async () => {
 };
 
 const deleteUserById = async (id) => {
-  await pool.query('DELETE FROM users WHERE id = $1 AND role = $2', 
-    [id, 'user']);
+  // Fetch the user's role first
+  const result = await pool.query('SELECT role FROM users WHERE id = $1', [id]);
+
+  if (result.rows.length === 0) {
+    return { deleted: false, reason: 'not_found' };
+  }
+
+  const user = result.rows[0];
+  if (user.role === 'admin') {
+    return { deleted: false, reason: 'cannot_delete_admin' };
+  }
+
+  await pool.query('DELETE FROM users WHERE id = $1', [id]);
+  return { deleted: true };
 };
 
 const getAllWithOwnerEmail = async () => {

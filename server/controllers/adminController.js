@@ -39,13 +39,25 @@ const getUsers = async (req, res) => {
 const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
-    await adminModel.deleteUserById(id);
-    res.json({ message: 'User deleted successfully' });
+    const result = await adminModel.deleteUserById(id);
+
+    if (!result.deleted) {
+      if (result.reason === 'not_found') {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      if (result.reason === 'cannot_delete_admin') {
+        return res.status(403).json({ message: 'Admins cannot be deleted' });
+      }
+      return res.status(400).json({ message: 'Failed to delete user' });
+    }
+
+    res.status(200).json({ message: 'User deleted successfully' });
   } catch (err) {
     console.error('Error deleting user:', err);
-    res.status(500).json({ message: 'Failed to delete user' });
+    res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 const getAdminProperties = async (req, res) => {
   try {
@@ -63,7 +75,7 @@ const deleteProperty = async(req, res) => {
 
     console.log('Deleting property ID:', propertyId);
 
-    const deleted = await deleteUserProperty(propertyId);
+    const deleted = await adminModel.deleteUserProperty(propertyId);
     if (!deleted) {
       return res.status(404).json({ message: 'Property not found' });
     }

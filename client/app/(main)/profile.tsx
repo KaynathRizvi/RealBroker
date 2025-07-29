@@ -52,15 +52,15 @@ export default function ProfilePage() {
       });
 
       const data = await res.json();
-      if (res.ok) {
-        setProfile(prev => ({
-          ...prev,
-          ...data,
-          email: data.email || prev.email,
-        }));
+      if (res.ok && data) {
+      setProfile(prev => ({
+        ...prev,
+        ...data,
+      email: data.email || prev.email,
+      }));
       } else {
-        Alert.alert('Error', data.message || 'Failed to fetch profile');
-      }
+      Alert.alert('Error', data?.message || 'Failed to fetch profile');
+    }
     } catch (error) {
       Alert.alert('Error', 'Network error');
     } finally {
@@ -103,7 +103,8 @@ export default function ProfilePage() {
   }
 
   if (loading) return <Text style={styles.text}>Loading...</Text>;
-
+  if (!profile) return <Text style={styles.text}>Profile not available</Text>;
+  
   return (
     <ScrollView style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />

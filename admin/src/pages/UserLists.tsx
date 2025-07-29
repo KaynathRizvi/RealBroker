@@ -42,17 +42,23 @@ const UserLists: React.FC = () => {
   const handleDelete = async (id: string) => {
   const token = localStorage.getItem('token');
   try {
-    await fetch(`${SERVER_URL}/api/admin/users/${id}`, {
+    const res = await fetch(`${SERVER_URL}/api/admin/users/${id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    setUsers(users.filter(user => user.id !== id));
-  } catch (err) {
+
+    const data = await res.json();
+    alert(data.message);
+   
+    if (res.ok) {
+      setUsers(users.filter(user => user.id !== id));
+    }
+    } catch (err) {
     console.error('Delete failed:', err);
     alert('Failed to delete user');
-  }
+    }
 };
 
   return (
