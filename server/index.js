@@ -24,10 +24,10 @@ app.use('/api/auth', authRoutes);
 const profileRoutes = require('./routes/profile');
 app.use('/api/profile', profileRoutes);
 
-const propertyRoutes = require('./routes/propertyRoutes');
+const propertyRoutes = require('./routes/property');
 app.use('/api/property', propertyRoutes);
 
-const subscriptionRoutes = require("./routes/subscriptionRoutes");
+const subscriptionRoutes = require("./routes/subscription");
 app.use("/api/subscription", subscriptionRoutes);
 
 const adminRoutes = require('./routes/admin');

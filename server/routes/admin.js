@@ -9,6 +9,7 @@ router.post('/login', login);
 router.get('/users', adminAuth, getUsers);
 router.delete('/users/:id', adminAuth, deleteUser);
 router.get('/properties', adminAuth, getAdminProperties);
+
 router.post('/forgot-password', sendAdminResetEmail);
 router.post('/reset-password/:token', resetAdminPassword);
 

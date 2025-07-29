@@ -1,5 +1,5 @@
 // controllers/propertyController.js
-const { addUserProperty, getUserProperties, deleteUserProperty } = require('../models/propertyModel');
+const { addUserProperty, getUserProperties, deleteUserProperty, getAllProperties } = require('../models/propertyModel');
 
 async function createProperty(req, res) {
   try {
@@ -47,8 +47,19 @@ async function deleteProperty(req, res) {
   }
 }
 
+async function fetchAllProperties(req, res) {
+  try {
+    const properties = await getAllProperties();
+    res.status(200).json(properties);
+  } catch (error) {
+    console.error('Error in fetchAllProperties:', error.stack);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
 module.exports = {
   createProperty,
   fetchUserProperties,
   deleteProperty,
+  fetchAllProperties,
 };

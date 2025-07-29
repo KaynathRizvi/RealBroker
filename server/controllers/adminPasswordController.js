@@ -5,16 +5,16 @@ const pool = require('../config/db');
 
 const sendAdminResetEmail = async (req, res) => {
   const { email } = req.body;
-
   try {
-    const result = await pool.query('SELECT * FROM admins WHERE email = $1', [email]);
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     if (result.rows.length === 0) {
-      return res.status(404).json({ message: 'Admin not found' });
+      return res.status(404).json({ message: 'User not found' });
     }
 
-    const admin = result.rows[0];
-    const token = jwt.sign({ adminId: admin.id }, process.env.JWT_SECRET, { expiresIn: '15m' });
-    const resetLink = `${process.env.ADMIN_URL}/reset-password/${token}`;
+    const user = result.rows[0];
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '15m' });
+    
+    const resetLink = `${process.env.ADMIN_URL}/reset-password?token=${token}`;
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -27,15 +27,14 @@ const sendAdminResetEmail = async (req, res) => {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
-      subject: 'Admin Password Reset',
+      subject: 'Reset Your Password',
       html: `<p>Click the link to reset your password:</p><a href="${resetLink}">${resetLink}</a>`,
     });
 
-    res.json({ message: 'Password reset email sent to admin' });
-
+    res.json({ message: 'Password reset email sent' });
   } catch (err) {
-    console.error('Admin forgot password error:', err);
-    res.status(500).json({ message: 'Something went wrong' });
+    console.error('Forgot password error:', err.message);
+    res.status(500).json({ message: 'Invalid email' });
   }
 };
 
@@ -45,19 +44,16 @@ const resetAdminPassword = async (req, res) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const adminId = decoded.adminId;
+    const userId = decoded.userId;
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    await pool.query('UPDATE admins SET password = $1 WHERE id = $2', [hashedPassword, adminId]);
+    await pool.query('UPDATE users SET password = $1 WHERE id = $2', [hashedPassword, userId]);
 
-    res.json({ message: 'Admin password updated successfully' });
+    res.json({ message: 'Password updated successfully' });
   } catch (err) {
-    console.error('Admin reset password error:', err);
+    console.error('Reset password error:', err.message);
     res.status(400).json({ message: 'Invalid or expired token' });
   }
 };
 
-module.exports = {
-  sendAdminResetEmail,
-  resetAdminPassword,
-};
+module.exports = { sendAdminResetEmail, resetAdminPassword };
