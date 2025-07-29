@@ -4,13 +4,15 @@
   padding: 2rem;
   background-color: #e0e3e4;
   min-height: 100vh;
-  font-family: 'Roboto';
+  font-family: 'Roboto', sans-serif;
 }
 
 .property-topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
   margin-bottom: 2rem;
 }
 
@@ -35,6 +37,7 @@
   color: #223b61;
 }
 
+/* Table */
 .property-table {
   width: 100%;
   border-collapse: separate;
@@ -57,7 +60,7 @@
   padding: 14px;
   background-color: white;
   color: #223b61;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   vertical-align: middle;
   border-style: none;
 }
@@ -79,4 +82,33 @@
 
 .p-delete-button:hover {
   background-color: #942c23;
+}
+
+/* ✅ Responsive adjustments */
+@media (max-width: 520px) and (min-width: 380px) {
+  .property-lists-container {
+    padding: 1rem;
+  }
+
+  .property-topbar h2 {
+    font-size: .8rem;
+  }
+
+  .back-button {
+    font-size: .7rem;
+    padding: .4rem;
+  }
+
+  .property-table th,
+  .property-table td {
+    padding: 10px;
+    font-size: 0.5rem;
+  }
+
+  .p-delete-button {
+    width: 100%;
+    margin-top: 0rem;
+    font-size: 0.5rem;
+    padding: .3rem;
+  }
 }

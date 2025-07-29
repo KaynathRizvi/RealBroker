@@ -4,7 +4,7 @@
   padding: 2rem;
   background-color: #e0e3e4;
   min-height: 100vh;
-  font-family: 'Roboto';
+  font-family: 'Roboto', sans-serif;
   color: #1e2a38;
 }
 
@@ -12,6 +12,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
   margin-bottom: 2rem;
 }
 
@@ -58,7 +60,7 @@
   padding: 14px;
   background-color: white;
   color: #223b61;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   vertical-align: middle;
   border-style: none;
 }
@@ -91,4 +93,45 @@
 
 .user-delete-button:hover {
   background-color: #942c23;
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 528px) and (min-width: 380px) {
+  .user-lists-container {
+    padding: 1rem;
+    width: 100%;
+  }
+
+  .user-table th,
+  .user-table td {
+    font-size: 0.80rem;
+    padding: 10px;
+  }
+
+  .user-view-button,
+  .user-delete-button {
+    font-size: 0.70rem;
+    padding: 5px 10px;
+    margin-top: 0.3rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .user-lists-container {
+    padding: 1rem;
+    width: 100%;
+  }
+
+  .user-table th,
+  .user-table td {
+    font-size: 0.65rem;
+    padding: 10px;
+  }
+
+  .user-view-button,
+  .user-delete-button {
+    font-size: 0.70rem;
+    padding: 5px 10px;
+    margin-top: 0.3rem;
+  }
 }

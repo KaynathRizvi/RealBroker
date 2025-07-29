@@ -1,25 +1,32 @@
+/* Container */
 .login-container {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 1rem;
   background-color: #e0e3e4;
 }
 
+/* Form Box */
 .login-form {
   background-color: #fff;
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  min-width: 300px;
+  width: 100%;
+  max-width: 400px;
 }
 
+/* Header */
 .login-header {
   margin-bottom: 20px;
   text-align: center;
   color: #223b61;
+  font-size: 1.5rem;
 }
 
+/* Input Fields */
 .login-input {
   width: 100%;
   padding: 12px;
@@ -27,8 +34,10 @@
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 14px;
+  box-sizing: border-box;
 }
 
+/* Button */
 .login-button {
   width: 100%;
   padding: 12px;
@@ -38,8 +47,14 @@
   border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
+.login-button:hover {
+  background-color: #1a2f50;
+}
+
+/* Error Message */
 .login-error {
   color: red;
   margin-bottom: 10px;
@@ -47,6 +62,7 @@
   text-align: center;
 }
 
+/* Forgot Password */
 .forgot-password {
   text-align: right;
   margin-bottom: 10px;
@@ -57,4 +73,26 @@
   text-decoration: underline;
   cursor: pointer;
   font-size: 13px;
+}
+
+/* ✅ Responsive adjustments for small screens */
+@media (max-width: 380px) {
+  .login-form {
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .login-header {
+    font-size: 1.2rem;
+  }
+
+  .login-input,
+  .login-button {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .forgot-password-link {
+    font-size: 12px;
+  }
 }
