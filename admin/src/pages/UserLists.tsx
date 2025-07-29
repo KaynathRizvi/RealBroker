@@ -61,6 +61,10 @@ const UserLists: React.FC = () => {
     }
 };
 
+const handleView = (id: string) => {
+  navigate(`/userprofile/${id}`);
+};
+
   return (
     <div style={styles.container}>
       <div style={styles.topBar}>
@@ -70,18 +74,19 @@ const UserLists: React.FC = () => {
       <table border={1} cellPadding={8} style={styles.table}>
         <thead>
   <tr>
-    <th>ID</th>
-    <th>Name</th>
+    <th>Profile</th>
     <th>Email</th>
     <th>Role</th>
-    <th>Action</th> {/* 👈 New column */}
+    <th>Action</th>
   </tr>
 </thead>
 <tbody>
   {users.map((u) => (
     <tr key={u.id}>
-      <td>{u.id}</td>
-      <td>{u.name}</td>
+      <td><button onClick={() => handleView(u.id)}
+      style={{ color: 'white', backgroundColor: 'red', padding: '4px 8px', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+          View
+        </button></td>
       <td>{u.email}</td>
       <td>{u.role}</td>
       <td>

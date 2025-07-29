@@ -55,10 +55,16 @@ async function deleteUserProperty(propertyId) {
   }
 }
 
+const getProfileById = async (id) => {
+  const result = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
+  return result.rows[0]; // returns undefined if not found
+};
+
 module.exports = {
   findAdminByEmail,
   getAllUsers,
   deleteUserById,
   getAllWithOwnerEmail,
   deleteUserProperty,
+  getProfileById,
 };
