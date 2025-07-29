@@ -13,7 +13,8 @@ const getAllUsers = async () => {
 };
 
 const deleteUserById = async (id) => {
-  await pool.query('DELETE FROM users WHERE id = $1', [id]);
+  await pool.query('DELETE FROM users WHERE id = $1 AND role = $2', 
+    [id, 'user']);
 };
 
 const getAllWithOwnerEmail = async () => {
