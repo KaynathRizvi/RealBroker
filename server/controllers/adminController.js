@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const adminModel = require('../models/adminModel');
+const { deleteUserProperty } = require('../models/propertyModel');
 
 // POST /api/admin/login
 const login = async (req, res) => {
@@ -57,9 +58,31 @@ const getAdminProperties = async (req, res) => {
   }
 };
 
+async function deleteProperty(req, res) {
+  try {
+    const userId = req.user.id;
+    const propertyId = parseInt(req.params.id);
+
+    console.log('User ID from token:', req.user.userId);
+    console.log('Property ID:', req.params.id);
+
+    const deleted = await deleteUserProperty(userId, propertyId);
+    if (!deleted) {
+      console.log('Failed to delete: likely not owner or not found');
+      return res.status(404).json({ message: 'Property not found or not yours' });
+    }
+
+    res.status(200).json({ message: 'Property deleted successfully' });
+  } catch (error) {
+    console.error('Error in deleteProperty:', error.stack);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
 module.exports = {
   login,
   getUsers,
   deleteUser,
   getAdminProperties,
+  deleteProperty,
 };

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { SERVER_URL } from '../../config';
 
 interface Property {
-  property_id: number;
+  id: number;
   property_name: string;
   deal_price: number;
   email: string;
@@ -38,13 +38,13 @@ const PropertyLists: React.FC = () => {
     }
   };
 
-  const deleteProperty = async (property_id: number) => {
+  const deleteProperty = async (id: number) => {
     const confirm = window.confirm('Are you sure you want to delete this property?');
     if (!confirm) return;
 
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`${SERVER_URL}/api/property/${property_id}`, {
+      const res = await fetch(`${SERVER_URL}/api/admin/property/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -52,7 +52,7 @@ const PropertyLists: React.FC = () => {
       });
 
       if (res.ok) {
-        setProperties(prev => prev.filter(p => p.property_id !== property_id));
+        setProperties(prev => prev.filter(p => p.id !== id));
       } else {
         alert('Failed to delete property');
       }
@@ -83,13 +83,13 @@ const PropertyLists: React.FC = () => {
         </thead>
         <tbody>
           {properties.map((p) => (
-            <tr key={p.property_id}>
+            <tr key={p.id}>
               <td>{p.owner_name}</td>
               <td>{p.property_name}</td>
               <td>{p.deal_price ?? 'N/A'}</td>
               <td>{p.email}</td>
               <td>
-                <button onClick={() => deleteProperty(p.property_id)} style={styles.deleteButton}>
+                <button onClick={() => deleteProperty(p.id)} style={styles.deleteButton}>
                   Delete
                 </button>
               </td>
