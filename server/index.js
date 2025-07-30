@@ -10,8 +10,8 @@ app.use(cors({
     "http://localhost:3000", 
     "http://localhost:8081", 
     "http://localhost:5173",
-    "https://broker2broker.onrender.com",
-    "https://admin-panel-ukxk.onrender.com",
+    "https://realbroker.onrender.com",
+    "https://realbroker-admin.onrender.com",
   ],
   credentials: true,
 }));
