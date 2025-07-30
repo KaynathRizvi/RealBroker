@@ -24,19 +24,25 @@ const sendAdminResetEmail = async (req, res) => {
       },
     });
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: 'Reset Your Password',
-      html: `<p>Click the link to reset your password:</p><a href="${resetLink}">${resetLink}</a>`,
-    });
-
-    res.json({ message: 'Password reset email sent' });
-  } catch (err) {
-    console.error('Forgot password error:', err.message);
-    res.status(500).json({ message: 'Invalid email' });
-  }
-};
+  await transporter.sendMail({
+    from: `"Real Broker Support" <${process.env.EMAIL_USER}>`,
+    to: email,
+    subject: 'Reset Your Password - Real Broker',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px; background-color: #f9f9f9;">
+        <h2 style="color: #223b61;">Reset Your Password</h2>
+        <p>Hello,</p>
+        <p>We received a request to reset your password for your Real Broker account.</p>
+        <p>Click the button below to reset your password. This link will expire in 1 hour.</p>
+        <a href="${resetLink}" style="display: inline-block; margin: 20px 0; padding: 12px 24px; background-color: #223b61; color: #ffffff; text-decoration: none; border-radius: 4px;">Reset Password</a>
+        <p>If the button doesn't work, you can also copy and paste this link into your browser:</p>
+        <p style="word-break: break-all;"><a href="${resetLink}" style="color: #223b61;">${resetLink}</a></p>
+        <hr style="margin: 30px 0;">
+        <p style="font-size: 14px; color: #777;">If you didn’t request a password reset, you can ignore this email. Your password will remain unchanged.</p>
+        <p style="font-size: 14px; color: #777;">— Real Broker Team</p>
+    </div>
+  `
+});
 
 const resetAdminPassword = async (req, res) => {
   const { token } = req.params;
