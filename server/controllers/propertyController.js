@@ -1,5 +1,5 @@
 // controllers/propertyController.js
-const { addUserProperty, getUserProperties } = require('../models/propertyModel');
+const { addUserProperty, getUserProperties, getAllProperties } = require('../models/propertyModel');
 
 async function createProperty(req, res) {
   try {
