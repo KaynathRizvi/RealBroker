@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SERVER_URL } from '../../config.ts';
+import '../styles/UserProfile.css';
 
 interface User {
   id: string;
-  name: string;
+  name?: string;
   email: string;
   role: string;
+  agency_name?: string;
+  contact_number?: string;
+  license_number?: string;
+  location?: string;
 }
 
-const AdminUserProfile: React.FC = () => {
+const UserProfile: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
@@ -39,63 +44,43 @@ const AdminUserProfile: React.FC = () => {
   if (!user) return <p>Loading user profile...</p>;
 
   return (
-    <div style={styles.container}>
-      <button onClick={() => navigate('/users')} style={styles.backButton}>
+    <div className='user-profile-container'>
+      <button onClick={() => navigate('/users')} className='back-button'>
         ← Back
       </button>
-      <h2 style={styles.title}>User Profile</h2>
-      <div style={styles.profileBox}>
-        <div style={styles.field}>
-          <label>ID:</label>
-          <span>{user.id}</span>
-        </div>
-        <div style={styles.field}>
+      <h2 className='user-profile-header'>User Profile</h2>
+      <div className='profile-box'>
+        <div className='user-field'>
           <label>Name:</label>
           <span>{user.name || 'N/A'}</span>
         </div>
-        <div style={styles.field}>
+        <div className='user-field'>
           <label>Email:</label>
           <span>{user.email}</span>
         </div>
-        <div style={styles.field}>
+        <div className='user-field'>
           <label>Role:</label>
           <span>{user.role}</span>
+        </div>
+        <div className='user-field'>
+          <label>Agency Name:</label>
+          <span>{user.agency_name || 'N/A'}</span>
+        </div>
+        <div className='user-field'>
+          <label>Contact Number:</label>
+          <span>{user.contact_number || 'N/A'}</span>
+        </div>
+        <div className='user-field'>
+          <label>License Number:</label>
+          <span>{user.license_number || 'N/A'}</span>
+        </div>
+        <div className='user-field'>
+          <label>Location:</label>
+          <span>{user.location || 'N/A'}</span>
         </div>
       </div>
     </div>
   );
 };
 
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    padding: '2rem',
-    backgroundColor: '#f4f4f4',
-    minHeight: '100vh',
-  },
-  backButton: {
-    marginBottom: '1rem',
-    padding: '0.5rem 1rem',
-    backgroundColor: '#007bff',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-  title: {
-    marginBottom: '1rem',
-  },
-  profileBox: {
-    backgroundColor: '#fff',
-    padding: '1.5rem',
-    borderRadius: '8px',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-    maxWidth: '500px',
-  },
-  field: {
-    marginBottom: '1rem',
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-};
-
-export default AdminUserProfile;
+export default UserProfile;

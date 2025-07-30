@@ -56,8 +56,27 @@ async function deleteUserProperty(propertyId) {
 }
 
 const getProfileById = async (id) => {
-  const result = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
-  return result.rows[0]; // returns undefined if not found
+  const result = await pool.query(
+    `
+    SELECT 
+      u.id AS user_id,
+      u.email,
+      u.role,
+      up.id AS profile_id,
+      up.name,
+      up.agency_name,
+      up.contact_number,
+      up.license_number,
+      up.location,
+      up.created_at,
+      up.updated_at
+    FROM users u
+    LEFT JOIN user_profile up ON u.id = up.user_id
+    WHERE u.id = $1
+    `,
+    [id]
+  );
+  return result.rows[0];
 };
 
 module.exports = {

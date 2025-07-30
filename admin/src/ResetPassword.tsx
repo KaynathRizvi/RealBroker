@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { SERVER_URL } from '../config'
+import { SERVER_URL } from '../config';
+import './styles/ResetPassword.css';
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <div style={styles.container}>
+    <div className='reset-pass-container'>
       <h2>Reset Your Password</h2>
 
       <input
@@ -46,7 +47,7 @@ const ResetPassword = () => {
         placeholder="New Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        style={styles.input}
+        className='reset-pass-input'
       />
 
       <input
@@ -54,50 +55,16 @@ const ResetPassword = () => {
         placeholder="Confirm Password"
         value={confirm}
         onChange={(e) => setConfirm(e.target.value)}
-        style={styles.input}
+        className='reset-pass-input'
       />
 
-      {message && <p style={styles.message}>{message}</p>}
+      {message && <p className='reset-pass-message'>{message}</p>}
 
-      <button onClick={handleReset} style={styles.button}>
+      <button onClick={handleReset} className='reset-pass-button'>
         Reset Password
       </button>
     </div>
   );
-};
-
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    maxWidth: 400,
-    margin: '60px auto',
-    padding: 20,
-    textAlign: 'center',
-    border: '1px solid #ccc',
-    borderRadius: 10,
-    backgroundColor: '#fff',
-  },
-  input: {
-    width: '100%',
-    padding: 12,
-    marginBottom: 15,
-    border: '1px solid #ccc',
-    borderRadius: 6,
-    fontSize: 14,
-  },
-  button: {
-    width: '100%',
-    padding: 12,
-    backgroundColor: '#000',
-    color: '#fff',
-    border: 'none',
-    borderRadius: 6,
-    fontWeight: 'bold',
-    cursor: 'pointer',
-  },
-  message: {
-    color: '#d00',
-    marginBottom: 10,
-  },
 };
 
 export default ResetPassword;

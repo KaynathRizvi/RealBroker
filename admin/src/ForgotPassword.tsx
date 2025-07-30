@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SERVER_URL } from '../config'
+import './styles/ForgotPassword.css';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -32,86 +33,28 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.title}>Enter your email to reset password</h2>
-
+    <div className='forgot-pass-container'>
+      <h2 className='forgot-pass-header'>Enter your email to reset password</h2>
       <input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
-        style={styles.input}
+       className='forgot-pass-input'
       />
 
-      {errorMessage && <p style={styles.error}>{errorMessage}</p>}
-      {successMessage && <p style={styles.success}>{successMessage}</p>}
+      {errorMessage && <p className='forgot-pass-error'>{errorMessage}</p>}
+      {successMessage && <p className='forgot-pass-success'>{successMessage}</p>}
 
-      <button style={styles.button} onClick={handleReset}>
+      <button className='forgot-pass-button' onClick={handleReset}>
         Send Reset Email
       </button>
 
-      <button style={styles.secondaryButton} onClick={() => navigate('/')}>
+      <button className='forgot-pass-secondary-button' onClick={() => navigate('/')}>
         Go Back to Login
       </button>
     </div>
   );
-};
-
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    maxWidth: 400,
-    margin: '60px auto',
-    padding: 20,
-    border: '1px solid #ccc',
-    borderRadius: 8,
-    backgroundColor: '#fff',
-    textAlign: 'center',
-  },
-  title: {
-    marginBottom: 20,
-    fontSize: 20,
-    color: '#223b61'
-  },
-  input: {
-    width: '100%',
-    padding: 12,
-    marginBottom: 15,
-    border: '1px solid #ccc',
-    borderRadius: 6,
-    fontSize: 14,
-    boxSizing: 'border-box',
-  },
-  
-  button: {
-    width: '100%',
-    padding: 12,
-    marginBottom: 10,
-    backgroundColor: '#223b61',
-    color: '#fff',
-    border: 'none',
-    borderRadius: 6,
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    boxSizing: 'border-box',
-  },
-  secondaryButton: {
-    width: '100%',
-    padding: 12,
-    backgroundColor: '#f4f4f4',
-    color: '#000',
-    border: '1px solid #ccc',
-    borderRadius: 6,
-    cursor: 'pointer',
-    boxSizing: 'border-box',
-  },
-  error: {
-    color: 'red',
-    marginBottom: 10,
-  },
-  success: {
-    color: 'green',
-    marginBottom: 10,
-  },
 };
 
 export default ForgotPassword;
