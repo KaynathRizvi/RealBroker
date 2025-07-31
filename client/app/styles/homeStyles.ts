@@ -13,6 +13,17 @@ const homeStyles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
+  button: {
+    backgroundColor: '#007AFF',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    alignSelf: 'flex-start',
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: '600',
+  },
 });
 
 export default homeStyles;

@@ -12,6 +12,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
+    position: "relative",
   },
   imageScrollContainer: {
     marginBottom: 16,
@@ -38,14 +39,26 @@ export default StyleSheet.create({
     marginTop: 12,
     lineHeight: 22,
   },
-  subscribeButton: {
+  requestButton: {
     backgroundColor: "#007bff",
     padding: 12,
     borderRadius: 8,
     marginTop: 20,
     alignItems: "center",
   },
-  subscribeButtonText: {
+  requestButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  backButton: {
+    backgroundColor: "#007bff",
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 20,
+    alignItems: "center",
+  },
+  backButtonText: {
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",

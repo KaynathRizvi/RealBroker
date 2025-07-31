@@ -1,7 +1,7 @@
 "use client"
 
 import { Stack, useRouter } from "expo-router"
-import { Text, View } from "react-native"
+import { Text, View, Pressable } from "react-native"
 import { useEffect, useState } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import Constants from "expo-constants"
@@ -68,6 +68,9 @@ export default function HomePage() {
           </Text>
         </View>
       )}
+      <Pressable style={[styles.button]} onPress={() => router.push('/owner')}>
+          <Text style={styles.buttonText}>View Contact Requests</Text>
+        </Pressable>
     </View>
   )
 }

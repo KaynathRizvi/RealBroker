@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Stack } from "expo-router";
 import {
   View,
   Text,
@@ -10,6 +11,7 @@ import {
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import Constants from "expo-constants";
+import { Ionicons } from '@expo/vector-icons';
 import styles from "../styles/propertyDetailStyles";
 
 const SERVER_URL =
@@ -79,6 +81,8 @@ export default function PropertyDetail() {
 
   return (
     <ScrollView style={styles.container}>
+      <Stack.Screen options={{ headerShown: false }} />
+
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.imageScrollContainer}>
         {property.property_pic_url.map((url: string, idx: number) => (
           <Image
@@ -99,11 +103,12 @@ export default function PropertyDetail() {
         {property.property_desc || "No description available."}
       </Text>
 
-      <Pressable
-        style={styles.subscribeButton}
-        onPress={() => Alert.alert("Request Sent", "We'll contact the owner shortly.")}
-      >
-        <Text style={styles.subscribeButtonText}>Request Contact</Text>
+      <Pressable style={styles.requestButton}
+        onPress={() => router.push(`/request-contact?id=${id}`)}>
+        <Text style={styles.requestButtonText}>Request Contact</Text>
+      </Pressable>
+      <Pressable style={styles.backButton} onPress={() => router.push('/properties')}> 
+        <Text style={styles.backButtonText}>Go Back</Text>
       </Pressable>
     </ScrollView>
   );

@@ -33,6 +33,9 @@ app.use("/api/subscription", subscriptionRoutes);
 const adminRoutes = require('./routes/admin');
 app.use('/api/admin', adminRoutes);
 
+const contactRoutes = require('./routes/contact');
+app.use('/api/request-contact', contactRoutes);
+
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
