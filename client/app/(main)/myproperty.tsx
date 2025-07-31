@@ -25,6 +25,7 @@ type Property = {
   property_name: string;
   deal_price: string;
   property_pic_url: string[];
+  property_desc?: string;
 };
 
 export default function MyProperty() {
@@ -33,6 +34,7 @@ export default function MyProperty() {
   const [newPropName, setNewPropName] = useState('');
   const [newPropPrice, setNewPropPrice] = useState('');
   const [newPropPicUrl, setNewPropPicUrl] = useState('');
+  const [newPropDesc, setNewPropDesc] = useState('');
 
   const [modalVisible, setModalVisible] = useState(false);
   const [propertyToDelete, setPropertyToDelete] = useState<number | null>(null);
@@ -85,8 +87,12 @@ export default function MyProperty() {
         body: JSON.stringify({
           property_name: newPropName,
           deal_price: parseFloat(newPropPrice),
-          property_pic_url: newPropPicUrl.trim().split(/\s+/),
-        }),
+          property_pic_url: newPropPicUrl
+            .trim()
+            .split(/\s+/)
+            .map((url) => url.replace(/[{}]/g, "")),
+          property_desc: newPropDesc,
+          }),
       });
 
       const data = await res.json();
@@ -95,6 +101,7 @@ export default function MyProperty() {
         setNewPropName('');
         setNewPropPrice('');
         setNewPropPicUrl('');
+        setNewPropDesc('');
         Alert.alert('Success', 'Property added');
       } else {
         Alert.alert('Error', data.message || 'Failed to add property');
@@ -139,28 +146,32 @@ export default function MyProperty() {
   }
 
   const renderProperty = ({ item }: { item: Property }) => (
-    <View style={styles.propertyCard}>
-      <View style={styles.imageWrapper}>
-        {item.property_pic_url.map((url, index) => (
-          <Image
-            key={index}
-            source={{ uri: url }}
-            style={styles.thumbnail}
-            resizeMode="cover"
-          />
-        ))}
-      </View>
-      <Text style={styles.text}>Name: {item.property_name}</Text>
-      <Text style={styles.text}>Price: ${item.deal_price}</Text>
-      <View style={{ marginTop: 5 }}>
-        <Button
-          title="Delete This Property"
-          color="red"
-          onPress={() => confirmDeleteProperty(item.id)}
+  <View style={styles.propertyCard}>
+    <View style={styles.imageWrapper}>
+      {item.property_pic_url.map((url, index) => (
+        <Image
+          key={index}
+          source={{ uri: url }}
+          style={styles.thumbnail}
+          resizeMode="cover"
         />
-      </View>
+      ))}
     </View>
-  );
+    <Text style={styles.text}>Name: {item.property_name}</Text>
+    <Text style={styles.text}>Price: ${item.deal_price}</Text>
+    {item.property_desc ? (
+      <Text style={styles.text}>Description: {item.property_desc}</Text>
+    ) : null}
+    <View style={{ marginTop: 5 }}>
+      <Button
+        title="Delete This Property"
+        color="red"
+        onPress={() => confirmDeleteProperty(item.id)}
+      />
+    </View>
+  </View>
+);
+
 
   if (loading) return <Text style={styles.text}>Loading properties...</Text>;
 
@@ -188,6 +199,12 @@ export default function MyProperty() {
         value={newPropPrice}
         onChangeText={setNewPropPrice}
         keyboardType="numeric"
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Property Description"
+        value={newPropDesc}
+        onChangeText={setNewPropDesc}
         style={styles.input}
       />
       <TextInput

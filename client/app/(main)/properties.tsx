@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Stack } from "expo-router";
-import { View, Text, Image, ScrollView, ActivityIndicator } from 'react-native';
+import { Stack, useRouter } from "expo-router";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native';
 import Constants from 'expo-constants';
 import styles from '../styles/propertiesStyle';
 
@@ -11,6 +18,7 @@ const SERVER_URL =
 const Properties = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter(); // <-- Added
 
   const fetchProperties = async () => {
     try {
@@ -41,21 +49,38 @@ const Properties = () => {
     <ScrollView style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
       {properties.map((property) => (
-        <View key={property.property_id} style={styles.card}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.imageScrollContainer}>
-            {property.property_pic_url?.map((url, index) => (
-              <Image
-                key={index}
-                source={{ uri: url }}
-                style={styles.thumbnailImage}
-                resizeMode="cover"
-              />
-            ))}
-          </ScrollView>
-          <Text style={styles.title}>{property.property_name}</Text>
-          <Text style={styles.detail}>Price: ₹{property.deal_price ?? 'Not specified'}</Text>
-          <Text style={styles.email}>Owner: {property.name}</Text>
-        </View>
+        <TouchableOpacity
+          key={property.id} // use property.id here
+          onPress={() => {
+          if (property.id != null) {
+            router.push({
+            pathname: "/(main)/propertyDetail",
+            params: { id: property.id.toString() }, 
+          });
+          } else {
+            console.warn("id is undefined for property:", property);
+          }
+        }}>
+          <View style={styles.card}>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={styles.imageScrollContainer}
+            >
+              {property.property_pic_url?.map((url, index) => (
+                <Image
+                  key={index}
+                  source={{ uri: url }}
+                  style={styles.thumbnailImage}
+                  resizeMode="cover"
+                />
+              ))}
+            </ScrollView>
+            <Text style={styles.title}>{property.property_name}</Text>
+            <Text style={styles.detail}>Price: ₹{property.deal_price ?? 'Not specified'}</Text>
+            <Text style={styles.email}>Owner: {property.name}</Text>
+          </View>
+        </TouchableOpacity>
       ))}
     </ScrollView>
   );

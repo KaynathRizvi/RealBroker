@@ -51,6 +51,14 @@ export default function SubscriptionPage() {
         },
       })
 
+      if (statusRes.status === 401) {
+      // 🔴 Token is invalid or expired — remove it and redirect
+      await AsyncStorage.removeItem("token")
+      Alert.alert("Session expired", "Please log in again.")
+      router.replace("/login")
+      return
+    }
+
       const statusData = await statusRes.json()
 
       if (statusData.hasActiveSubscription) {

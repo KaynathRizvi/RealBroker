@@ -25,6 +25,9 @@ export default function LoginPage() {
     setLoading(true)
 
     try {
+       // 🔑 Remove any previous/bad tokens before new login
+      await AsyncStorage.removeItem("token")
+
       const response = await fetch(`${SERVER_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
