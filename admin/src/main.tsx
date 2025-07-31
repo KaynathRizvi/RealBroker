@@ -8,6 +8,7 @@ import PropertyLists from './pages/PropertyLists';
 import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
 import AdminUserProfile from './pages/UserProfile';
+import PropertyDetail from './pages/PropertyDetail';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Route path="/forgotpassword" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/userprofile/:id" element={<AdminUserProfile />} />
+      <Route path="/property-detail" element={<PropertyDetail />} />
     </Routes>
   </BrowserRouter>
 );

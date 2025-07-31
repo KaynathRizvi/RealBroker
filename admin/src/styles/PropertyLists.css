@@ -65,6 +65,12 @@
   border-style: none;
 }
 
+.property-name-link {
+  color: #223b61;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .property-table td:last-child, .property-table th:last-child {
   text-align: center;
 }

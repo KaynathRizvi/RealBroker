@@ -89,7 +89,12 @@ const PropertyLists: React.FC = () => {
           {properties.map((p) => (
             <tr key={p.id}>
               <td>{p.owner_name}</td>
-              <td>{p.property_name}</td>
+              <td>
+              <span className="property-name-link"
+                onClick={() => navigate(`/property-detail?id=${p.id}`)}>
+                  {p.property_name}
+                </span>
+              </td>
               <td>{p.deal_price ?? 'N/A'}</td>
               <td>{p.email}</td>
               <td>
