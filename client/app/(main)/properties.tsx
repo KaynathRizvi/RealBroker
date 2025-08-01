@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Stack, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import {
   View,
   Text,
@@ -24,9 +24,6 @@ const Properties = () => {
     try {
       const response = await fetch(SERVER_URL + '/api/property/all');
       const data = await response.json();
-
-      console.log("Fetched properties:", JSON.stringify(data, null, 2));
-
       setProperties(data);
     } catch (error) {
       console.error('Error fetching properties:', error);
@@ -50,7 +47,6 @@ const Properties = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <Stack.Screen options={{ headerShown: false }} />
       {properties.map((property) => (
         <TouchableOpacity
           key={property.id} // use property.id here

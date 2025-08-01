@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, useRouter } from "expo-router"
+import { useRouter } from "expo-router"
 import { useState } from "react"
 import { Pressable, Text, TextInput, View, Alert, ActivityIndicator } from "react-native"
 import Constants from "expo-constants"
@@ -65,7 +65,6 @@ export default function LoginPage() {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: "Login" }} />
       <Text style={styles.title}>Login Page</Text>
 
       <TextInput

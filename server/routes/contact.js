@@ -4,17 +4,17 @@ const contactController = require('../controllers/contactController');
 const { protect } = require('../middleware/authMiddleware');
 
 // POST new contact request
-router.post('/', contactController.createContactRequest);
+router.post('/', protect, contactController.createContactRequest);
 
 // GET all contact requests for owner
-router.get('/my-requests', contactController.getContactRequestsForOwner);
-
-router.get('/owner/requests/:userId', contactController.getContactRequestsForOwner);
+router.get('/owner/requests/', protect, contactController.getContactRequestsForOwner);
 
 // Accept a contact request by requestId
 router.put('/owner/requests/:requestId/accept', protect, contactController.acceptContactRequest);
 
 // Reject (delete) a contact request by requestId
-router.delete('/owner/requests/:requestId/reject', contactController.rejectContactRequest);
+router.delete('/owner/requests/:requestId/reject', protect, contactController.rejectContactRequest);
+
+router.get('/sent-requests/', protect, contactController.getSentRequestsByUser);
 
 module.exports = router;

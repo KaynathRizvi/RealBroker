@@ -1,12 +1,10 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import { Stack } from 'expo-router';
 import styles from '../styles/aboutStyles';
 
 export default function AboutPage() {
   return (
     <ScrollView style={styles.container}>
-      <Stack.Screen options={{ headerShown: false }} />
       <Text style={styles.heading}>About Us</Text>
       <Text style={styles.paragraph}>
         Welcome to our Real Estate App! We aim to simplify property buying, selling,

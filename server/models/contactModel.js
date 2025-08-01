@@ -1,12 +1,12 @@
 const pool = require('../config/db');
 
 // Save a new contact request
-async function saveContactRequest({ property_id, name, agency, phone, email, message }) {
+async function saveContactRequest({ property_id, name, agency, phone, email, message, userId }) {
   const query = `
-    INSERT INTO contact_request (property_id, name, agency, phone, email, message)
-    VALUES ($1, $2, $3, $4, $5, $6)
+    INSERT INTO contact_request (property_id, name, agency, phone, email, message, user_id)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
   `;
-  await pool.query(query, [property_id, name, agency, phone, email, message]);
+  await pool.query(query, [property_id, name, agency, phone, email, message, userId]);
 }
 
 // Get contact requests for an owner with owner info included
@@ -72,9 +72,22 @@ async function rejectContactRequestById(requestId) {
   await pool.query('DELETE FROM contact_request WHERE id = $1', [requestId]);
 }
 
+const getSentRequestsByUserId = async (userId) => {
+  const result = await pool.query(
+    `SELECT cr.*, up.property_name
+     FROM contact_request cr
+     JOIN user_property up ON cr.property_id = up.id
+     WHERE cr.user_id = $1`,
+    [userId]
+  );
+  return result.rows;
+};
+
+
 module.exports = {
   saveContactRequest,
   getContactRequestsForOwner,
   acceptContactRequestById,
   rejectContactRequestById,
+  getSentRequestsByUserId,
 };

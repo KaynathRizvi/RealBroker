@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, useRouter } from "expo-router"
+import { useRouter } from "expo-router"
 import { Text, View, Pressable } from "react-native"
 import { useEffect, useState } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
@@ -46,7 +46,6 @@ export default function HomePage() {
 
   return (
     <View style={styles.content}>
-      <Stack.Screen options={{ headerShown: false }} />
       <Text style={{ fontSize: 18, marginBottom: 20 }}>
         Welcome to BrokerApp Home Page!
       </Text>
@@ -69,8 +68,11 @@ export default function HomePage() {
         </View>
       )}
       <Pressable style={[styles.button]} onPress={() => router.push('/view-requests')}>
-          <Text style={styles.buttonText}>View Contact Requests</Text>
-        </Pressable>
+        <Text style={styles.buttonText}>View Contact Requests</Text>
+      </Pressable>
+      <Pressable style={[styles.button]} onPress={() => router.push('/sent-requests')}>
+        <Text style={styles.buttonText}>View Sent Requests</Text>
+      </Pressable>
     </View>
   )
 }

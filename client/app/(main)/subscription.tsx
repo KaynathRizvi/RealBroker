@@ -9,7 +9,7 @@ import {
   Alert,
   ActivityIndicator,
 } from "react-native"
-import { Stack, useRouter } from "expo-router"
+import { useRouter } from "expo-router"
 import Constants from "expo-constants"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import styles from "../styles/subscriptionStyles"
@@ -133,7 +133,6 @@ export default function SubscriptionPage() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Stack.Screen options={{ headerShown: false }} />
       <Text style={styles.title}>Choose a Subscription Plan</Text>
       {plans.map((plan) => (
         <View key={plan.id} style={styles.planCard}>

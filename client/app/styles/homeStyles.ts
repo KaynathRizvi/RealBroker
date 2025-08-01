@@ -19,6 +19,7 @@ const homeStyles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 8,
     alignSelf: 'flex-start',
+    marginBottom: 5,
   },
   buttonText: {
     color: '#fff',

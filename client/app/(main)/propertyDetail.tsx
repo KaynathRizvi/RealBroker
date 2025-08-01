@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Stack } from "expo-router";
 import {
   View,
   Text,
@@ -81,8 +80,6 @@ export default function PropertyDetail() {
 
   return (
     <ScrollView style={styles.container}>
-      <Stack.Screen options={{ headerShown: false }} />
-
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.imageScrollContainer}>
         {property.property_pic_url.map((url: string, idx: number) => (
           <Image

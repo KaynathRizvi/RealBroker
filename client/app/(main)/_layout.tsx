@@ -15,7 +15,19 @@ export default function RootLayout() {
   return (
     <View style={styles.container}>
       {shouldShowNavbar && <Navbar />}
-      <Stack />
+      <Stack>
+        <Stack.Screen name="sent-requests" options={{ headerShown: false }} />
+        <Stack.Screen name="about" options={{ headerShown: false }} />
+        <Stack.Screen name="myproperty" options={{ headerShown: false }} />
+        <Stack.Screen name="profile" options={{ headerShown: false }} />
+        <Stack.Screen name="properties" options={{ headerShown: false }} />
+        <Stack.Screen name="propertyDetail" options={{ headerShown: false }} />
+        <Stack.Screen name="home" options={{ headerShown: false }} />
+        <Stack.Screen name="subscription" options={{ headerShown: false }} />
+        <Stack.Screen name="view-requests" options={{ headerShown: false }} />
+        <Stack.Screen name="login" options={{ headerShown: false }} />
+        <Stack.Screen name="register" options={{ headerShown: false }} />
+      </Stack>
     </View>
   );
 }

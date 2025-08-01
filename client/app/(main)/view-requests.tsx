@@ -29,7 +29,7 @@ const Owner = () => {
       const decoded: DecodedToken = jwtDecode(token);
       const userId = decoded.userId;
 
-      const res = await fetch(`${SERVER_URL}/api/request-contact/owner/requests/${userId}`, {
+      const res = await fetch(`${SERVER_URL}/api/request-contact/owner/requests`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

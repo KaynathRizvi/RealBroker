@@ -10,7 +10,6 @@ import {
   Modal,
   Pressable,
 } from 'react-native';
-import { Stack } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 
@@ -177,7 +176,6 @@ export default function MyProperty() {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ headerShown: false }} />
       <Text style={styles.title}>My Properties</Text>
 
       <FlatList

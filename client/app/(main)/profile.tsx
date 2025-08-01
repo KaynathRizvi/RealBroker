@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, Alert, ScrollView } from 'react-native';
-import { Stack } from "expo-router";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 import styles from '../styles/profileStyles';
@@ -107,7 +106,6 @@ export default function ProfilePage() {
   
   return (
     <ScrollView style={styles.container}>
-      <Stack.Screen options={{ headerShown: false }} />
       <Text style={styles.title}>Your Profile</Text>
 
       <Text style={styles.label}>Email (not editable):</Text>

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable, Alert, ScrollView } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import Constants from 'expo-constants';
-import styles from '../styles/request-contactStyles'; // create or reuse styles
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import styles from '../styles/request-contactStyles'; // your existing styles
 
 const SERVER_URL = Constants.expoConfig?.extra?.DEBUG_SERVER_URL || Constants.expoConfig?.extra?.SERVER_URL;
 
@@ -30,15 +31,34 @@ export default function RequestContact() {
     }
 
     try {
+      const token = await AsyncStorage.getItem('token');
+
+      if (!token) {
+        Alert.alert("Unauthorized", "Please log in to send a contact request.");
+        return;
+      }
+
       const res = await fetch(`${SERVER_URL}/api/request-contact`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, property_id }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // ✅ include token
+        },
+        body: JSON.stringify({
+          property_id,
+          name: form.name,
+          agency: form.agency,
+          phone: form.contact,     // ✅ map to expected backend field
+          email: form.email,
+          message: form.message,
+        }),
       });
 
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.message || "Submission failed");
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to send request');
+      }
 
       Alert.alert("Success", "Contact request sent!");
       router.push('/properties');
