@@ -68,7 +68,7 @@ export default function HomePage() {
           </Text>
         </View>
       )}
-      <Pressable style={[styles.button]} onPress={() => router.push('/owner')}>
+      <Pressable style={[styles.button]} onPress={() => router.push('/view-requests')}>
           <Text style={styles.buttonText}>View Contact Requests</Text>
         </Pressable>
     </View>

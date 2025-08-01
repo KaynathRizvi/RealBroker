@@ -24,6 +24,9 @@ const Properties = () => {
     try {
       const response = await fetch(SERVER_URL + '/api/property/all');
       const data = await response.json();
+
+      console.log("Fetched properties:", JSON.stringify(data, null, 2));
+
       setProperties(data);
     } catch (error) {
       console.error('Error fetching properties:', error);

@@ -1,4 +1,4 @@
-const pool = require('../config/db'); // or adjust path
+const pool = require('../config/db');
 
 // Save a new contact request
 async function saveContactRequest({ property_id, name, agency, phone, email, message }) {
@@ -41,26 +41,40 @@ async function getContactRequestsForOwner(userId) {
   return result.rows;
 }
 
-// Accept a contact request and update owner info (frontend must send owner info)
-async function acceptContactRequest({ requestId, ownerName, ownerEmail, ownerContact }) {
-  await pool.query(`
-    UPDATE contact_request
-    SET status = 'accepted',
-        owner_name = $1,
-        owner_email = $2,
-        owner_contact = $3
-    WHERE id = $4
-  `, [ownerName, ownerEmail, ownerContact, requestId]);
+// Accept a contact request
+async function acceptContactRequestById(requestId, userId) {
+  // Fetch owner info
+  const result = await pool.query(
+    'SELECT name, email, contact_number FROM user_profile WHERE user_id = $1',
+    [userId]
+  );
+
+  if (result.rows.length === 0) {
+    throw new Error('Owner profile not found');
+  }
+
+  const owner = result.rows[0];
+
+  // Update contact request with owner info
+  await pool.query(
+    `UPDATE contact_request
+     SET status = 'accepted',
+         owner_name = $1,
+         owner_email = $2,
+         owner_contact = $3
+     WHERE id = $4`,
+    [owner.name, owner.email, owner.contact_number, requestId]
+  );
 }
 
 // Reject (delete) a contact request
-async function rejectContactRequest(requestId) {
+async function rejectContactRequestById(requestId) {
   await pool.query('DELETE FROM contact_request WHERE id = $1', [requestId]);
 }
 
 module.exports = {
   saveContactRequest,
   getContactRequestsForOwner,
-  acceptContactRequest,
-  rejectContactRequest,
+  acceptContactRequestById,
+  rejectContactRequestById,
 };
