@@ -47,7 +47,7 @@ export default function HomePage() {
   return (
     <View style={styles.content}>
       <Text style={{ fontSize: 18, marginBottom: 20 }}>
-        Welcome to BrokerApp Home Page!
+        Welcome to Real Broker!
       </Text>
 
       {subscriptionInfo && (

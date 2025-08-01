@@ -15,7 +15,7 @@ export default function Navbar() {
 
   return (
     <View style={styles.navbar}>
-      <Text style={styles.title}>BrokerApp</Text>
+      <Text style={styles.title}>Real Broker</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.navLinks}>
         <Text style={styles.link} onPress={() => router.push("/home")}>
           Home
