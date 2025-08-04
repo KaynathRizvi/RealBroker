@@ -1,14 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  Alert,
-  ActivityIndicator,
-} from "react-native"
+import { View, Text, ScrollView, TouchableOpacity, Alert, ActivityIndicator } from "react-native"
 import { useRouter } from "expo-router"
 import Constants from "expo-constants"
 import AsyncStorage from "@react-native-async-storage/async-storage"

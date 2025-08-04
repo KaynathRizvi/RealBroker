@@ -45,34 +45,35 @@ export default function HomePage() {
   }
 
   return (
-    <View style={styles.content}>
-      <Text style={{ fontSize: 18, marginBottom: 20 }}>
-        Welcome to Real Broker!
-      </Text>
+  <View style={styles.content}>
+    <Text style={styles.greeting}>👋 Welcome to Real Broker!</Text>
 
+    <View style={styles.dashboardContainer}>
       {subscriptionInfo && (
-        <View
-          style={{
-            backgroundColor: "#e8f5e8",
-            padding: 15,
-            borderRadius: 8,
-            marginBottom: 20,
-          }}
-        >
-          <Text style={{ fontSize: 16, fontWeight: "bold", color: "#2d5a2d" }}>
-            Active Subscription: {subscriptionInfo.planName}
+        <Pressable onPress={() => router.push('/viewsubscription')}
+        style={[styles.card, styles.subscriptionCard]}>
+          <Text style={styles.cardTitle}>💳 Active Subscription</Text>
+          <Text style={styles.cardText}>Plan: {subscriptionInfo.planName}</Text>
+          <Text style={styles.cardText}>
+            Expires on: {new Date(subscriptionInfo.expiryDate).toLocaleDateString()}
           </Text>
-          <Text style={{ color: "#2d5a2d" }}>
-            Expires: {new Date(subscriptionInfo.expiryDate).toLocaleDateString()}
-          </Text>
-        </View>
+        </Pressable>
       )}
-      <Pressable style={[styles.button]} onPress={() => router.push('/view-requests')}>
-        <Text style={styles.buttonText}>View Contact Requests</Text>
-      </Pressable>
-      <Pressable style={[styles.button]} onPress={() => router.push('/sent-requests')}>
-        <Text style={styles.buttonText}>View Sent Requests</Text>
-      </Pressable>
+
+      <View style={[styles.card, styles.requestCard]}>
+        <Text style={styles.cardTitle}>📥 Contact Requests</Text>
+        <Pressable style={styles.cardButton} onPress={() => router.push('/view-requests')}>
+          <Text style={styles.cardButtonText}>View Received Requests</Text>
+        </Pressable>
+      </View>
+
+      <View style={[styles.card, styles.sentCard]}>
+        <Text style={styles.cardTitle}>📤 Sent Requests</Text>
+        <Pressable style={styles.cardButton} onPress={() => router.push('/sent-requests')}>
+          <Text style={styles.cardButtonText}>View Sent Requests</Text>
+        </Pressable>
+      </View>
     </View>
-  )
+  </View>
+)
 }

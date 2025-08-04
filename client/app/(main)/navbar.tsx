@@ -1,4 +1,3 @@
-// components/Navbar.tsx
 import { View, Text, ScrollView, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
 import AsyncStorage from "@react-native-async-storage/async-storage"

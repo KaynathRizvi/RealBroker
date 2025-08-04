@@ -1,16 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  Image,
-  ActivityIndicator,
-  Alert,
-  Pressable,
-} from "react-native";
+import { View, Text, ScrollView, Image, ActivityIndicator, Alert, Pressable } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import Constants from "expo-constants";
-import { Ionicons } from '@expo/vector-icons';
 import styles from "../styles/propertyDetailStyles";
 
 const SERVER_URL =

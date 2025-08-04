@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View, Text, FlatList, ActivityIndicator, StyleSheet,
-  Pressable, Alert, TouchableOpacity
-} from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, StyleSheet, Pressable, Alert, TouchableOpacity } from 'react-native';
 import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { jwtDecode } from 'jwt-decode';
@@ -18,7 +15,7 @@ interface DecodedToken {
 const Owner = () => {
   const [requests, setRequests] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [expandedId, setExpandedId] = useState<number | null>(null); // For dropdown behavior
+  const [expandedId, setExpandedId] = useState<number | null>(null);
 
   const fetchRequests = async () => {
     setLoading(true);

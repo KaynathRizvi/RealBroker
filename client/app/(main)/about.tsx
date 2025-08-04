@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { Text, ScrollView } from 'react-native';
 import styles from '../styles/aboutStyles';
 
 export default function AboutPage() {

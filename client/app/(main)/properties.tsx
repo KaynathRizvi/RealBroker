@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from "expo-router";
-import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  ActivityIndicator,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, Image, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
 import Constants from 'expo-constants';
 import styles from '../styles/propertiesStyle';
 
