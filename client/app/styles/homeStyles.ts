@@ -21,12 +21,23 @@ const homeStyles = StyleSheet.create({
   },
   subscriptionCard: {
     backgroundColor: '#e0f7e9', // light green
+    borderLeftColor: "#75a989ff",
+    borderLeftWidth: 4,
   },
   requestCard: {
     backgroundColor: '#e8f1ff', // light blue
+    borderLeftColor: "#7d92b4ff",
+    borderLeftWidth: 4,
   },
   sentCard: {
     backgroundColor: '#fff2e5', // light orange
+    borderLeftColor: "#e3b383ff",
+    borderLeftWidth: 4,
+  },
+  statsCard: {
+    backgroundColor: "#fbf0f9ff",
+    borderLeftColor: "#d2a9caff",
+    borderLeftWidth: 4,
   },
   cardTitle: {
     fontSize: 18,
@@ -56,6 +67,18 @@ const homeStyles = StyleSheet.create({
     color: '#1e1e1e',
     marginBottom: 12,
   },
+  infoText: {
+    fontSize: 14,
+    color: '#555',
+    lineHeight: 20,
+    marginBottom: 10,
+  },
+  cardSubtitle: {
+    fontSize: 14,
+    color: '#555',
+    marginTop: 4,
+  },
+
 })
 
 export default homeStyles;

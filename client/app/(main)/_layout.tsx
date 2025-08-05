@@ -27,6 +27,8 @@ export default function RootLayout() {
         <Stack.Screen name="view-requests" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="register" options={{ headerShown: false }} />
+        <Stack.Screen name="viewsubscription" options={{ headerShown: false }} />
+        <Stack.Screen name="statsOverview" options={{ headerShown: false }} />
       </Stack>
     </View>
   );

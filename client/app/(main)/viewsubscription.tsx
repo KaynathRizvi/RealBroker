@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { View, Text, StyleSheet, ActivityIndicator, Alert } from "react-native"
+import { View, Text, ActivityIndicator, Alert } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import Constants from "expo-constants"
 import { useRouter } from "expo-router"
@@ -88,6 +88,7 @@ export default function ViewSubscription() {
         <Text style={styles.value}>
           {new Date(subscriptionInfo.expiryDate).toLocaleDateString()}
         </Text>
+
       </View>
     </View>
   )
