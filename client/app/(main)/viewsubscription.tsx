@@ -74,10 +74,15 @@ export default function ViewSubscription() {
         <Text style={styles.value}>{subscriptionInfo.planName}</Text>
 
         <Text style={styles.label}>Price:</Text>
-        <Text style={styles.value}>${subscriptionInfo.price}</Text>
+        <Text style={styles.value}>${subscriptionInfo.planPrice}</Text>
 
         <Text style={styles.label}>Duration:</Text>
-        <Text style={styles.value}>{subscriptionInfo.duration} days</Text>
+        <Text style={styles.value}>{subscriptionInfo.planDuration} days</Text>
+
+        <Text style={styles.label}>Purchase Date:</Text>
+        <Text style={styles.value}>
+          {new Date(subscriptionInfo.purchaseDate).toLocaleDateString()}
+        </Text>
 
         <Text style={styles.label}>Expiry Date:</Text>
         <Text style={styles.value}>

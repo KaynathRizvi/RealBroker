@@ -26,6 +26,8 @@ const getSubscriptionStatus = async (req, res) => {
         planId: subscription.plan_id,
         planName: subscription.plan_name,
         features: subscription.features,
+        planPrice: subscription.plan_price, // <-- updated field
+        planDuration: subscription.plan_duration, 
         purchaseDate: subscription.purchase_date,
         expiryDate: subscription.expiry_date,
         amountPaid: subscription.amount_paid,
@@ -66,7 +68,10 @@ const activateSubscription = async (req, res) => {
       subscription: {
         id: subscription.id,
         planId: subscription.plan_id,
-        planName: plan.name,
+        planName: subscription.plan_name,
+        features: subscription.features,
+        planPrice: subscription.plan_price, // <-- updated field
+        planDuration: subscription.plan_duration, // <-- updated field
         purchaseDate: subscription.purchase_date,
         expiryDate: subscription.expiry_date,
         amountPaid: subscription.amount_paid,
@@ -111,6 +116,8 @@ const getSubscriptionHistory = async (req, res) => {
         id: sub.id,
         planId: sub.plan_id,
         planName: sub.plan_name,
+        planPrice: sub.plan_price,
+        planDuration: sub.plan_duration,
         purchaseDate: sub.purchase_date,
         expiryDate: sub.expiry_date,
         isActive: sub.is_active,

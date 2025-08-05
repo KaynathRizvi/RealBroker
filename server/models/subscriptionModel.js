@@ -90,11 +90,14 @@ const createUserSubscription = async (userId, planId) => {
     const expiryDate = new Date()
     expiryDate.setDate(expiryDate.getDate() + plan.duration_days)
 
+    const basePrice = plan.price;
+    const amountPaid = basePrice;
+
     // Insert new subscription manually
     const insertQuery = `
       INSERT INTO user_subscriptions 
-      (user_id, plan_id, expiry_date, amount_paid, payment_status)
-      VALUES ($1, $2, $3, $4, $5)
+      (user_id, plan_id, expiry_date, amount_paid, payment_status, plan_price, plan_duration)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *
     `
 
@@ -102,8 +105,10 @@ const createUserSubscription = async (userId, planId) => {
       userId,
       planId,
       expiryDate,
+      amountPaid,
+      "manual", 
       plan.price,
-      "manual", // Or "completed"
+      plan.duration_days 
     ])
 
     await client.query("COMMIT")
