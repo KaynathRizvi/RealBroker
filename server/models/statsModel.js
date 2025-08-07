@@ -58,17 +58,71 @@ const getDaysLeft = async (userId) => {
 
   const expiryDate = new Date(result.rows[0].expiry_date);
   const today = new Date();
-  const timeDiff = expiryDate - today;
 
+  // Normalize both dates to midnight
+  expiryDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  const timeDiff = expiryDate - today;
   const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
   return daysLeft >= 0 ? daysLeft : 0;
 };
+
+// Get number of property listings per day for the last 30 days
+const getListingsOverLast30Days = async () => {
+  const result = await pool.query(`
+    SELECT 
+      TO_CHAR(created_at::date, 'YYYY-MM-DD') AS date,
+      COUNT(*) as count
+    FROM user_property
+    WHERE created_at >= CURRENT_DATE - INTERVAL '30 days'
+    GROUP BY date
+    ORDER BY date ASC
+  `);
+
+  // Format as arrays for chart.js
+  const labels = result.rows.map(row => row.date);
+  const data = result.rows.map(row => parseInt(row.count, 10));
+
+  return { labels, data };
+};
+
+// Get number of requests received per property for a given user
+async function getRequestsPerProperty(userId) {
+  try {
+    const query = `
+      SELECT up.property_name, COUNT(cr.id) AS request_count
+      FROM user_property up
+      LEFT JOIN contact_request cr ON cr.property_id = up.id
+      WHERE up.user_id = $1
+      GROUP BY up.property_name
+      ORDER BY request_count DESC;
+    `
+    const result = await pool.query(query, [userId])
+
+    console.log("requestsPerProperty result:", result)
+
+    // Check if result.rows exists (for pg)
+    const rows = result.rows || result
+
+    return rows.map((row) => ({
+      property_name: row.property_name,
+      request_count: Number(row.request_count),
+    }))
+  } catch (error) {
+    console.error("Error in getRequestsPerProperty:", error)
+    throw error
+  }
+}
 
 module.exports = {
   getTotalListings,
   getMyListings,
   getReceivedRequests,
   getSentRequests,
+  getListingsOverLast30Days,
   getNewThisWeek,
   getDaysLeft,
+  getRequestsPerProperty,
 };

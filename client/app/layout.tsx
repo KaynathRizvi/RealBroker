@@ -10,6 +10,8 @@ export default function Layout() {
   const [fontsLoaded] = useFonts({
     Nunito: require('../assets/fonts/Nunito-Regular.ttf'),
     NunitoBold: require('../assets/fonts/Nunito-Bold.ttf'),
+    Poppins: require('../assets/fonts/Poppins-Regular.ttf'),
+    PoppinsBold: require('../assets/fonts/Poppins-Bold.ttf'),
   });
 
   // 2. Show loader until fonts are ready

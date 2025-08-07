@@ -4,17 +4,19 @@ import { View, Text, Dimensions, ScrollView } from "react-native"
 import { useEffect, useState } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import Constants from "expo-constants"
-import { PieChart } from "react-native-chart-kit"
 import statsStyles, { statColors } from "../styles/statsOverviewStyles"
-import PercentBars from "./percentBar"
-
-const screenWidth = Dimensions.get("window").width
+import ListingsPieChart from "../component/pieChart"
+import RequestsBarChart from "../component/barChart"
+import GaugeChart from "../component/gaugeChart"
+import StackBar from "../component/stackBar"
+import CustomLineChart from "../component/lineChart"
 
 const SERVER_URL =
   Constants.expoConfig?.extra?.DEBUG_SERVER_URL ||
   Constants.expoConfig?.extra?.SERVER_URL
 
 export default function StatsOverview({ subscriptionExpiry }: { subscriptionExpiry: string }) {
+  const [screenWidth, setScreenWidth] = useState(Dimensions.get("window").width)
   const [stats, setStats] = useState({
     totalListings: 0,
     myListings: 0,
@@ -23,9 +25,21 @@ export default function StatsOverview({ subscriptionExpiry }: { subscriptionExpi
     newThisWeek: 0,
     daysLeft: 0,
   })
+  const [lineData, setLineData] = useState({ labels: [], data: [] })
+  const [requestsData, setRequestsData] = useState<
+    { property_name: string; request_count: number }[]
+  >([])
+
+  const isSmallScreen = screenWidth < 600
 
   useEffect(() => {
     fetchStats()
+
+    const subscription = Dimensions.addEventListener("change", ({ window }) => {
+      setScreenWidth(window.width)
+    })
+
+    return () => subscription?.remove()
   }, [])
 
   const fetchStats = async () => {
@@ -39,8 +53,15 @@ export default function StatsOverview({ subscriptionExpiry }: { subscriptionExpi
           "Content-Type": "application/json",
         },
       })
-
       const data = await response.json()
+
+      const lineRes = await fetch(`${SERVER_URL}/api/stats/listings-over-time`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      const lineJson = await lineRes.json()
 
       const expiryDate = new Date(subscriptionExpiry)
       const today = new Date()
@@ -61,84 +82,40 @@ export default function StatsOverview({ subscriptionExpiry }: { subscriptionExpi
         newThisWeek: data.newThisWeek || 0,
         daysLeft: data.daysLeft ?? 0,
       })
+
+      setLineData({
+        labels: lineJson.labels || [],
+        data: lineJson.data || [],
+      })
+
+      const requestsRes = await fetch(`${SERVER_URL}/api/stats/requests-per-property`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+
+      const requestsJson = await requestsRes.json()
+      if (Array.isArray(requestsJson)) {
+        setRequestsData(requestsJson)
+      } else if (Array.isArray(requestsJson.data)) {
+        setRequestsData(requestsJson.data)
+      } else {
+        console.error("Invalid requests-per-property response:", requestsJson)
+        setRequestsData([])
+      }
+
     } catch (error) {
       console.error("Error fetching stats:", error)
     }
   }
 
-  const chartConfig = {
-    backgroundGradientFrom: "#ffffff",
-    backgroundGradientTo: "#f0f0f0",
-    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    labelColor: () => "#333",
-    decimalPlaces: 0,
-  }
-
-  const pieChartData = [
-    {
-      name: "My Listings",
-      population: stats.myListings,
-      color: "#a29bfe",
-      legendFontColor: "#333",
-      legendFontSize: 12,
-    },
-    {
-      name: "Requests Sent",
-      population: stats.sentRequests,
-      color: "#e17055",
-      legendFontColor: "#333",
-      legendFontSize: 12,
-    },
-    {
-      name: "Requests Received",
-      population: stats.receivedRequests,
-      color: "#55efc4",
-      legendFontColor: "#333",
-      legendFontSize: 12,
-    },
-    {
-      name: "New This Week",
-      population: stats.newThisWeek,
-      color: "#ffeaa7",
-      legendFontColor: "#333",
-      legendFontSize: 12,
-    },
-  ]
-
-  const total = stats.totalListings || 1 // prevent division by zero
-
   return (
     <ScrollView style={statsStyles.container}>
       <Text style={statsStyles.title}>📈 RealBroker Stats</Text>
 
-      {/* Pie Chart */}
-      <Text style={statsStyles.subtitle}>Distribution</Text>
-      <PieChart
-        data={pieChartData}
-        width={screenWidth - 20}
-        height={220}
-        chartConfig={chartConfig}
-        accessor="population"
-        backgroundColor="transparent"
-        paddingLeft="15"
-        center={[10, 0]}
-        absolute
-        style={{ marginVertical: 10 }}
-      />
-
-      {/* Percent Bars */}
-      <Text style={statsStyles.subtitle}>Percent Contributions</Text>
-        <PercentBars data={[
-            { label: "My Listings", value: stats.myListings },
-            { label: "Requests Received", value: stats.receivedRequests },
-            { label: "Requests Sent", value: stats.sentRequests },
-            { label: "New This Week", value: stats.newThisWeek },
-        ]}
-        total={total}
-        />
-
-    {/* Stat Cards */}
-    <Text style={statsStyles.subtitle}>Your Stats</Text>
+      {/* Stat Cards */}
+      <Text style={statsStyles.subtitle}>Your Stats</Text>
       <View style={statsStyles.grid}>
         <StatCard label="Total Listings" value={stats.totalListings} />
         <StatCard label="My Listings" value={stats.myListings} />
@@ -147,10 +124,44 @@ export default function StatsOverview({ subscriptionExpiry }: { subscriptionExpi
         <StatCard label="New This Week" value={stats.newThisWeek} />
         <StatCard label="Days Left" value={stats.daysLeft} />
       </View>
+
+      {/* Row 3: Gauge */}
+      <View style={statsStyles.gaugeContainer}>
+        <GaugeChart daysLeft={stats.daysLeft} />
+      </View>
+
+      {/* Row 1: Line & Bar Chart */}
+      <View style={[statsStyles.row, { flexDirection: isSmallScreen ? "column" : "row" }]}>
+        <View style={statsStyles.lineChartContainer}>
+          <CustomLineChart
+            labels={lineData.labels}
+            data={lineData.data}
+          />
+        </View>
+
+        <View style={statsStyles.barChartContainer}>
+          <RequestsBarChart
+            sentRequests={stats.sentRequests}
+            receivedRequests={stats.receivedRequests}
+          />
+        </View>
+      </View>
+
+      {/* Row 2: StackBar & Pie */}
+      <View style={[statsStyles.row, { flexDirection: isSmallScreen ? "column" : "row" }]}>
+        <View style={statsStyles.stackBarContainer}>
+          <StackBar data={requestsData} />
+        </View>
+        <View style={statsStyles.pieChartContainer}>
+          <ListingsPieChart
+            myListings={stats.myListings}
+            totalListings={stats.totalListings}
+          />
+        </View>
+      </View>
     </ScrollView>
   )
 }
-
 
 const StatCard = ({ label, value }: { label: string; value: number }) => {
   const colorSet = statColors[label] || { text: "#007AFF", border: "#007AFF" }
@@ -162,5 +173,3 @@ const StatCard = ({ label, value }: { label: string; value: number }) => {
     </View>
   )
 }
-
-

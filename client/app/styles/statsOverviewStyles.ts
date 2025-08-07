@@ -54,6 +54,47 @@ const statsStyles = StyleSheet.create({
     color: "#555",
     marginTop: 4,
   },
+  row: {
+  flexDirection: "row",
+  justifyContent: "space-between",
+  gap: 10,
+  marginTop: 10,
+},
+lineChartContainer: {
+  backgroundColor: "#e0f7fa",
+  borderRadius: 12,
+  padding: 10,
+  flex: 1,
+},
+barChartContainer: {
+  backgroundColor: "#fce4ec",
+  borderRadius: 12,
+  padding: 10,
+  flex: 1,
+},
+stackBarContainer: {
+  backgroundColor: "#f1f8e9",
+  borderRadius: 12,
+  padding: 10,
+  flex: 1.4,
+  marginRight: 5,
+},
+pieChartContainer: {
+  backgroundColor: "#fff3e0",
+  borderRadius: 12,
+  padding: 10,
+  flex: 1.4,
+},
+gaugeContainer: {
+  backgroundColor: "#ede7f6",
+  borderRadius: 12,
+  padding: 10,
+  marginTop: 10,
+},
+chartStyle: {
+  borderRadius: 8,
+},
+
 })
 
 

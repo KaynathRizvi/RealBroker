@@ -1,68 +1,119 @@
-// styles/loginStyles.ts
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native"
 
-const loginStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    padding: 24,
-    backgroundColor: '#f4f6f9',
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 24,
   },
+
+  formBox: {
+    backgroundColor: "#ffffffee", // semi-transparent white
+    borderRadius: 16,
+    padding: 24,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 6,
+    maxWidth: 400,
+    width: "100%",
+    alignSelf: "center",
+  },
+
   title: {
     fontSize: 28,
-    fontFamily: 'NunitoBold',
+    fontWeight: "bold",
     marginBottom: 32,
-    textAlign: 'center',
-    color: '#1f2937', // dark gray
+    textAlign: "center",
+    color: "#1f2937", // dark slate
+    fontFamily: "Nunito",
   },
+
   input: {
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: "#bae6fd",         // Soft pastel blue border
     marginBottom: 16,
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderRadius: 12,
     fontSize: 16,
-    fontFamily: 'Nunito',
-    backgroundColor: '#fff',
-    shadowColor: '#000',
+    fontFamily: "Nunito",
+    backgroundColor: "#e0f2fe",     // Pastel blue background
+    shadowColor: "#bae6fd",         // Soft blue shadow
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.08,
     shadowRadius: 3,
-    elevation: 1,
+    elevation: 2,
   },
-  button: {
-    backgroundColor: '#2563eb', // blue-600
-    paddingVertical: 14,
-    borderRadius: 12,
-    marginTop: 8,
-    alignItems: 'center',
-    shadowColor: '#2563eb',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    elevation: 4,
+
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontFamily: 'NunitoBold',
+  eyeIcon: {
+    marginLeft: -40,
+    padding: 10,
+    marginBottom: 10,
   },
+
+  checkboxContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+
+  checkboxLabel: {
+    fontSize: 15,
+    fontFamily: "Nunito",
+    color: "#374151", // slate gray
+    marginLeft: 8,
+  },
+
+ button: {
+  backgroundColor: '#e0f2fe', // Pastel baby blue
+  borderColor: '#bae6fd',     // Lighter blue border
+  borderWidth: 1,
+  paddingVertical: 14,
+  borderRadius: 12,
+  marginTop: 8,
+  alignItems: 'center',
+  shadowColor: '#7dd3fc',     // Soft blue shadow
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.1,
+  shadowRadius: 4,
+  elevation: 2,
+},
+
+buttonText: {
+  color: '#0284c7',            // Rich pastel blue text
+  fontSize: 16,
+  fontFamily: 'NunitoBold',
+},
+
   forgotButton: {
     marginTop: 18,
-    alignItems: 'center',
+    alignItems: "center",
+    marginBottom: 16,
   },
-  forgotButtonText: {
-    color: '#4b5563', // gray-600
-    fontSize: 15,
-    fontFamily: 'Nunito',
-    textDecorationLine: 'underline',
-  },
-  message: {
-    color: 'red',
-    fontFamily: 'Nunito',
-    fontSize: 16,
-  }
-});
 
-export default loginStyles;
+  forgotButtonText: {
+    color: "#4b5563", // muted slate
+    fontSize: 15,
+    fontFamily: "Nunito",
+    textDecorationLine: "underline",
+  },
+
+  message: {
+    color: "red",
+    fontFamily: "Nunito",
+    fontSize: 16,
+    marginBottom: 10,
+    textAlign: "center",
+  },
+})
+
+export default styles
