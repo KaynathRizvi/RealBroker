@@ -2,35 +2,47 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    padding: 15,
-    backgroundColor: '#fff',
     flex: 1,
+    paddingTop: 20,
+  },
+  formBox: {
+    padding: 20,
   },
   title: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: '700',
-    marginBottom: 20,
+    marginBottom: 25,
+    textAlign: 'center',
   },
   label: {
     fontSize: 16,
-    marginTop: 10,
-    marginBottom: 4,
+    marginBottom: 6,
+    color: '#1f2937',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    borderRadius: 8,
+    borderColor: '#d1d5db',
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 15,
     backgroundColor: '#fff',
-    marginBottom: 10,
+    fontSize: 16,
   },
   disabledInput: {
-    backgroundColor: '#eee',
+    backgroundColor: '#f3f4f6',
+    color: '#9ca3af',
   },
-  text: {
+  button: {
+    backgroundColor: '#3b82f6',
+    paddingVertical: 14,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  buttonText: {
+    color: '#fff',
     fontSize: 16,
-    textAlign: 'center',
-    marginTop: 20,
+    fontWeight: '600',
   },
 });
 
