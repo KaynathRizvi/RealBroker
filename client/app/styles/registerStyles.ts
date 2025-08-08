@@ -31,18 +31,18 @@ const registerStyles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#bae6fd",         // Soft pastel blue border
+    borderColor: "#c7d2fe",         // Soft pastel lavender border
     marginBottom: 16,
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderRadius: 12,
     fontSize: 16,
     fontFamily: "Nunito",
-    backgroundColor: "#e0f2fe",     // Pastel blue background
-    shadowColor: "#bae6fd",         // Soft blue shadow
-    shadowOffset: { width: 0, height: 1 },
+    backgroundColor: "#f3e8ff",     // Lavender background
+    shadowColor: "#c7d2fe",         // Lavender shadow
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
-    shadowRadius: 3,
+    shadowRadius: 4,
     elevation: 2,
   },
   passwordContainer: {

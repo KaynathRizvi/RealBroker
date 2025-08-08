@@ -107,7 +107,8 @@ export default function LoginPage() {
         <Text style={styles.title}>Welcome Back 👋</Text>
 
         <TextInput
-          placeholder="Email"
+          placeholder="Enter your email"
+          placeholderTextColor="#6d628cff"
           value={email}
           onChangeText={setEmail}
           autoCapitalize="none"
@@ -118,7 +119,8 @@ export default function LoginPage() {
 
         <View style={styles.passwordContainer}>
           <TextInput
-            placeholder="Password"
+            placeholder="Enter your password"
+            placeholderTextColor="#6d628cff"
             secureTextEntry={!showPassword}
             value={password}
             onChangeText={setPassword}
@@ -132,7 +134,7 @@ export default function LoginPage() {
             <Ionicons
               name={showPassword ? "eye-off" : "eye"}
               size={22}
-              color="#7dd3fc"
+              color="#8e7ebaff"
             />
           </TouchableOpacity>
         </View>

@@ -34,18 +34,18 @@ const styles = StyleSheet.create({
 
   input: {
     borderWidth: 1,
-    borderColor: "#bae6fd",         // Soft pastel blue border
+    borderColor: "#c7d2fe",         // Soft pastel lavender border
     marginBottom: 16,
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderRadius: 12,
     fontSize: 16,
     fontFamily: "Nunito",
-    backgroundColor: "#e0f2fe",     // Pastel blue background
-    shadowColor: "#bae6fd",         // Soft blue shadow
-    shadowOffset: { width: 0, height: 1 },
+    backgroundColor: "#f3e8ff",     // Lavender background
+    shadowColor: "#c7d2fe",         // Lavender shadow
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
-    shadowRadius: 3,
+    shadowRadius: 4,
     elevation: 2,
   },
 
@@ -73,26 +73,26 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
 
- button: {
-  backgroundColor: '#e0f2fe', // Pastel baby blue
-  borderColor: '#bae6fd',     // Lighter blue border
-  borderWidth: 1,
-  paddingVertical: 14,
-  borderRadius: 12,
-  marginTop: 8,
-  alignItems: 'center',
-  shadowColor: '#7dd3fc',     // Soft blue shadow
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.1,
-  shadowRadius: 4,
-  elevation: 2,
-},
+  button: {
+    backgroundColor: '#e0f2fe', // Pastel baby blue
+    borderColor: '#bae6fd',     // Lighter blue border
+    borderWidth: 1,
+    paddingVertical: 14,
+    borderRadius: 12,
+    marginTop: 8,
+    alignItems: 'center',
+    shadowColor: '#7dd3fc',     // Soft blue shadow
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
 
-buttonText: {
-  color: '#0284c7',            // Rich pastel blue text
-  fontSize: 16,
-  fontFamily: 'NunitoBold',
-},
+  buttonText: {
+    color: '#0284c7',            // Rich pastel blue text
+    fontSize: 16,
+    fontFamily: 'NunitoBold',
+  },
 
   forgotButton: {
     marginTop: 18,

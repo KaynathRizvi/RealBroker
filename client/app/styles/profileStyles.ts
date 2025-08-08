@@ -3,7 +3,13 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: 15,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fdf2f8',
   },
   formBox: {
     padding: 20,
@@ -33,17 +39,31 @@ const styles = StyleSheet.create({
     color: '#9ca3af',
   },
   button: {
-    backgroundColor: '#3b82f6',
+    backgroundColor: '#799cc9ff',
+    borderWidth: 1,
+    borderColor: '#799cc9ff',
     paddingVertical: 14,
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 3,
   },
   buttonText: {
-    color: '#fff',
+    color: '#fcfcfcff', // deep pastel lavender text
     fontSize: 16,
     fontWeight: '600',
   },
+  errorText: {
+  color: '#f03737ff', // pastel pink
+  fontSize: 12,
+  marginBottom: 10,
+  fontWeight: '300',
+},
+
 });
 
 export default styles;

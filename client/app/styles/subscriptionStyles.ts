@@ -1,69 +1,79 @@
-import { StyleSheet } from "react-native"
+// subscriptionStyles.ts
+import { StyleSheet } from "react-native";
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#c9deecff", // pastel pink background
     padding: 20,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#fdf2f8",
   },
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 26,
+    fontFamily: "Nunito",
+    fontWeight: "700",
     textAlign: "center",
-    marginBottom: 20,
-    color: "#333",
+    marginBottom: 25,
+    color: "#4b5563", // Slate gray for contrast
   },
   planCard: {
     backgroundColor: "white",
-    borderRadius: 10,
+    borderRadius: 16,
     padding: 20,
-    marginBottom: 15,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    marginBottom: 20,
+    shadowColor: "#9ca3af", // soft gray shadow
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 8,
+    elevation: 4,
+    borderWidth: 1,
+    borderColor: "#fbcfe8", // pastel pink border
   },
   planName: {
     fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 5,
-    color: "#333",
+    fontFamily: "Nunito",
+    fontWeight: "700",
+    marginBottom: 6,
+    color: "#144cc7ff", // pastel purple
   },
   planPrice: {
-    fontSize: 20,
-    color: "#007AFF",
-    fontWeight: "bold",
-    marginBottom: 10,
+    fontSize: 18,
+    fontFamily: "Nunito",
+    color: "#4065b4ff", // pastel blue
+    fontWeight: "700",
+    marginBottom: 12,
   },
   planFeature: {
-    fontSize: 14,
-    color: "#666",
-    marginBottom: 5,
+    fontSize: 15,
+    fontFamily: "Nunito",
+    color: "#374151", // dark slate
+    marginBottom: 6,
     paddingLeft: 5,
   },
   subscribeButton: {
-    backgroundColor: "#007AFF",
+    backgroundColor: "#93c5fd", // pastel blue
     paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
+    borderRadius: 10,
     alignItems: "center",
-    marginTop: 10,
+    marginTop: 14,
+    shadowColor: "#93c5fd",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 3,
+    borderWidth: 1.5,
+    borderColor: "#3b82f6", // deeper blue border
   },
   subscribeButtonText: {
-    color: "white",
+    color: "#1e3a8a", // deep blue text for contrast
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily: "Nunito",
+    fontWeight: "700",
   },
-})
 
-export default styles
+});

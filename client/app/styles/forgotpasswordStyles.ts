@@ -22,48 +22,51 @@ const forgotPasswordStyles = StyleSheet.create({
     alignSelf: "center",
   },
   title: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: "bold",
     marginBottom: 32,
     textAlign: "center",
-    color: "#1f2937", // dark slate
+    color: "#2b2542ff", // dark slate
     fontFamily: "Nunito", // slate-900
   },
   input: {
     borderWidth: 1,
-    borderColor: "#bae6fd",         // Soft pastel blue border
+    borderColor: '#e9d5ff',        // Light pastel lavender border
     marginBottom: 16,
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderRadius: 12,
     fontSize: 16,
-    fontFamily: "Nunito",
-    backgroundColor: "#e0f2fe",     // Pastel blue background
-    shadowColor: "#bae6fd",         // Soft blue shadow
+    fontFamily: 'Nunito',
+    backgroundColor: '#f5f3ff',    // Soft lavender background
+    shadowColor: '#d8b4fe',        // Soft lavender shadow
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.08,
     shadowRadius: 3,
     elevation: 2,
   },
+
   button: {
-    backgroundColor: '#e0f2fe', // Pastel baby blue
-    borderColor: '#bae6fd',     // Lighter blue border
+    backgroundColor: '#f5f3ff', // Light lavender background
+    borderColor: '#e9d5ff',     // Pastel lavender border
     borderWidth: 1,
     paddingVertical: 14,
     borderRadius: 12,
     marginTop: 8,
     alignItems: 'center',
-    shadowColor: '#7dd3fc',     // Soft blue shadow
+    shadowColor: '#d8b4fe',     // Soft lavender shadow
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
   },
+
   buttonText: {
-    color: '#0284c7',            // Rich pastel blue text
+    color: '#8b5cf6',            // Rich lavender text for contrast
     fontSize: 16,
     fontFamily: 'NunitoBold',
   },
+
   message: {
     color: "red",
     fontFamily: "Nunito",

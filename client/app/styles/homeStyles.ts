@@ -10,6 +10,10 @@ const homeStyles = StyleSheet.create({
     gap: 20,
     marginTop: 10,
   },
+  userName: {
+    color: '#1c327aff',
+    fontWeight: 'bold',
+  },
   card: {
     borderRadius: 16,
     padding: 20,
@@ -39,6 +43,22 @@ const homeStyles = StyleSheet.create({
     borderLeftColor: "#d2a9caff",
     borderLeftWidth: 4,
   },
+  propertyCard: {
+    backgroundColor: "#e4faf7ff", 
+    borderLeftColor: "#3caea3", 
+    borderLeftWidth: 4,
+  },
+  propertyItemCard: {
+    backgroundColor: '#fff',  // white background for each property card
+    borderRadius: 16,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 4,
+  },
+
   cardTitle: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -78,6 +98,22 @@ const homeStyles = StyleSheet.create({
     color: '#555',
     marginTop: 4,
   },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+    marginTop: 8,
+  },
+  detail: {
+    fontSize: 14,
+    color: "#666",
+    marginTop: 4,
+  },
+  email: {
+    fontSize: 14,
+    color: "#999",
+    marginTop: 2,
+  }
 
 })
 

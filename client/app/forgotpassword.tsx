@@ -65,6 +65,7 @@ export default function ForgotPasswordScreen() {
           value={email}
           onChangeText={setEmail}
           placeholder="Enter Your Email"
+          placeholderTextColor="#6d628cff"
           keyboardType="email-address"
           autoCapitalize="none"
           style={styles.input}

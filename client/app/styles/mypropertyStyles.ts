@@ -6,29 +6,24 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: '700',
-    color: '#334155', // slate-800
-    marginBottom: 20,
-    fontFamily: 'NunitoBold',
+    marginBottom: 25,
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: 20,
-    fontWeight: '600',
-    color: '#64748b', // slate-500
-    marginBottom: 12,
-    fontFamily: 'NunitoSemiBold',
+    fontWeight: '700',
+    marginBottom: 25,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#e2e8f0', // slate-200
-    backgroundColor: '#ffffff',
+    borderColor: '#d1d5db',
+    borderRadius: 10,
     padding: 12,
     marginBottom: 15,
-    borderRadius: 10,
+    backgroundColor: '#fff',
     fontSize: 16,
-    color: '#0f172a', // slate-900
-    fontFamily: 'NunitoRegular',
   },
   list: {
     marginBottom: 25,
@@ -86,10 +81,53 @@ const styles = StyleSheet.create({
   modalButton: {
     flex: 1,
     paddingVertical: 10,
+    paddingHorizontal: 10,
     marginHorizontal: 5,
     borderRadius: 8,
     alignItems: 'center',
   },
+  deleteButton:{
+    backgroundColor: '#e33434ff',
+    paddingVertical: 14,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  deleteButtonText:{
+    color: '#fcfcfcff', // deep pastel lavender text
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  button: {
+    backgroundColor: '#799cc9ff',
+    borderWidth: 1,
+    borderColor: '#799cc9ff',
+    paddingVertical: 14,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  buttonText: {
+    color: '#fcfcfcff', // deep pastel lavender text
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  errorText: {
+  color: '#d9534f', // soft red for errors
+  fontSize: 14,
+  marginBottom: 10,
+  fontWeight: '500',
+},
 });
 
 export default styles;

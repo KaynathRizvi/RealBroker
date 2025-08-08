@@ -100,6 +100,7 @@ export default function RegisterPage() {
 
       <TextInput
         placeholder="Email"
+        placeholderTextColor="#6d628cff"
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
@@ -110,6 +111,7 @@ export default function RegisterPage() {
       <View style={styles.passwordContainer}>
         <TextInput
           placeholder="Password"
+          placeholderTextColor="#6d628cff"
           secureTextEntry={!showPassword}
           value={password}
           onChangeText={setPassword}
@@ -122,7 +124,7 @@ export default function RegisterPage() {
           <Ionicons
             name={showPassword ? "eye-off" : "eye"}
             size={22}
-            color="#7dd3fc"
+            color="#8e7ebaff"
           />
         </TouchableOpacity>
       </View>
@@ -130,6 +132,7 @@ export default function RegisterPage() {
       <View style={styles.passwordContainer}>
         <TextInput
           placeholder="Confirm Password"
+          placeholderTextColor="#6d628cff"
           secureTextEntry={!showPassword}
           value={confirmPassword}
           onChangeText={setConfirmPassword}
@@ -142,7 +145,7 @@ export default function RegisterPage() {
           <Ionicons
             name={showPassword ? "eye-off" : "eye"}
             size={22}
-            color="#7dd3fc"
+            color="#8e7ebaff"
           />
         </TouchableOpacity>
       </View>

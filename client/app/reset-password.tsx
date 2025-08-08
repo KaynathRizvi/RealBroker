@@ -73,6 +73,7 @@ export default function ResetPasswordScreen() {
 
         <TextInput
           placeholder="New Password"
+          placeholderTextColor="#6d628cff"
           secureTextEntry
           onChangeText={setPassword}
           value={password}
@@ -80,6 +81,7 @@ export default function ResetPasswordScreen() {
         />
         <TextInput
           placeholder="Confirm Password"
+          placeholderTextColor="#6d628cff"
           secureTextEntry
           onChangeText={setConfirm}
           value={confirm}

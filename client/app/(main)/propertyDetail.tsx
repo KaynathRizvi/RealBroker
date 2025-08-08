@@ -10,7 +10,6 @@ const SERVER_URL =
 export default function PropertyDetail() {
   const router = useRouter();
   const { id } = useLocalSearchParams();
-  console.log("Received ID:", id);
   const [property, setProperty] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -36,7 +35,6 @@ export default function PropertyDetail() {
         property_pic_url: imageArray,
       });
     } catch (err) {
-      console.error("Failed to load property detail:", err);
       Alert.alert("Error", "Could not load property detail.");
     } finally {
       setLoading(false);
@@ -55,7 +53,7 @@ export default function PropertyDetail() {
   if (loading) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#a78bfa" />
         <Text>Loading property detail...</Text>
       </View>
     );
@@ -95,7 +93,8 @@ export default function PropertyDetail() {
         onPress={() => router.push(`/request-contact?id=${id}`)}>
         <Text style={styles.requestButtonText}>Request Contact</Text>
       </Pressable>
-      <Pressable style={styles.backButton} onPress={() => router.push('/properties')}> 
+
+      <Pressable style={styles.backButton} onPress={() => router.push('/properties')}>
         <Text style={styles.backButtonText}>Go Back</Text>
       </Pressable>
     </ScrollView>

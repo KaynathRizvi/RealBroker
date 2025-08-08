@@ -11,7 +11,7 @@ const SERVER_URL =
 const Properties = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter(); // <-- Added
+  const router = useRouter();
 
   const fetchProperties = async () => {
     try {
@@ -31,28 +31,29 @@ const Properties = () => {
 
   if (loading) {
     return (
-      <View style={styles.center}>
-        <ActivityIndicator size="large" color="#0000ff" />
-        <Text>Loading properties...</Text>
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#8b5cf6" />
+        <Text style={styles.loadingText}>Loading properties...</Text>
       </View>
     );
   }
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {properties.map((property) => (
         <TouchableOpacity
-          key={property.id} // use property.id here
+          key={property.id}
           onPress={() => {
-          if (property.id != null) {
-            router.push({
-            pathname: "/(main)/propertyDetail",
-            params: { id: property.id.toString() }, 
-          });
-          } else {
-            console.warn("id is undefined for property:", property);
-          }
-        }}>
+            if (property.id != null) {
+              router.push({
+                pathname: "/(main)/propertyDetail",
+                params: { id: property.id.toString() },
+              });
+            } else {
+              console.warn("id is undefined for property:", property);
+            }
+          }}
+        >
           <View style={styles.card}>
             <ScrollView
               horizontal
@@ -69,7 +70,7 @@ const Properties = () => {
               ))}
             </ScrollView>
             <Text style={styles.title}>{property.property_name}</Text>
-            <Text style={styles.detail}>Price: ₹{property.deal_price ?? 'Not specified'}</Text>
+            <Text style={styles.detail}>Deal Price: ₹{property.deal_price ?? 'Not specified'}</Text>
             <Text style={styles.email}>Owner: {property.name}</Text>
           </View>
         </TouchableOpacity>

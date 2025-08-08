@@ -38,6 +38,13 @@ export default function ProfilePage() {
   });
 
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState({
+    name: '',
+    agency: '',
+    contact: '',
+    location: '',
+  });
 
   useEffect(() => {
     fetchProfile();
@@ -76,12 +83,32 @@ export default function ProfilePage() {
     }
   }
 
+  function validateField(field: string, value: string) {
+  let message = '';
+
+  if (value.trim() === '' && field !== 'license') {
+    message = 'This field cannot be empty';
+  } else if ((field === 'contact' || field === 'license') && !/^\d*$/.test(value)) {
+    message = 'Must contain only numbers';
+  }
+
+  setErrors(prev => ({ ...prev, [field]: message }));
+  return message === ''; // valid if no error
+}
+
+
   async function saveProfile() {
     const { name, agency_name, contact_number, location } = profile;
 
-    if (!name || !agency_name || !contact_number || !location) {
-      Alert.alert('Validation Error', 'Please fill in all required fields');
+    const isNameValid = validateField('name', name);
+    const isAgencyValid = validateField('agency', agency_name);
+    const isContactValid = validateField('contact', contact_number);
+    const isLocationValid = validateField('location', location);
+
+    if (!isNameValid || !isAgencyValid || !isContactValid || !isLocationValid) {
       return;
+    } else {
+      setError(null);
     }
 
     try {
@@ -113,7 +140,7 @@ export default function ProfilePage() {
           Alert.alert('Success ✅', data.message || 'Your profile has been updated successfully!');
         }, 100);
       } else {
-          Alert.alert('Error', data.message || 'Failed to save profile');
+        Alert.alert('Error', data.message || 'Failed to save profile');
       }
     } catch (err) {
       Alert.alert('Error', 'Network error');
@@ -133,6 +160,8 @@ export default function ProfilePage() {
       <ScrollView contentContainerStyle={styles.formBox}>
         <Text style={styles.title}>Your Profile 👤</Text>
 
+        {error && <Text style={styles.errorText}>{error}</Text>}
+
         <Text style={styles.label}>Email (not editable):</Text>
         <TextInput
           value={profile.email}
@@ -143,43 +172,56 @@ export default function ProfilePage() {
         <Text style={styles.label}>Name*:</Text>
         <TextInput
           value={profile.name}
-          onChangeText={text => setProfile(prev => ({ ...prev, name: text }))}
+          onChangeText={text => { setProfile(prev => ({ ...prev, name: text })); validateField('name', text); }}
           style={styles.input}
           placeholder="Enter your full name"
         />
+        {errors.name ? <Text style={styles.errorText}>{errors.name}</Text> : null}
 
         <Text style={styles.label}>Agency Name*:</Text>
         <TextInput
           value={profile.agency_name}
-          onChangeText={text => setProfile(prev => ({ ...prev, agency_name: text }))}
+          onChangeText={text => { setProfile(prev => ({ ...prev, agency_name: text })); validateField('agency', text); }}
           style={styles.input}
           placeholder="Enter your agency name"
         />
+        {errors.agency ? <Text style={styles.errorText}>{errors.agency}</Text> : null}
 
         <Text style={styles.label}>Contact Number*:</Text>
         <TextInput
           value={profile.contact_number}
-          onChangeText={text => setProfile(prev => ({ ...prev, contact_number: text }))}
+          onChangeText={text => {
+            const numericValue = text.replace(/[^0-9]/g, '');
+            setProfile(prev => ({ ...prev, contact_number: numericValue }));
+            validateField('contact', numericValue);
+          }}
           style={styles.input}
           placeholder="Enter your contact number"
-          keyboardType="phone-pad"
+          keyboardType="number-pad"
         />
+        {errors.contact ? <Text style={styles.errorText}>{errors.contact}</Text> : null}
 
         <Text style={styles.label}>License Number (optional):</Text>
         <TextInput
           value={profile.license_number}
-          onChangeText={text => setProfile(prev => ({ ...prev, license_number: text }))}
+          onChangeText={text => {
+            const numericValue = text.replace(/[^0-9]/g, '');
+            setProfile(prev => ({ ...prev, license_number: numericValue }));
+          }}
           style={styles.input}
-          placeholder="Enter your license number"
+          placeholder="Enter your license number (digits only)"
+          keyboardType="number-pad"
         />
+
 
         <Text style={styles.label}>Location*:</Text>
         <TextInput
           value={profile.location}
-          onChangeText={text => setProfile(prev => ({ ...prev, location: text }))}
+          onChangeText={text => { setProfile(prev => ({ ...prev, location: text })); validateField('location', text); }}
           style={styles.input}
           placeholder="Enter your city or region"
         />
+        {errors.location ? <Text style={styles.errorText}>{errors.location}</Text> : null}
 
         <Pressable style={styles.button} onPress={saveProfile}>
           <Text style={styles.buttonText}>Save Profile</Text>

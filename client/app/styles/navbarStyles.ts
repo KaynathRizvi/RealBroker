@@ -27,13 +27,13 @@ const navbarStyles = StyleSheet.create({
   },
   link: {
     fontSize: 16,
-    color: '#00838f', // 🧊 Cool pastel teal
+    color: '#5f7ad4ff', // 🧊 Cool pastel teal
     paddingVertical: 8,
     paddingHorizontal: 14,
     borderRadius: 8,
-    backgroundColor: '#e0f7fa', // Light mint blue
+    backgroundColor: '#dde5ffff', // Light mint blue
     borderWidth: 1,
-    borderColor: '#b2ebf2',
+    borderColor: '#c0cefdff',
   },
   logout: {
     color: '#c62828',

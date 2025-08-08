@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode'; // corrected import (default export)
+import { LinearGradient} from "expo-linear-gradient" ;
+import styles from '../styles/sentRequestStyles';
 
 const SERVER_URL =
   Constants.expoConfig?.extra?.DEBUG_SERVER_URL ||
@@ -47,67 +49,69 @@ const SentRequests = () => {
   }, []);
 
   if (loading) {
-    return <ActivityIndicator size="large" style={{ marginTop: 50 }} />;
+    return (
+      <LinearGradient colors={["#fdf2f8", "#eceffeff"]} style={styles.gradient}>
+        <ActivityIndicator size="large" style={styles.loading} />
+      </LinearGradient>
+    );
   }
 
   if (requests.length === 0) {
-    return <Text style={{ padding: 20 }}>You haven't sent any contact requests.</Text>;
+    return (
+      <LinearGradient colors={["#fdf2f8", "#eceffeff"]} style={styles.gradient}>
+        <Text style={styles.noRequests}>You haven't sent any contact requests.</Text>
+      </LinearGradient>
+    );
   }
 
   return (
-    <FlatList
-      data={requests}
-      keyExtractor={(item, index) =>
-        item.request_id ? item.request_id.toString() : index.toString()
-      }
-      renderItem={({ item }) => (
-        <View style={styles.card}>
-          <TouchableOpacity onPress={() => toggleExpand(item.request_id)}>
-            <View style={styles.headerRow}>
-              <Text style={styles.property}>{item.property_name}</Text>
-              <Text style={styles.status}>Status: {item.status}</Text>
-            </View>
-          </TouchableOpacity>
+    <LinearGradient colors={["#fdf2f8", "#eceffeff"]} style={styles.gradient}>
+      <FlatList
+        data={requests}
+        keyExtractor={(item, index) =>
+          item.request_id ? item.request_id.toString() : index.toString()
+        }
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+            <TouchableOpacity onPress={() => toggleExpand(item.request_id)}>
+              <View style={styles.headerRow}>
+                <Text style={styles.property}>{item.property_name}</Text>
+                <Text
+                  style={[
+                    styles.status,
+                    item.status === 'accepted'
+                      ? styles.accepted
+                      : item.status === 'rejected'
+                      ? styles.rejected
+                      : styles.pending,
+                  ]}
+                >
+                  {item.status.toUpperCase()}
+                </Text>
+              </View>
+            </TouchableOpacity>
 
-          {expandedId === item.request_id && (
-            <View style={{ marginTop: 10 }}>
-              {item.status === 'accepted' ? (
-                <>
-                  <Text>Message: Hello, let's connect!</Text>
-                  <Text>Owner Name: {item.owner_name}</Text>
-                  <Text>Email: {item.owner_email}</Text>
-                  <Text>Contact: {item.owner_contact}</Text>
-                </>
-              ) : (
-                <Text>You will see owner details once the request is accepted.</Text>
-              )}
-            </View>
-          )}
-        </View>
-      )}
-    />
+            {expandedId === item.request_id && (
+              <View style={styles.details}>
+                {item.status === 'accepted' ? (
+                  <>
+                    <Text style={styles.detailText}>💬 Message: Hello, let's connect!</Text>
+                    <Text style={styles.detailText}>👤 Owner Name: {item.owner_name}</Text>
+                    <Text style={styles.detailText}>📧 Email: {item.owner_email}</Text>
+                    <Text style={styles.detailText}>📱 Contact: {item.owner_contact}</Text>
+                  </>
+                ) : (
+                  <Text style={styles.waitingText}>
+                    You will see owner details once the request is accepted.
+                  </Text>
+                )}
+              </View>
+            )}
+          </View>
+        )}
+      />
+    </LinearGradient>
   );
 };
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: '#f2f2f2',
-    padding: 15,
-    borderRadius: 10,
-    margin: 10,
-  },
-  headerRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  property: {
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  status: {
-    fontStyle: 'italic',
-    color: '#555',
-  },
-});
 
 export default SentRequests;
