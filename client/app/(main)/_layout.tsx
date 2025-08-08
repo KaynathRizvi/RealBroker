@@ -30,6 +30,7 @@ export default function RootLayout() {
         <Stack.Screen name="viewsubscription" options={{ headerShown: false }} />
         <Stack.Screen name="statsOverview" options={{ headerShown: false }} />
         <Stack.Screen name="request-contact" options={{ headerShown: false }} />
+        <Stack.Screen name="contactPage" options={{ headerShown: false }} />
       </Stack>
     </View>
   );

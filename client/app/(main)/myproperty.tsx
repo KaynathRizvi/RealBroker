@@ -71,6 +71,15 @@ export default function MyProperty() {
       message = 'This field cannot be empty';
     } else if (field === 'price' && !/^\d+(\.\d{1,2})?$/.test(value)) {
       message = 'Price must be a number';
+    } else if (field === 'picUrl') {
+      // Validate each URL for valid image extension
+      const urls = value.trim().split(/\s+/);
+      const imageRegex = /\.(jpg|jpeg|png|gif|bmp|webp)$/i;
+
+      const invalidUrl = urls.find(url => !imageRegex.test(url));
+      if (invalidUrl) {
+        message = 'Invalid image type: only JPG, PNG, GIF, BMP, WEBP allowed';
+      }
     }
 
     setErrors(prev => ({ ...prev, [field]: message }));
@@ -82,8 +91,13 @@ export default function MyProperty() {
     validateField('desc', newPropDesc);
     validateField('picUrl', newPropPicUrl);
 
-    if (Object.values(errors).some(err => err !== '') ||
-        !newPropName || !newPropPrice || !newPropDesc || !newPropPicUrl) {
+    if (
+      Object.values(errors).some(err => err !== '') ||
+      !newPropName ||
+      !newPropPrice ||
+      !newPropDesc ||
+      !newPropPicUrl
+    ) {
       Alert.alert('Error', 'Please fix errors before submitting');
       return;
     }
@@ -192,7 +206,10 @@ export default function MyProperty() {
       <TextInput
         placeholder="Property Name"
         value={newPropName}
-        onChangeText={text => { setNewPropName(text); validateField('name', text); }}
+        onChangeText={text => {
+          setNewPropName(text);
+          validateField('name', text);
+        }}
         style={styles.input}
       />
       {errors.name ? <Text style={styles.errorText}>{errors.name}</Text> : null}
@@ -200,7 +217,10 @@ export default function MyProperty() {
       <TextInput
         placeholder="Deal Price"
         value={newPropPrice}
-        onChangeText={text => { setNewPropPrice(text); validateField('price', text); }}
+        onChangeText={text => {
+          setNewPropPrice(text);
+          validateField('price', text);
+        }}
         keyboardType="numeric"
         style={styles.input}
       />
@@ -209,7 +229,10 @@ export default function MyProperty() {
       <TextInput
         placeholder="Property Description"
         value={newPropDesc}
-        onChangeText={text => { setNewPropDesc(text); validateField('desc', text); }}
+        onChangeText={text => {
+          setNewPropDesc(text);
+          validateField('desc', text);
+        }}
         style={styles.input}
       />
       {errors.desc ? <Text style={styles.errorText}>{errors.desc}</Text> : null}
@@ -217,7 +240,10 @@ export default function MyProperty() {
       <TextInput
         placeholder="Property Picture URL(s)"
         value={newPropPicUrl}
-        onChangeText={text => { setNewPropPicUrl(text); validateField('picUrl', text); }}
+        onChangeText={text => {
+          setNewPropPicUrl(text);
+          validateField('picUrl', text);
+        }}
         style={styles.input}
       />
       {errors.picUrl ? <Text style={styles.errorText}>{errors.picUrl}</Text> : null}
@@ -236,10 +262,16 @@ export default function MyProperty() {
           <View style={styles.modalContent}>
             <Text style={styles.text}>Are you sure you want to delete this property?</Text>
             <View style={styles.modalActions}>
-              <Pressable style={[styles.modalButton, { backgroundColor: 'gray' }]} onPress={() => setModalVisible(false)}>
+              <Pressable
+                style={[styles.modalButton, { backgroundColor: 'gray' }]}
+                onPress={() => setModalVisible(false)}
+              >
                 <Text style={{ color: 'white' }}>Cancel</Text>
               </Pressable>
-              <Pressable style={[styles.modalButton, { backgroundColor: 'red' }]} onPress={handleDeleteConfirmed}>
+              <Pressable
+                style={[styles.modalButton, { backgroundColor: 'red' }]}
+                onPress={handleDeleteConfirmed}
+              >
                 <Text style={{ color: 'white' }}>Delete</Text>
               </Pressable>
             </View>

@@ -2,22 +2,25 @@
   padding: 1rem;
   background-color: #e0e3e4;
   min-height: 100vh;
-  font-family: 'Roboto', 
+  font-family: 'Roboto';
 }
 
+/* Align header left */
 .dashboard-header {
   margin-bottom: 1rem;
   color: #223b61;
-  text-align: center;
+  text-align: left; /* changed from center */
   font-size: 1.5rem;
+  padding-left: 1rem; /* optional for spacing */
 }
 
-/* Cards container */
+/* Cards container align left */
 .card-container {
   display: flex;
   gap: 2rem;
   flex-wrap: wrap; /* Allows wrapping on smaller screens */
-  justify-content: center;
+  justify-content: flex-start; /* changed from center */
+  padding-left: 1rem; /* optional for spacing */
 }
 
 /* Common card style */
@@ -57,18 +60,21 @@
   transform: scale(1.03);
 }
 
-/* ✅ Responsive adjustments */
+/* Responsive adjustments */
 @media (max-width: 508px) and (min-width: 380px) {
   .dashboard-container {
     padding: 1rem;
   }
   .dashboard-header {
     font-size: 1.2rem;
+    padding-left: 1rem;
+    text-align: left;
   }
   .card-container {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start; /* align items left */
     gap: 1rem;
+    padding-left: 1rem;
   }
 
   .user-card,
@@ -79,18 +85,20 @@
   }
 }
 
-/* ✅ Responsive adjustments */
 @media (max-width: 380px) {
   .dashboard-container {
     padding: 1rem;
   }
-  .dashboard-header{
+  .dashboard-header {
     font-size: 1rem;
+    padding-left: 1rem;
+    text-align: left;
   }
   .card-container {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start; /* align items left */
     gap: 1rem;
+    padding-left: 1rem;
   }
 
   .user-card,

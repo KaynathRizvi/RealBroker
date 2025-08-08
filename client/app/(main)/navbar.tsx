@@ -30,6 +30,9 @@ export default function Navbar() {
         <Pressable onPress={() => router.push("/profile")}>
           <Text style={styles.link}>Profile</Text>
         </Pressable>
+        <Pressable onPress={() => router.push("/contactPage")}>
+          <Text style={styles.link}>Contact Us</Text>
+        </Pressable>
         <Pressable onPress={handleLogout}>
           <Text style={[styles.link, styles.logout]}>Logout</Text>
         </Pressable>
