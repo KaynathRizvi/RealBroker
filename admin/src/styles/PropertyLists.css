@@ -67,7 +67,11 @@
 
 .property-name-link {
   color: #223b61;
-  text-decoration: none;
+  cursor: pointer;
+}
+.property-name-link:hover{
+  text-decoration: underline;
+  color: #000000;
   cursor: pointer;
 }
 
