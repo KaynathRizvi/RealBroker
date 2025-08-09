@@ -53,8 +53,8 @@ const homeStyles = StyleSheet.create({
     borderLeftWidth: 4,
   },
   propertyCard: {
-    backgroundColor: "#e4faf7ff", // Aqua/teal background
-    borderLeftColor: "#3caea3",   // Teal accent strip
+    backgroundColor: "#f5f5f5", // Aqua/teal background
+    borderLeftColor: "#333333",   // Teal accent strip
     borderLeftWidth: 4,
   },
 
