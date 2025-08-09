@@ -1,6 +1,3 @@
-Got it! Here’s a polished, emoji-rich, professional **README.md** for your project — designed to be informative, clear, and visually appealing for GitHub:
-
-```markdown
 # 🏡 Full-Stack Real Estate Application
 
 Welcome to the **Full-Stack Real Estate Application**! This repository hosts a complete real estate management system with three interconnected parts:
