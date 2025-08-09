@@ -3,19 +3,28 @@ const nodemailer = require('nodemailer');
 const bcrypt = require('bcryptjs');
 const pool = require('../config/db');
 
+// Send password reset email to user
 const sendResetEmail = async (req, res) => {
-  const { email } = req.body;
+  const { email } = req.body; // Extract email from request body
+
   try {
+    // Query database for user with the provided email
     const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+
+    // If no user found, respond with 404 Not Found
     if (result.rows.length === 0) {
       return res.status(404).json({ message: 'User not found' });
     }
 
     const user = result.rows[0];
+
+    // Create a JWT token containing the userId, valid for 15 minutes
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '15m' });
-    
+
+    // Construct the password reset link including the token as query param
     const resetLink = `${process.env.CLIENT_URL}/reset-password?token=${token}`;
 
+    // Set up email transporter using Gmail SMTP with credentials from environment variables
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -24,6 +33,7 @@ const sendResetEmail = async (req, res) => {
       },
     });
 
+    // Send email with reset password instructions and reset link
     await transporter.sendMail({
       from: `"Real Broker Support" <${process.env.EMAIL_USER}>`,
       to: email,
@@ -47,30 +57,38 @@ const sendResetEmail = async (req, res) => {
           <p style="font-size: 13px; color: #777;">If you did not request a password reset, you can safely ignore this email. Your account will remain secure.</p>
           <p style="font-size: 13px; color: #777;">— The Real Broker Team</p>
         </div>
-    `
-});
+      `
+    });
 
-
+    // Respond with success message
     res.json({ message: 'Password reset email sent' });
   } catch (err) {
+    // Log error message and respond with 500 Internal Server Error
     console.error('Forgot password error:', err.message);
     res.status(500).json({ message: 'Invalid email' });
   }
 };
 
+// Reset password using token and new password
 const resetPassword = async (req, res) => {
-  const { token } = req.params;
-  const { newPassword } = req.body;
+  const { token } = req.params;       // Extract token from URL params
+  const { newPassword } = req.body;   // Extract new password from request body
 
   try {
+    // Verify JWT token and extract userId payload
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decoded.userId;
 
+    // Hash the new password before storing
     const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update user's password in the database
     await pool.query('UPDATE users SET password = $1 WHERE id = $2', [hashedPassword, userId]);
 
+    // Respond with success message
     res.json({ message: 'Password updated successfully' });
   } catch (err) {
+    // Log error and respond with 400 Bad Request for invalid or expired token
     console.error('Reset password error:', err.message);
     res.status(400).json({ message: 'Invalid or expired token' });
   }

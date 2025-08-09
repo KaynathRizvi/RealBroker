@@ -6,18 +6,22 @@ import Constants from "expo-constants"
 import styles from "../styles/homeStyles"
 import { LinearGradient } from "expo-linear-gradient"
 
+// Determine server URL from Expo config
 const SERVER_URL =
   Constants.expoConfig?.extra?.DEBUG_SERVER_URL ||
   Constants.expoConfig?.extra?.SERVER_URL
 
 export default function HomePage() {
   const router = useRouter()
-  const [subscriptionInfo, setSubscriptionInfo] = useState<any>(null)
-  const [stats, setStats] = useState<any>(null)
-  const [userName, setUserName] = useState<string | null>(null);
-  const [properties, setProperties] = useState<any[]>([])
-  const [loadingProperties, setLoadingProperties] = useState(true)
 
+  // Local states
+  const [subscriptionInfo, setSubscriptionInfo] = useState<any>(null) // Stores active subscription details
+  const [stats, setStats] = useState<any>(null) // Stores stats overview
+  const [userName, setUserName] = useState<string | null>(null) // Stores logged-in user's name
+  const [properties, setProperties] = useState<any[]>([]) // Stores all properties
+  const [loadingProperties, setLoadingProperties] = useState(true) // Loading state for property fetch
+
+  // Fetch all required data on mount
   useEffect(() => {
     fetchSubscriptionInfo()
     fetchStats()
@@ -25,10 +29,14 @@ export default function HomePage() {
     fetchProperties()
   }, [])
 
+  /**
+   * Fetch the logged-in user's profile
+   */
   const fetchUserProfile = async () => {
     try {
       const token = await AsyncStorage.getItem("token")
       if (!token) {
+        // If no token, redirect to login
         router.replace("/login")
         return
       }
@@ -51,6 +59,9 @@ export default function HomePage() {
     }
   }
 
+  /**
+   * Fetch subscription status & details
+   */
   const fetchSubscriptionInfo = async () => {
     try {
       const token = await AsyncStorage.getItem("token")
@@ -75,6 +86,9 @@ export default function HomePage() {
     }
   }
 
+  /**
+   * Fetch stats overview (total listings, requests, etc.)
+   */
   const fetchStats = async () => {
     try {
       const token = await AsyncStorage.getItem("token")
@@ -94,6 +108,9 @@ export default function HomePage() {
     }
   }
 
+  /**
+   * Fetch all properties for the featured section
+   */
   const fetchProperties = async () => {
     try {
       const response = await fetch(`${SERVER_URL}/api/property/all`)
@@ -107,20 +124,25 @@ export default function HomePage() {
   }
 
   return (
+    // Background gradient
     <LinearGradient colors={["#e0f2fe", "#edd6e3ff"]} style={{ flex: 1 }}>
       <ScrollView style={styles.content} contentContainerStyle={{ paddingBottom: 40 }}>
+
+        {/* Greeting */}
         <Text style={styles.greeting}>
           👋 Welcome,
           {userName && <Text style={styles.userName}> {userName} </Text>}
           to Real Broker!
         </Text>
 
+        {/* Introductory text */}
         <Text style={styles.infoText}>
           Real Broker is your trusted platform for discovering and listing premium properties with ease.
           Whether you're a real estate agent, or investor, we provide modern tools to connect and grow your business.
         </Text>
 
         <View style={styles.dashboardContainer}>
+          {/* Active subscription card */}
           {subscriptionInfo && (
             <Pressable
               onPress={() => router.push('/viewsubscription')}
@@ -134,6 +156,7 @@ export default function HomePage() {
             </Pressable>
           )}
 
+          {/* View received contact requests */}
           <Pressable onPress={() => router.push('/view-requests')}>
             <View style={[styles.card, styles.requestCard]}>
               <Text style={styles.cardTitle}>📥 Contact Requests</Text>
@@ -143,6 +166,7 @@ export default function HomePage() {
             </View>
           </Pressable>
 
+          {/* View sent contact requests */}
           <Pressable onPress={() => router.push('/sent-requests')}>
             <View style={[styles.card, styles.sentCard]}>
               <Text style={styles.cardTitle}>📤 Sent Requests</Text>
@@ -152,6 +176,7 @@ export default function HomePage() {
             </View>
           </Pressable>
 
+          {/* View statistics overview */}
           <Pressable onPress={() => router.push("/statsOverview")}>
             <View style={[styles.card, styles.statsCard]}>
               <Text style={styles.cardTitle}>📊 View Stats</Text>
@@ -168,13 +193,13 @@ export default function HomePage() {
             </View>
           </Pressable>
 
-          {/* Properties Horizontal Scroll Section */}
-          {/* Properties Horizontal Scroll Section */}
+          {/* Featured properties section */}
           <View style={[styles.card, styles.propertyCard]}>
             <Text style={[styles.cardTitle, { marginLeft: 16, marginBottom: 12 }]}>
               🏘️ Featured Properties
             </Text>
 
+            {/* Show loader until properties are fetched */}
             {loadingProperties ? (
               <ActivityIndicator size="large" color="#8b5cf6" style={{ marginVertical: 20 }} />
             ) : (
@@ -187,6 +212,7 @@ export default function HomePage() {
                   <TouchableOpacity
                     key={property.id}
                     onPress={() => {
+                      // Navigate to property details page
                       if (property.id != null) {
                         router.push({
                           pathname: "/(main)/propertyDetail",
@@ -197,6 +223,7 @@ export default function HomePage() {
                     style={{ marginRight: 16, width: 250 }}
                   >
                     <View style={styles.propertyItemCard}>
+                      {/* Property images horizontal scroll */}
                       <ScrollView
                         horizontal
                         showsHorizontalScrollIndicator={false}
@@ -211,6 +238,8 @@ export default function HomePage() {
                           />
                         ))}
                       </ScrollView>
+
+                      {/* Property info */}
                       <Text style={styles.title}>{property.property_name}</Text>
                       <Text style={styles.detail}>
                         Deal Price: ₹{property.deal_price ?? 'Not specified'}
@@ -222,7 +251,6 @@ export default function HomePage() {
               </ScrollView>
             )}
           </View>
-
         </View>
       </ScrollView>
     </LinearGradient>

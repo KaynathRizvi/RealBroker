@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middleware/authMiddleware');
-
-// ✅ Import controller functions, not model
 const { getProfile, updateProfile, addProperty, } = require('../controllers/profileController');
 
 // GET /api/profile

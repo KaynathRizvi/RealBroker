@@ -1,60 +1,66 @@
+/* Container for the entire user profile page */
 .user-profile-container {
-  padding: 2rem;
-  background-color: #e0e0e0;
-  min-height: 100vh;
+  padding: 2rem; /* Inner spacing */
+  background-color: #e0e0e0; /* Light gray background */
+  min-height: 100vh; /* Full viewport height */
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center children horizontally */
 }
 
+/* Back button styling */
 .back-button {
-  margin-bottom: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: #223b61;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  align-self: flex-start;
+  margin-bottom: 1rem; /* Space below button */
+  padding: 0.5rem 1rem; /* Vertical and horizontal padding */
+  background-color: #223b61; /* Dark blue background */
+  color: white; /* White text */
+  border: none; /* No border */
+  border-radius: 4px; /* Slightly rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth color change */
+  align-self: flex-start; /* Align button to left side */
 }
-
 .back-button:hover {
-  background-color: #0056b3;
+  background-color: #0056b3; /* Brighter blue on hover */
 }
 
+/* Profile page header/title */
 .user-profile-header {
-  margin-bottom: 1.5rem;
-  font-size: 1.8rem;
-  font-weight: 600;
-  text-align: center;
-  color: #223b61;
+  margin-bottom: 1.5rem; /* Space below heading */
+  font-size: 1.8rem; /* Large font size */
+  font-weight: 600; /* Semi-bold */
+  text-align: center; /* Center aligned text */
+  color: #223b61; /* Dark blue text */
 }
 
+/* Container box for user profile details */
 .profile-box {
-  background-color: #ffffff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  width: 100%;
+  background-color: #ffffff; /* White background */
+  padding: 2rem; /* Inner padding */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  max-width: 600px; /* Max width */
+  width: 100%; /* Full width up to max */
 }
 
+/* Each individual user detail row */
 .user-field {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.2rem;
-  border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 0.5rem;
+  display: flex; /* Flex container */
+  justify-content: space-between; /* Space between label and value */
+  align-items: center; /* Vertically center items */
+  margin-bottom: 1.2rem; /* Space below each field */
+  border-bottom: 1px solid #e0e0e0; /* Light bottom border */
+  padding-bottom: 0.5rem; /* Padding below content */
 }
 
+/* Label for each user field */
 .field-label {
-  font-weight: 500;
-  color: #555;
+  font-weight: 500; /* Medium font weight */
+  color: #555; /* Medium gray color */
 }
 
+/* Value for each user field */
 .field-value {
-  color: #222;
-  font-weight: 400;
+  color: #222; /* Dark gray text */
+  font-weight: 400; /* Normal font weight */
 }

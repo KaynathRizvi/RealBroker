@@ -1,5 +1,6 @@
-const pool = require("../config/db")
+const pool = require("../config/db");
 
+// Get all active subscription plans sorted by price (ascending)
 const getAllSubscriptionPlans = async () => {
   try {
     const query = `
@@ -15,6 +16,7 @@ const getAllSubscriptionPlans = async () => {
     `
     const result = await pool.query(query)
 
+    // Parse the price as float and parse features JSON if needed
     return result.rows.map((plan) => ({
       ...plan,
       price: Number.parseFloat(plan.price),
@@ -25,6 +27,7 @@ const getAllSubscriptionPlans = async () => {
   }
 }
 
+// Check if a user currently has an active and valid subscription
 const checkUserSubscription = async (userId) => {
   try {
     const query = `
@@ -45,25 +48,28 @@ const checkUserSubscription = async (userId) => {
 
     if (result.rows.length > 0) {
       const subscription = result.rows[0]
+      // Convert amount_paid to float for consistency
       return {
         ...subscription,
         amount_paid: Number.parseFloat(subscription.amount_paid),
       }
     }
 
+    // Return null if no active subscription found
     return null
   } catch (error) {
     throw error
   }
 }
 
+// Create a new subscription for a user with the specified plan
 const createUserSubscription = async (userId, planId) => {
   const client = await pool.connect()
 
   try {
     await client.query("BEGIN")
 
-    // Get plan details
+    // Fetch plan details to validate and get price/duration
     const planQuery = `
       SELECT *, CAST(price AS DECIMAL(10,2)) as price 
       FROM subscription_plans 
@@ -78,7 +84,7 @@ const createUserSubscription = async (userId, planId) => {
     const plan = planResult.rows[0]
     plan.price = Number.parseFloat(plan.price)
 
-    // Deactivate current subscription(s)
+    // Deactivate any existing active subscriptions for the user
     const deactivateQuery = `
       UPDATE user_subscriptions 
       SET is_active = false, updated_at = NOW()
@@ -86,14 +92,14 @@ const createUserSubscription = async (userId, planId) => {
     `
     await client.query(deactivateQuery, [userId])
 
-    // Calculate expiry date
+    // Calculate new expiry date based on plan duration
     const expiryDate = new Date()
     expiryDate.setDate(expiryDate.getDate() + plan.duration_days)
 
     const basePrice = plan.price;
     const amountPaid = basePrice;
 
-    // Insert new subscription manually
+    // Insert the new subscription record
     const insertQuery = `
       INSERT INTO user_subscriptions 
       (user_id, plan_id, expiry_date, amount_paid, payment_status, plan_price, plan_duration)
@@ -106,7 +112,7 @@ const createUserSubscription = async (userId, planId) => {
       planId,
       expiryDate,
       amountPaid,
-      "manual", 
+      "manual",  // Payment status hardcoded as 'manual'
       plan.price,
       plan.duration_days 
     ])
@@ -114,8 +120,10 @@ const createUserSubscription = async (userId, planId) => {
     await client.query("COMMIT")
 
     const subscription = subscriptionResult.rows[0]
+    // Convert amount_paid to float for consistency
     subscription.amount_paid = Number.parseFloat(subscription.amount_paid)
 
+    // Return the created subscription and plan details
     return {
       subscription: subscription,
       plan: plan,
@@ -128,6 +136,7 @@ const createUserSubscription = async (userId, planId) => {
   }
 }
 
+// Cancel all active subscriptions for a user (set is_active to false)
 const cancelUserSubscription = async (userId) => {
   try {
     const query = `
@@ -137,12 +146,15 @@ const cancelUserSubscription = async (userId) => {
       RETURNING *
     `
     const result = await pool.query(query, [userId])
+
+    // Return the canceled subscription record or null if none found
     return result.rows.length > 0 ? result.rows[0] : null
   } catch (error) {
     throw error
   }
 }
 
+// Get the full subscription history for a user, including plan names and formatted amount paid
 const getUserSubscriptionHistory = async (userId) => {
   try {
     const query = `
@@ -157,6 +169,7 @@ const getUserSubscriptionHistory = async (userId) => {
     `
     const result = await pool.query(query, [userId])
 
+    // Parse amount_paid as float for all records
     return result.rows.map((subscription) => ({
       ...subscription,
       amount_paid: Number.parseFloat(subscription.amount_paid),

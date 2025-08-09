@@ -1,121 +1,128 @@
-/* Container */
+/* Container that centers the login form vertically and horizontally */
 .login-container {
-  min-height: 100vh;
+  min-height: 100vh; /* Full viewport height */
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  background-color: #e0e3e4;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  padding: 1rem; /* Padding around container */
+  background-color: #e0e3e4; /* Light gray background */
 }
 
-/* Form Box */
+/* The login form box */
 .login-form {
-  background-color: #fff;
-  padding: 1.9rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 25rem;
+  background-color: #fff; /* White background */
+  padding: 1.9rem; /* Internal padding */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  width: 100%; /* Full width of container */
+  max-width: 25rem; /* Max width 400px */
 }
 
-/* Header */
+/* Header/title of the login form */
 .login-header {
-  margin-bottom: 1.2rem;
-  text-align: center;
-  color: #223b61;
-  font-size: 1.5rem;
+  margin-bottom: 1.2rem; /* Space below header */
+  text-align: center; /* Center the text */
+  color: #223b61; /* Dark blue text */
+  font-size: 1.5rem; /* Font size */
 }
 
-/* Input Fields */
+/* Input fields styling */
 .login-input {
-  width: 100%;
-  padding: 0.9rem;
-  margin-bottom: 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 0.9rem;
-  box-sizing: border-box;
+  width: 100%; /* Full width */
+  padding: 0.9rem; /* Internal padding */
+  margin-bottom: 1rem; /* Space below each input */
+  border-radius: 6px; /* Rounded corners */
+  border: 1px solid #ccc; /* Light gray border */
+  font-size: 0.9rem; /* Font size */
+  box-sizing: border-box; /* Include padding/border in width */
 }
 
-/* Button */
+/* Submit button styling */
 .login-button {
-  width: 100%;
-  padding: 0.9rem;
-  background-color: #223b61;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 0.9rem;
+  width: 100%; /* Full width */
+  padding: 0.9rem; /* Internal padding */
+  background-color: #223b61; /* Dark blue background */
+  color: #fff; /* White text */
+  border: none; /* No border */
+  border-radius: 6px; /* Rounded corners */
+  font-weight: bold; /* Bold text */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth hover transition */
+  font-size: 0.9rem; /* Font size */
 }
 
+/* Button hover state */
 .login-button:hover {
-  background-color: #1a2f50;
+  background-color: #1a2f50; /* Darker blue on hover */
 }
 
-/* Error Message */
+/* Error message styling */
 .login-error {
-  color: red;
-  margin-bottom: 0.7rem;
-  font-size: 0.9rem;
-  text-align: center;
+  color: red; /* Red text for errors */
+  margin-bottom: 0.7rem; /* Space below error */
+  font-size: 0.9rem; /* Font size */
+  text-align: center; /* Center the message */
 }
 
-/* Forgot Password */
+/* Container for forgot password link */
 .forgot-password {
-  text-align: right;
+  text-align: right; /* Align to right */
   margin-bottom: 0.3rem;
   margin-top: 0.3rem;
 }
 
+/* Forgot password link styling */
 .forgot-pass-link {
-  color: #007bff;
-  text-decoration: underline;
-  cursor: pointer;
-  font-size: 0.9rem;
+  color: #007bff; /* Blue text */
+  text-decoration: underline; /* Underlined link */
+  cursor: pointer; /* Pointer cursor */
+  font-size: 0.9rem; /* Font size */
 }
 
-/* ✅ Responsive adjustments for small screens */
+/* Responsive styles for devices between 380px and 580px width */
 @media (max-width: 580px) and (min-width: 380px) {
   .login-form {
-    padding: 15px;
-    border-radius: 8px;
+    padding: 15px; /* Slightly smaller padding */
+    border-radius: 8px; /* Slightly smaller corners */
   }
 
   .login-header {
-    font-size: 1.3rem;
+    font-size: 1.3rem; /* Smaller header font size */
   }
 
+  /* Inputs and button with adjusted padding and font size */
   .login-input,
   .login-button {
     padding: 10px;
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
 
+  /* Smaller forgot password link font */
   .forgot-pass-link {
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
 }
 
+/* Responsive styles for devices less than 380px width */
 @media (max-width: 380px) {
   .login-form {
-    padding: .8rem;
-    border-radius: 8px;
+    padding: 0.8rem; /* Reduced padding */
+    border-radius: 8px; /* Rounded corners */
   }
 
   .login-header {
-    font-size: 1rem;
+    font-size: 1rem; /* Smaller header font size */
   }
 
+  /* Smaller inputs and button */
   .login-input,
   .login-button {
-    padding: .7rem;
-    font-size: .7rem;
+    padding: 0.7rem;
+    font-size: 0.7rem;
   }
 
+  /* Smaller forgot password link */
   .forgot-pass-link {
-    font-size: .7rem;
+    font-size: 0.7rem;
   }
 }

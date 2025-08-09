@@ -5,13 +5,15 @@ import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../styles/request-contactStyles';
 
+// Get API base URL from Expo config (debug or production)
 const SERVER_URL = Constants.expoConfig?.extra?.DEBUG_SERVER_URL || Constants.expoConfig?.extra?.SERVER_URL;
 
 export default function RequestContact() {
-  const router = useRouter();
-  const { id } = useLocalSearchParams();
-  const property_id = Array.isArray(id) ? id[0] : id;
+  const router = useRouter(); // Navigation hook
+  const { id } = useLocalSearchParams(); // Get the property ID from URL params
+  const property_id = Array.isArray(id) ? id[0] : id; // Ensure it's a single value
 
+  // Form data state
   const [form, setForm] = useState({
     name: '',
     agency: '',
@@ -20,41 +22,62 @@ export default function RequestContact() {
     message: '',
   });
 
+  // Field-specific validation error messages
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
+  /**
+   * Handle form input changes
+   * @param key - The field name being updated
+   * @param value - The new value for that field
+   */
   const handleChange = (key: string, value: string) => {
     if (key === 'contact') {
-      // allow only numbers
+      // Allow only numeric input for contact number
       value = value.replace(/[^0-9]/g, '');
     }
     setForm(prev => ({ ...prev, [key]: value }));
   };
 
+  /**
+   * Validate required fields and formats
+   */
   const validateFields = () => {
     const newErrors: { [key: string]: string } = {};
+
+    // Name required
     if (!form.name.trim()) newErrors.name = 'This field is required';
+    // Agency required
     if (!form.agency.trim()) newErrors.agency = 'This field is required';
+    // Contact required
     if (!form.contact.trim()) newErrors.contact = 'This field is required';
+    // Email required and must be valid
     if (!form.email.trim()) {
       newErrors.email = 'This field is required';
     } else if (!/\S+@\S+\.\S+/.test(form.email)) {
       newErrors.email = 'Enter a valid email';
     }
+
     setErrors(newErrors);
+    // Form is valid if no errors
     return Object.keys(newErrors).length === 0;
   };
 
+  /**
+   * Handle form submission to request owner's contact
+   */
   const handleSubmit = async () => {
     if (!property_id) {
       Alert.alert("Error", "Missing property ID");
       return;
     }
 
+    // Run validations before submit
     if (!validateFields()) {
       return;
     }
 
     try {
+      // Retrieve authentication token
       const token = await AsyncStorage.getItem('token');
 
       if (!token) {
@@ -62,6 +85,7 @@ export default function RequestContact() {
         return;
       }
 
+      // Send contact request to API
       const res = await fetch(`${SERVER_URL}/api/request-contact`, {
         method: 'POST',
         headers: {
@@ -84,6 +108,7 @@ export default function RequestContact() {
         throw new Error(data.error || 'Failed to send request');
       }
 
+      // Success message and navigate back to properties
       Alert.alert("Success", "Contact request sent!");
       router.push('/properties');
     } catch (err: any) {
@@ -96,6 +121,7 @@ export default function RequestContact() {
       <View style={styles.formCard}>
         <Text style={styles.title}>Contact Property Owner</Text>
 
+        {/* Name Field */}
         <Text style={styles.label}>Your Name</Text>
         <TextInput
           style={styles.input}
@@ -105,6 +131,7 @@ export default function RequestContact() {
         />
         {errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
 
+        {/* Agency Field */}
         <Text style={styles.label}>Agency Name</Text>
         <TextInput
           style={styles.input}
@@ -114,6 +141,7 @@ export default function RequestContact() {
         />
         {errors.agency && <Text style={styles.errorText}>{errors.agency}</Text>}
 
+        {/* Contact Field */}
         <Text style={styles.label}>Contact Number</Text>
         <TextInput
           style={styles.input}
@@ -124,6 +152,7 @@ export default function RequestContact() {
         />
         {errors.contact && <Text style={styles.errorText}>{errors.contact}</Text>}
 
+        {/* Email Field */}
         <Text style={styles.label}>Email ID</Text>
         <TextInput
           style={styles.input}
@@ -134,6 +163,7 @@ export default function RequestContact() {
         />
         {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
 
+        {/* Message Field */}
         <Text style={styles.label}>Message</Text>
         <TextInput
           style={[styles.input, styles.messageInput]}
@@ -143,6 +173,7 @@ export default function RequestContact() {
           onChangeText={(t) => handleChange('message', t)}
         />
 
+        {/* Submit Button */}
         <Pressable style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Send Request</Text>
         </Pressable>

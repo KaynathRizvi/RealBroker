@@ -3,6 +3,7 @@ const pool = require("../config/db");
 // Get total number of properties listed by all users
 const getTotalListings = async () => {
   const result = await pool.query("SELECT COUNT(*) FROM user_property");
+  // Return count as integer
   return parseInt(result.rows[0].count, 10);
 };
 
@@ -12,6 +13,7 @@ const getMyListings = async (userId) => {
     "SELECT COUNT(*) FROM user_property WHERE user_id = $1",
     [userId]
   );
+  // Return count as integer
   return parseInt(result.rows[0].count, 10);
 };
 
@@ -23,6 +25,7 @@ const getReceivedRequests = async (userId) => {
      WHERE up.user_id = $1`,
     [userId]
   );
+  // Return count as integer
   return parseInt(result.rows[0].count, 10);
 };
 
@@ -32,6 +35,7 @@ const getSentRequests = async (userId) => {
     "SELECT COUNT(*) FROM contact_request WHERE user_id = $1",
     [userId]
   );
+  // Return count as integer
   return parseInt(result.rows[0].count, 10);
 };
 
@@ -40,10 +44,11 @@ const getNewThisWeek = async () => {
   const result = await pool.query(
     "SELECT COUNT(*) FROM user_property WHERE created_at >= NOW() - INTERVAL '7 days'"
   );
+  // Return count as integer
   return parseInt(result.rows[0].count, 10);
 };
 
-// Get days left until the user's subscription expires
+// Get number of days left until the user's active subscription expires
 const getDaysLeft = async (userId) => {
   const result = await pool.query(
     `SELECT expiry_date FROM user_subscriptions
@@ -52,6 +57,7 @@ const getDaysLeft = async (userId) => {
     [userId]
   );
 
+  // If no active subscription found, return null
   if (result.rows.length === 0 || !result.rows[0].expiry_date) {
     return null;
   }
@@ -59,17 +65,18 @@ const getDaysLeft = async (userId) => {
   const expiryDate = new Date(result.rows[0].expiry_date);
   const today = new Date();
 
-  // Normalize both dates to midnight
+  // Normalize both dates to midnight to calculate full days difference
   expiryDate.setHours(0, 0, 0, 0);
   today.setHours(0, 0, 0, 0);
 
   const timeDiff = expiryDate - today;
   const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 
+  // Return 0 if subscription expired
   return daysLeft >= 0 ? daysLeft : 0;
 };
 
-// Get number of property listings per day for the last 30 days
+// Get number of property listings created each day for the last 30 days
 const getListingsOverLast30Days = async () => {
   const result = await pool.query(`
     SELECT 
@@ -81,14 +88,14 @@ const getListingsOverLast30Days = async () => {
     ORDER BY date ASC
   `);
 
-  // Format as arrays for chart.js
+  // Format data for frontend chart: labels = dates, data = counts
   const labels = result.rows.map(row => row.date);
   const data = result.rows.map(row => parseInt(row.count, 10));
 
   return { labels, data };
 };
 
-// Get number of requests received per property for a given user
+// Get number of contact requests received per property for a given user
 async function getRequestsPerProperty(userId) {
   try {
     const query = `
@@ -99,20 +106,21 @@ async function getRequestsPerProperty(userId) {
       GROUP BY up.property_name
       ORDER BY request_count DESC;
     `
-    const result = await pool.query(query, [userId])
+    const result = await pool.query(query, [userId]);
 
-    console.log("requestsPerProperty result:", result)
+    console.log("requestsPerProperty result:", result);
 
-    // Check if result.rows exists (for pg)
-    const rows = result.rows || result
+    // Defensive check for result.rows
+    const rows = result.rows || result;
 
+    // Map result to simplified object format with counts as numbers
     return rows.map((row) => ({
       property_name: row.property_name,
       request_count: Number(row.request_count),
-    }))
+    }));
   } catch (error) {
-    console.error("Error in getRequestsPerProperty:", error)
-    throw error
+    console.error("Error in getRequestsPerProperty:", error);
+    throw error;
   }
 }
 

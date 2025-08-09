@@ -1,40 +1,34 @@
-"use client"
-
-import { useRouter } from "expo-router"
+import { useRouter } from "expo-router" // Expo Router for navigation
 import { useState, useEffect } from "react"
-import {
-  Pressable,
-  Text,
-  TextInput,
-  View,
-  Alert,
-  ActivityIndicator,
-  TouchableOpacity,
-  Switch,
-} from "react-native"
+import { Pressable, Text, TextInput, View, Alert, ActivityIndicator, TouchableOpacity, Switch } from "react-native"
 import Constants from "expo-constants"
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import AsyncStorage from "@react-native-async-storage/async-storage" // For storing local data (e.g., token, remembered login)
 import styles from "../styles/loginStyles"
-import { LinearGradient } from "expo-linear-gradient"
-import { Ionicons } from "@expo/vector-icons"
+import { LinearGradient } from "expo-linear-gradient" // For background gradient
+import { Ionicons } from "@expo/vector-icons" // Icons for password visibility toggle
 
+// Determine server URL from Expo config
 const SERVER_URL =
   Constants.expoConfig?.extra?.DEBUG_SERVER_URL ||
   Constants.expoConfig?.extra?.SERVER_URL
 
 export default function LoginPage() {
   const router = useRouter()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [errorMessage, setErrorMessage] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
-  const [rememberMe, setRememberMe] = useState(false)
 
+  // State variables for form inputs and UI behavior
+  const [email, setEmail] = useState("") // User's email
+  const [password, setPassword] = useState("") // User's password
+  const [errorMessage, setErrorMessage] = useState("") // Error messages to display
+  const [loading, setLoading] = useState(false) // Loading spinner state
+  const [showPassword, setShowPassword] = useState(false) // Toggle password visibility
+  const [rememberMe, setRememberMe] = useState(false) // Remember login credentials toggle
+
+  // Load saved credentials when the component mounts
   useEffect(() => {
     loadRememberedCredentials()
   }, [])
 
+  // Retrieve saved credentials from AsyncStorage
   const loadRememberedCredentials = async () => {
     const savedEmail = await AsyncStorage.getItem("rememberedEmail")
     const savedPassword = await AsyncStorage.getItem("rememberedPassword")
@@ -45,22 +39,27 @@ export default function LoginPage() {
     }
   }
 
+  // Main login function
   const login = async () => {
+    // Validate required fields
     if (!email || !password) {
       setErrorMessage("Please enter both email and password")
       return
     }
 
+    // Validate email format
     if (!email.includes("@")) {
       setErrorMessage("Please enter a valid email address")
       return
     }
 
-    setLoading(true)
+    setLoading(true) // Show loading spinner
 
     try {
+      // Remove any previous token before logging in
       await AsyncStorage.removeItem("token")
 
+      // Send login request to the server
       const response = await fetch(`${SERVER_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -70,9 +69,11 @@ export default function LoginPage() {
       const data = await response.json()
 
       if (response.ok) {
+        // Save token and email
         await AsyncStorage.setItem("token", data.token)
         await AsyncStorage.setItem("userEmail", email)
 
+        // Save credentials if Remember Me is enabled
         if (rememberMe) {
           await AsyncStorage.setItem("rememberedEmail", email)
           await AsyncStorage.setItem("rememberedPassword", password)
@@ -81,23 +82,26 @@ export default function LoginPage() {
           await AsyncStorage.removeItem("rememberedPassword")
         }
 
-        setErrorMessage("")
+        setErrorMessage("") // Clear any error messages
 
+        // Redirect based on subscription status
         if (data.hasActiveSubscription) {
           Alert.alert("Success", "Logged in successfully!")
-          router.replace("/home")
+          router.replace("/home") // Go to home screen
         } else {
           Alert.alert("Subscription Required", "Please purchase a subscription to continue.")
           router.replace("/subscription")
         }
       } else {
+        // Show error message from server
         setErrorMessage(data.message || "Login failed")
-        setPassword("")
+        setPassword("") // Clear password field
       }
     } catch (error) {
+      // Show network error
       Alert.alert("Network error", (error as Error).message || "Unknown error")
     } finally {
-      setLoading(false)
+      setLoading(false) // Hide loading spinner
     }
   }
 
@@ -106,6 +110,7 @@ export default function LoginPage() {
       <View style={styles.formBox}>
         <Text style={styles.title}>Welcome Back 👋</Text>
 
+        {/* Email input */}
         <TextInput
           placeholder="Enter your email"
           placeholderTextColor="#6d628cff"
@@ -117,6 +122,7 @@ export default function LoginPage() {
           editable={!loading}
         />
 
+        {/* Password input with toggle visibility */}
         <View style={styles.passwordContainer}>
           <TextInput
             placeholder="Enter your password"
@@ -139,6 +145,7 @@ export default function LoginPage() {
           </TouchableOpacity>
         </View>
 
+        {/* Remember Me switch */}
         <View style={styles.checkboxContainer}>
           <Switch
             value={rememberMe}
@@ -149,20 +156,25 @@ export default function LoginPage() {
           <Text style={styles.checkboxLabel}>Remember Me</Text>
         </View>
 
+        {/* Error message */}
         {errorMessage ? <Text style={styles.message}>{errorMessage}</Text> : null}
 
+        {/* Show loading spinner or buttons */}
         {loading ? (
           <ActivityIndicator size="large" color="#2563eb" />
         ) : (
           <>
+            {/* Login button */}
             <Pressable style={styles.button} onPress={login}>
               <Text style={styles.buttonText}>Login</Text>
             </Pressable>
 
+            {/* Navigate to register */}
             <Pressable style={styles.button} onPress={() => router.push("/register")}>
               <Text style={styles.buttonText}>Go to Register</Text>
             </Pressable>
 
+            {/* Forgot password link */}
             <Pressable style={styles.forgotButton} onPress={() => router.push("/forgotpassword")}>
               <Text style={styles.forgotButtonText}>Forgot Password?</Text>
             </Pressable>

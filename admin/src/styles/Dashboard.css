@@ -1,82 +1,91 @@
+/* Container for the entire dashboard page */
 .dashboard-container {
   padding: 1rem;
-  background-color: #e0e3e4;
-  min-height: 100vh;
-  font-family: 'Roboto';
+  background-color: #e0e3e4; /* Light grayish-blue background */
+  min-height: 100vh; /* Full viewport height */
+  font-family: 'Roboto'; /* Consistent font */
 }
 
-/* Align header left */
+/* Dashboard header styling */
+/* Align header text to the left instead of center */
 .dashboard-header {
   margin-bottom: 1rem;
-  color: #223b61;
-  text-align: left; /* changed from center */
-  font-size: 1.5rem;
-  padding-left: 1rem; /* optional for spacing */
+  color: #223b61; /* Dark blue text */
+  text-align: left; /* Changed from center to left */
+  font-size: 1.5rem; /* Larger font size */
+  padding-left: 1rem; /* Optional left padding for spacing */
 }
 
-/* Cards container align left */
+/* Container for the cards */
+/* Flexbox layout with horizontal gap and wrapping */
 .card-container {
   display: flex;
-  gap: 2rem;
-  flex-wrap: wrap; /* Allows wrapping on smaller screens */
-  justify-content: flex-start; /* changed from center */
-  padding-left: 1rem; /* optional for spacing */
+  gap: 2rem; /* Space between cards */
+  flex-wrap: wrap; /* Allows cards to wrap to next line on small screens */
+  justify-content: flex-start; /* Align cards to left instead of center */
+  padding-left: 1rem; /* Optional left padding */
 }
 
-/* Common card style */
+/* Common styling for all cards */
 .user-card,
 .property-card,
 .logout-card {
-  padding: 3rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  width: 150px;
-  text-align: center;
-  transition: transform 0.2s ease;
-  font-size: 1.2rem;
+  padding: 3rem; /* Padding inside each card */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  cursor: pointer; /* Pointer cursor on hover */
+  width: 150px; /* Fixed width */
+  text-align: center; /* Centered text inside cards */
+  transition: transform 0.2s ease; /* Smooth scaling on hover */
+  font-size: 1.2rem; /* Slightly larger font */
 }
 
-/* Specific card styles */
+/* Specific card background and text colors */
+
+/* User card: green gradient with dark green text */
 .user-card {
   background: linear-gradient(135deg, #a8e6cf, #33ab87);
   color: #103d25;
 }
 
+/* Property card: orange gradient with dark brown text */
 .property-card {
   background: linear-gradient(135deg, #ffdd95, #ff8a00);
   color: #5a3200;
 }
 
+/* Logout card: red gradient with white text */
 .logout-card {
   background: linear-gradient(135deg, #ff9a9e, #ff3d3d);
   color: white;
 }
 
-/* Hover effect */
+/* Hover effect: slightly scale the card on hover */
 .user-card:hover,
 .property-card:hover,
 .logout-card:hover {
   transform: scale(1.03);
 }
 
-/* Responsive adjustments */
+/* Responsive styles for devices between 380px and 508px width */
 @media (max-width: 508px) and (min-width: 380px) {
   .dashboard-container {
     padding: 1rem;
   }
   .dashboard-header {
-    font-size: 1.2rem;
+    font-size: 1.2rem; /* Smaller font size */
     padding-left: 1rem;
     text-align: left;
   }
+  /* Stack cards vertically, aligned left */
   .card-container {
-    flex-direction: column;
-    align-items: flex-start; /* align items left */
-    gap: 1rem;
+    flex-direction: column; /* Column layout */
+    align-items: flex-start; /* Align items left */
+    gap: 1rem; /* Smaller gap */
     padding-left: 1rem;
   }
 
+  /* Cards fill container width but max out at 250px */
   .user-card,
   .property-card,
   .logout-card {
@@ -85,22 +94,26 @@
   }
 }
 
+/* Responsive styles for devices less than 380px width */
 @media (max-width: 380px) {
   .dashboard-container {
     padding: 1rem;
   }
   .dashboard-header {
-    font-size: 1rem;
+    font-size: 1rem; /* Even smaller font size */
     padding-left: 1rem;
     text-align: left;
   }
+  /* Stack cards vertically, aligned left */
   .card-container {
     flex-direction: column;
-    align-items: flex-start; /* align items left */
+    align-items: flex-start; /* Align items left */
     gap: 1rem;
     padding-left: 1rem;
   }
 
+  /* Cards fill container width but max out at 200px */
+  /* Smaller font size for better fit */
   .user-card,
   .property-card,
   .logout-card {

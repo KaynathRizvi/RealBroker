@@ -1,164 +1,164 @@
-/* PropertyDetail.css */
-
+/* Container for the entire property details section */
 .property-container {
-  padding: 1.5rem;
-  background: #f9f9f9;
-  border-radius: 0.75rem;
-  max-width: 100%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem; /* Internal spacing */
+  background: #f9f9f9; /* Light gray background */
+  border-radius: 0.75rem; /* Rounded corners */
+  max-width: 100%; /* Full width container */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Soft shadow */
 }
 
+/* Property title styling */
 .property-title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: #223b61;
-  margin-bottom: 0.5rem;
-  border-left: 5px solid #223b61;
-  padding-left: 0.62rem;
+  font-size: 1.75rem; /* Large font size */
+  font-weight: 700; /* Bold */
+  color: #223b61; /* Dark blue color */
+  margin-bottom: 0.5rem; /* Space below title */
+  border-left: 5px solid #223b61; /* Left border accent */
+  padding-left: 0.62rem; /* Padding between border and text */
 }
 
+/* Top bar holding back button and other details */
 .property-detail-topbar {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  align-items: center; /* Vertically center items */
+  justify-content: space-between; /* Space between elements */
+  flex-wrap: wrap; /* Wrap items on small screens */
+  gap: 1rem; /* Space between items */
+  margin-bottom: 2rem; /* Space below the top bar */
 }
 
+/* Back button styling */
 .detail-back-button {
-  padding: 0.7rem 1.5rem;
-  font-size: 1rem;
-  background: linear-gradient(to right, #223b61, #30598c);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.2s ease, background 0.3s ease;
+  padding: 0.7rem 1.5rem; /* Padding inside button */
+  font-size: 1rem; /* Font size */
+  background: linear-gradient(to right, #223b61, #30598c); /* Blue gradient background */
+  color: #fff; /* White text */
+  border: none; /* No border */
+  border-radius: 8px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  transition: transform 0.2s ease, background 0.3s ease; /* Smooth hover transitions */
 }
+/* Back button hover effect */
 .detail-back-button:hover {
-  background: linear-gradient(to right, #1a2f4a, #274b72);
-  transform: translateY(-2px);
+  background: linear-gradient(to right, #1a2f4a, #274b72); /* Darker gradient */
+  transform: translateY(-2px); /* Slight lift effect */
 }
 
+/* Generic property detail text */
 .property-detail {
   font-size: 1rem;
-  margin-bottom: 0.375rem;
-  color: #444;
+  margin-bottom: 0.375rem; /* Small spacing below */
+  color: #444; /* Dark gray text */
 }
 
+/* Property description block styling */
 .property-description {
   font-size: 1rem;
-  color: #555;
-  margin-top: 0.875rem;
-  line-height: 1.6;
-  background-color: #fff;
-  padding: 1rem;
-  border-left: 4px solid #223b61;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+  color: #555; /* Medium gray text */
+  margin-top: 0.875rem; /* Spacing above description */
+  line-height: 1.6; /* Increased line height for readability */
+  background-color: #fff; /* White background */
+  padding: 1rem; /* Padding inside description */
+  border-left: 4px solid #223b61; /* Left border accent */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03); /* Subtle shadow */
 }
 
+/* Container for horizontally scrollable property images */
 .image-scroll {
-  display: flex;
-  gap: 0.75rem;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding-bottom: 10px;
-  margin-bottom: 1.5rem;
+  display: flex; /* Flex layout for images */
+  gap: 0.75rem; /* Space between images */
+  overflow-x: auto; /* Horizontal scroll if overflow */
+  scroll-behavior: smooth; /* Smooth scrolling */
+  padding-bottom: 10px; /* Space below images */
+  margin-bottom: 1.5rem; /* Space below image container */
 }
+/* Customize horizontal scrollbar height */
 .image-scroll::-webkit-scrollbar {
   height: 0.375rem;
 }
+/* Customize scrollbar thumb appearance */
 .image-scroll::-webkit-scrollbar-thumb {
-  background: #aaa;
-  border-radius: 0.188rem;
+  background: #aaa; /* Gray scrollbar */
+  border-radius: 0.188rem; /* Rounded scrollbar thumb */
 }
 
+/* Individual thumbnail images */
 .thumbnail-image {
-  width: 20rem;
-  height: 20rem;
-  border-radius: 0.75rem;
-  object-fit: cover;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-  flex-shrink: 0;
-  transition: transform 0.3s ease;
+  width: 20rem; /* Fixed width */
+  height: 20rem; /* Fixed height */
+  border-radius: 0.75rem; /* Rounded corners */
+  object-fit: cover; /* Crop image to fit container */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Shadow around image */
+  flex-shrink: 0; /* Prevent shrinking in flex container */
+  transition: transform 0.3s ease; /* Smooth hover effect */
 }
+/* Hover effect for thumbnails */
 .thumbnail-image:hover {
-  transform: scale(1.03);
+  transform: scale(1.03); /* Slightly enlarge on hover */
 }
 
-/* Medium devices (580px to 410px) */
+/* Medium devices (580px to 410px) responsive adjustments */
 @media (max-width: 580px) and (min-width: 410px) {
   .property-container {
-    padding: 1rem;
+    padding: 1rem; /* Reduced padding */
   }
-   .property-detail-topbar {
-    font-size: .9rem;
+  .property-detail-topbar {
+    font-size: 0.9rem; /* Slightly smaller text */
   }
-
   .property-title {
-    font-size: 1.3rem;
+    font-size: 1.3rem; /* Smaller title */
   }
-
   .detail-back-button {
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
+    padding: 0.6rem 1rem; /* Smaller button padding */
+    font-size: 0.9rem; /* Smaller font */
   }
-
   .thumbnail-image {
-    width: 16rem;
+    width: 16rem; /* Smaller thumbnails */
     height: 16rem;
   }
 }
 
-/* Small devices (410px to 320px) */
+/* Small devices (410px to 320px) responsive adjustments */
 @media (max-width: 410px) and (min-width: 320px) {
   .property-title {
-    font-size: 1.2rem;
+    font-size: 1.2rem; /* Smaller title */
   }
-
   .property-detail-topbar {
-    font-size: .8rem;
+    font-size: 0.8rem; /* Smaller text */
   }
-
   .detail-back-button {
-    font-size: 0.85rem;
-    padding: 0.5rem 0.9rem;
+    font-size: 0.85rem; /* Smaller button font */
+    padding: 0.5rem 0.9rem; /* Smaller padding */
   }
-
   .thumbnail-image {
-    width: 12rem;
+    width: 12rem; /* Smaller thumbnails */
     height: 12rem;
   }
-
   .property-description {
-    font-size: 0.9rem;
-    padding: 0.8rem;
+    font-size: 0.9rem; /* Smaller description text */
+    padding: 0.8rem; /* Smaller padding */
   }
 }
 
-/* Extra small devices (below 320px) */
+/* Extra small devices (below 320px) responsive adjustments */
 @media (max-width: 320px) {
   .property-title {
-    font-size: 1.1rem;
+    font-size: 1.1rem; /* Smallest title size */
   }
   .property-detail-topbar {
-    font-size: .7rem;
+    font-size: 0.7rem; /* Smallest text */
   }
-
   .detail-back-button {
-    font-size: 0.75rem;
-    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem; /* Smallest button font */
+    padding: 0.4rem 0.8rem; /* Smallest button padding */
   }
-
   .thumbnail-image {
-    width: 10rem;
+    width: 10rem; /* Smallest thumbnails */
     height: 10rem;
   }
-
   .property-description {
-    font-size: 0.9rem;
-    padding: 0.6rem;
+    font-size: 0.9rem; /* Description font size remains */
+    padding: 0.6rem; /* Reduced padding */
   }
 }
