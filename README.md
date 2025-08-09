@@ -145,9 +145,3 @@ For questions or feedback, please open an issue or contact the repo owner.
 
 Thank you for checking out this project! 🙌
 
-```
-
----
-
-If you want, I can also prepare a ready-to-upload `.md` file for you! Just ask.
-```
