@@ -125,6 +125,16 @@ npm run dev
 
 ---
 
+☁️ Hosting
+The backend API, admin dashboard, and client app are hosted on Render.com — providing reliable, scalable, and performant deployment.
+
+Client (Mobile App) Live URL: https://realbroker.onrender.com
+
+Admin Dashboard Live URL: https://realbroker-admin.onrender.com
+(The admin dashboard requires login credentials. Please contact me for access.)
+
+---
+
 ## 📜 License
 
 This project is licensed under the **MIT License**.
